@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Nam Cong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magenest" translate="label" sortOrder="10">
+            <label>Magenest</label>
+        </tab>
+        <section id="movie" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Movie</label>
+            <tab>magenest</tab>
+            <resource>Magenest_Test2::configuration</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <field id="text_field" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Text Field</label>
+                </field>
+
+                <field id="enable" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label><![CDATA[Yes/No_Field_<font color=red>abcd</font>]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="custom_select_field" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Select Field</label>
+                    <source_model>Magenest\Test2\Model\Config\Source\Relation</source_model>
+                </field>
+
+                <field id="magenest_movie" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Rows in table “magenest_movie”</label>
+                    <backend_model>Magenest\Test2\Model\Config\Source\CountMovie</backend_model>
+                    <frontend_model>Magenest\Test2\Block\System\Config\Disable</frontend_model>
+                </field>
+
+                <field id="magenest_actor" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Rows in table “magenest_actor”</label>
+                    <backend_model>Magenest\Test2\Model\Config\Source\CountActor</backend_model>
+                    <frontend_model>Magenest\Test2\Block\System\Config\Disable</frontend_model>
+                    <depends>
+                        <field id="movie/general/custom_select_field">1</field>
+                        <!--                        <field id="section_id/group_id/field_id">1</field>-->
+                    </depends>
+                </field>
+
+                <field id="button_field" translate="label" type="button" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Button Field</label>
+                    <frontend_model>Magenest\Test2\Block\System\Config\Button</frontend_model>
+                </field>
+
+            </group>
+        </section>
+    </system>
+</config>

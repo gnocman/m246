@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Nam Cong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="magenest_movie" resource="default" engine="innodb" comment="Magenest Movie">
+        <column xsi:type="int" name="movie_id" nullable="false" identity="true" comment="Movie ID"/>
+        <column xsi:type="text" name="name" nullable="false" comment="Name"/>
+        <column xsi:type="text" name="description" nullable="false" comment="Description"/>
+        <column xsi:type="int" name="rating" nullable="false" comment="Rating"/>
+        <column xsi:type="int" name="director_id" nullable="false" comment="Director ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="movie_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAGENEST_MOVIE_DIRECTOR_ID_MAGENEST_DIRECTOR_DIRECTOR_ID" table="magenest_movie" column="director_id" referenceTable="magenest_director" referenceColumn="director_id"/>
+    </table>
+    <table name="magenest_director" resource="default" engine="innodb" comment="Magenest Director">
+        <column xsi:type="int" name="director_id" nullable="false" identity="true" comment="Director ID"/>
+        <column xsi:type="text" name="name" nullable="false" comment="Name"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="director_id"/>
+        </constraint>
+    </table>
+    <table name="magenest_actor" resource="default" engine="innodb" comment="Magenest Actor">
+        <column xsi:type="int" name="actor_id" nullable="false" identity="true" comment="Actor ID"/>
+        <column xsi:type="text" name="name" nullable="false" comment="Name"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="actor_id"/>
+        </constraint>
+    </table>
+    <table name="magenest_movie_actor" resource="default" engine="innodb" comment="Magenest Movie Actor">
+        <column xsi:type="int" name="movie_id" nullable="false" comment="Movie ID"/>
+        <column xsi:type="int" name="actor_id" nullable="false" comment="Actor ID"/>
+        <constraint xsi:type="foreign" referenceId="MAGENEST_MOVIE_ACTOR_MOVIE_ID_MAGENEST_MOVIE_MOVIE_ID" table="magenest_movie_actor" column="movie_id" referenceTable="magenest_movie" referenceColumn="movie_id"/>
+        <constraint xsi:type="foreign" referenceId="MAGENEST_MOVIE_ACTOR_ACTOR_ID_MAGENEST_ACTOR_ACTOR_ID" table="magenest_movie" column="actor_id" referenceTable="magenest_actor" referenceColumn="actor_id"/>
+    </table>
+</schema>

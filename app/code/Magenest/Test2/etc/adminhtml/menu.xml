@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Nam Cong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="Magenest_Test2::movie"
+            title="Movie"
+            module="Magenest_Test2"
+            sortOrder="1"
+            resource="Magenest_Test2::movie"
+        />
+        <add
+            id="Magenest_Test2::magenest_movie"
+            title="Magenest Movie"
+            module="Magenest_Test2"
+            sortOrder="10"
+            action="backend/movie"
+            parent="Magenest_Test2::movie"
+            resource="Magenest_Test2::movie"
+        />
+        <add
+            id="Magenest_Test2::magenest_request"
+            title="Request Report"
+            module="Magenest_Test2"
+            sortOrder="40"
+            action="backend/request"
+            resource="Magenest_Test2::movie"
+            parent="Magenest_Test2::movie"
+        />
+    </menu>
+</config>

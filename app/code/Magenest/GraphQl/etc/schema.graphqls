@@ -1,0 +1,14 @@
+# Copyright © Nam Cong, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type Query {
+    testcustomer(email: String @doc(description: "email of the customer")): Testcustomer@resolver(class:"Magenest\\GraphQl\\Model\\Resolver\\Customer")@doc(description:"The test customer query returns information about a customer")@cache(cacheable: false)
+}
+type Testcustomer @doc(description: "Test customer defines the customer name and other details") {
+    entity_id: Int
+    firstname: String
+    lastname: String
+    email: String
+    created_in: String
+    created_at: String
+}

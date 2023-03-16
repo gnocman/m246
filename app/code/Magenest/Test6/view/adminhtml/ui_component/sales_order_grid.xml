@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="sales_order_columns">
+        <column name="odd_even" class="Magenest\Test6\Ui\Component\Listing\Grid\Column\OddOrEven">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Odd/Even</item>
+                </item>
+            </argument>
+            <settings>
+                <bodyTmpl>Magenest_Test6/grid/cells/oddoreven</bodyTmpl>
+            </settings>
+        </column>
+    </columns>
+</listing>

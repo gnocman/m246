@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Nam Cong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="smart_film_listing_data_source" xsi:type="string">SmartOSC\CustomUI\Model\ResourceModel\Movie\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="SmartOSC\CustomUI\Model\ResourceModel\Movie\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">smart_film</argument>
+            <argument name="resourceModel" xsi:type="string">SmartOSC\CustomUI\Model\ResourceModel\Film</argument>
+        </arguments>
+    </virtualType>
+</config>

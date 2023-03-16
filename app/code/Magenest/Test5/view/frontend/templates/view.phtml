@@ -1,0 +1,79 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magenest\Test5\Block\View $block
+ */
+?>
+
+<script>
+    require(['jquery', 'jquery/ui'], function ($) {
+        $('#button').click(function () {
+            alert("Hello World!");
+        });
+    });
+</script>
+<div class="customer-welcome" style="margin-right: 68px">
+    <button id="button"
+            data-mage-init='{"dropdown":{}}'
+            data-toggle="dropdown"
+            class="action"
+            data-action="customer-menu-toggle">
+        <span><?= $block->escapeHtml(__('Open Modal')) ?></span>
+    </button>
+    <ul data-target="dropdown" class="dropdown-options">
+        <li>
+            <span class="item"><a href="#"><?= $block->escapeHtml(__('Item 1')) ?></a></span>
+        </li>
+        <li>
+            <span class="item"><a href="#"><?= $block->escapeHtml(__('Item 2')) ?></a></span>
+        </li>
+        <li>
+            <span class="item"><a href="#"><?= $block->escapeHtml(__('Item 3')) ?></a></span>
+        </li>
+    </ul>
+</div>
+
+
+<button id="button2" style="margin-right: 68px">Open Magento Login Modal</button>
+<div id="popup-modal" style="display:none">
+    <h3>Đăng nhập</h3>
+    <label>Tài Khoản<input type="text"></label>
+    <label>Mật Khẩu<input type="password"></label>
+</div>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function (
+            $,
+            modal
+        ) {
+            $('#button2').click(function () {
+                let options = {
+                    type: 'popup',
+                    responsive: true,
+                    innerScroll: true,
+                    title: 'Custom Form Popup',
+                    buttons: [{
+                        text: $.mage.__('Close'),
+                        class: '',
+                        click: function () {
+                            this.closeModal();
+                        }
+                    }]
+                };
+
+                let popup = modal(options, $('#popup-modal'));
+                $('#popup-modal').modal('openModal');
+            });
+        }
+    );
+</script>
+
+<button id="button3">Open Custom Login Modal</button>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © NamCong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:GraphQL:etc/schema.xsd">
+    <types>
+        <type name="CustomerOrdersOutput">
+            <field name="customer_name" type="String"/>
+            <field name="customer_email" type="String"/>
+            <field name="orders" type="[Order]"/>
+            <field name="customer_total_amount" type="Float"/>
+        </type>
+        <type name="Order">
+            <field name="increment_id" type="String"/>
+            <field name="order_status" type="String"/>
+            <field name="order_grand_total" type="Float"/>
+        </type>
+    </types>
+    <queries>
+        <query name="customer_orders" resolver="SmartOSC\GraphQl\Model\Resolver\CustomerOrdersQuery"/>
+    </queries>
+</config>

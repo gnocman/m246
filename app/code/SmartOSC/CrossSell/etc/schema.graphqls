@@ -1,0 +1,18 @@
+# Copyright © Nam Cong, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type Query {
+    getOrderCrossSell(orderId: Int!): OrderCrossSell @resolver(class: "SmartOSC\\CrossSell\\Model\\Resolver\\CrossSellProducts") @doc(description: "Get cross-sell products for a specific order")
+}
+
+type OrderCrossSell {
+    items: [OrderCrossSellItem] @doc(description: "List of cross-sell products for each order item")
+}
+
+type OrderCrossSellItem {
+    sku: String! @doc(description: "Product SKU")
+    name: String! @doc(description: "Product name")
+    price: Float! @doc(description: "Product price")
+    image: String! @doc(description: "Product image URL")
+}
+

@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * @var Magenest\Test2\Block\System\Config\Button $block
+ */
+?>
+
+<script>
+    require([
+        'jquery',
+        'prototype',
+    ], function ($) {
+        $('#fieldbtn').click(function () {
+            window.location.reload(true);
+        });
+    });
+</script>
+
+<?= $block->getButtonHtml() ?>

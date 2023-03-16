@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Nam Cong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="namcong_movie" resource="default" engine="innodb" comment="Namcong Movie">
+        <column xsi:type="int" name="movie_id" nullable="false" identity="true" comment="Movie ID"/>
+        <column xsi:type="text" name="name" nullable="false" comment="Name"/>
+        <column xsi:type="text" name="description" nullable="false" comment="Description"/>
+        <column xsi:type="int" name="rating" nullable="false" comment="Rating"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="movie_id"/>
+        </constraint>
+    </table>
+</schema>

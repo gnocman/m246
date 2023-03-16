@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © NamCong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="smart_renameProduct" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Rename Product</label>
+            <tab>general</tab>
+            <resource>SmartOSC_RenameProduct::configuration</resource>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="new_product_name" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>New Product Name</label>
+                    <comment>The product name will be changed to</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

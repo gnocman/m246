@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * @var Magenest\Test4\Block\Customer\Account $block ;
+ */
+?>
+
+<fieldset class="fieldset create account" data-hasrequired="<?= /* @escapeNotVerified */
+__('* Required Fields') ?>">
+    <legend class="legend">
+        <span><?= /* @escapeNotVerified */
+            __('Avatar') ?></span>
+    </legend>
+    <?php if ($url = $block->getFileUrl()): ?>
+        <div class="field">
+            <img src="<?= $url ?>" alt="image"/>
+        </div>
+    <?php endif; ?>
+</fieldset>

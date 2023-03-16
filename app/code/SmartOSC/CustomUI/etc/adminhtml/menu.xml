@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Nam Cong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="SmartOSC_CustomUI::film"
+             title="SmartOSC"
+             module="SmartOSC_CustomUI"
+             sortOrder="1"
+             resource="SmartOSC_CustomUI::film"/>
+        <add id="SmartOSC_CustomUI::smart_film"
+             title="SmartOSC Film"
+             module="SmartOSC_CustomUI"
+             sortOrder="10"
+             action="backend/film"
+             parent="SmartOSC_CustomUI::film"
+             resource="SmartOSC_CustomUI::film"/>
+    </menu>
+</config>

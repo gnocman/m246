@@ -1,0 +1,19 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * @var $block NamCong\FrontEnd\Block\Showdata
+ */
+
+?>
+<?php if ($block->isCustomerLoggedIn()) : ?>
+    <h1><?= __('Login success!'); ?></h1>
+<?php else : ?>
+    <h1><?= __('Login fail!'); ?></h1>
+<?php endif; ?>
+<h1><?= __($block->getCustomerName()); ?></h1>
+<h1><?= __($block->getCustomerEmail()); ?></h1>

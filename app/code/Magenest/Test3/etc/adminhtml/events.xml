@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Nam Cong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="movie_save_before">
+        <observer name="rating_actor_save_before" instance="Magenest\Test3\Observer\ChangeRating"/>
+    </event>
+
+    <event name="admin_system_config_changed_section_movie">
+        <!--admin_system_config_changed_section_ten section trong system.xml-->
+        <observer name="ping_pong_config_save" instance="Magenest\Test3\Observer\DisplayText"/>
+    </event>
+</config>

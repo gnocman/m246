@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Nam Cong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="magenest_blog" resource="default" engine="innodb">
+        <column xsi:type="int" name="blog_id" unsigned="true" nullable="false" identity="true"/>
+        <column xsi:type="text" name="title" nullable="false"/>
+        <column xsi:type="text" name="description" nullable="false"/>
+        <column xsi:type="text" name="content" nullable="false"/>
+        <column xsi:type="text" name="url_rewrite" nullable="false"/>
+        <column xsi:type="int" name="status" nullable="false"/>
+        <column xsi:type="datetime" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"/>
+        <column xsi:type="datetime" name="update_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"/>
+        <column xsi:type="int" name="author_id" unsigned="true" nullable="false"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="blog_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAGENEST_BLOG_AUTHOR_ID_ADMIN_USER_USER_ID" table="magenest_blog" column="author_id" referenceTable="admin_user" referenceColumn="user_id" onDelete="CASCADE"/>
+        <index referenceId="MAGENEST_BLOG_TITLE_CONTENT" indexType="fulltext">
+            <column name="title"/>
+            <column name="content"/>
+        </index>
+    </table>
+
+    <table name="magenest_category" resource="default" engine="innodb">
+        <column xsi:type="int" name="category_id" unsigned="true" nullable="false" identity="true"/>
+        <column xsi:type="text" name="name" nullable="false"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="category_id"/>
+        </constraint>
+        <index referenceId="MAGENEST_CATEGORY_NAME" indexType="fulltext">
+            <column name="name"/>
+        </index>
+    </table>
+
+    <table name="magenest_blog_category" resource="default" engine="innodb">
+        <column xsi:type="int" name="blog_id" unsigned="true" nullable="false"/>
+        <column xsi:type="int" name="category_id" unsigned="true" nullable="false"/>
+        <constraint xsi:type="foreign" referenceId="MAGENEST_BLOG_CATEGORY_BLOG_ID_MAGENEST_BLOG_BLOG_ID" table="magenest_blog_category" column="blog_id" referenceTable="magenest_blog" referenceColumn="blog_id"/>
+        <constraint xsi:type="foreign" referenceId="MAGENEST_BLOG_CATEGORY_CATEGORY_ID_MAGENEST_CATEGORY_CATEGORY_ID" table="magenest_blog_category" column="category_id" referenceTable="magenest_category" referenceColumn="category_id"/>
+    </table>
+</schema>

@@ -1,0 +1,100 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * @var $block NamCong\FrontEnd\Block\Movie
+ */
+
+$collection = $block->getCollection();
+if ($collection) : ?>
+    <h1><?= __('Information') ?></h1>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?= __('Grid Record') ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col movie_id"><?= __('Movies ID') ?></th>
+                <th scope="col" class="col name"><?= __('Movies Name') ?></th>
+                <th scope="col" class="col description"><?= __('Description') ?></th>
+                <th scope="col" class="col rating"><?= __('Rating') ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($collection as $item): ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('Movies ID')) ?>" class="col movie_id">
+                        <?= $item->getMovieId() ?>
+                        <!--                         $item['movie_id']-->
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Movies')) ?>" class="col name">
+                        <?= $item->getName() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Description')) ?>" class="col description">
+                        <?= $item->getDescription() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Rating')) ?>" class="col rating">
+                        <?= $item->getRating() ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <form name="addData" method="post" id="addData" class="form"
+                  action="<?= $block->getFormAction(); ?>"
+                  data-hasrequired="<?= $block->escapeHtml(__('* Required Fields')) ?>"
+                  data-mage-init='{"validation":{}}'>
+                <fieldset class="fieldset">
+                    <legend class="legend"><span><?= $block->escapeHtml(__('Add Information')) ?></span></legend>
+                    <fieldset class="fieldset row">
+                        <div class="fields col-md-6">
+                            <div class=" field name required">
+                                <label class="label" for="title">
+                                    <span><?= $block->escapeHtml(__('Movie Name')) ?></span>
+                                </label>
+                                <div class="control">
+                                    <input name="name" id="name" title="Movie Name" value="" class="input-text"
+                                           type="text" data-validate="{required:true}">
+                                </div>
+                            </div>
+                            <div class=" field name required">
+                                <label class="label" for="title">
+                                    <span><?= $block->escapeHtml(__('Description')) ?></span>
+                                </label>
+                                <div class="control">
+                                    <input name="description" id="description" title="Description" value=""
+                                           class="input-text" type="text"
+                                           data-validate="{required:true}">
+                                </div>
+                            </div>
+                            <div class=" field name required">
+                                <label class="label" for="title"><span>
+                                        <?= $block->escapeHtml(__('Rating')) ?></span>
+                                </label>
+                                <div class="control">
+                                    <input name="rating" id="rating" title="Rating" value=""
+                                           class="input-text" type="text"
+                                           data-validate="{'required':true, 'validate-number':true}">
+                                    <!--                                    'validate-number-range': '1.00-5.00'-->
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </fieldset>
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button type="submit" class="action submit primary" title="Save">
+                            <span><?= $block->escapeHtml(__('Save')) ?></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,62 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * @var  \Magenest\Test2\Block\Adminhtml\Request\Report $block
+ */
+
+$module = $block->getCountAllModule();
+$magento = $block->getModuleMagento();
+$customer = $block->getCustomerCollection();
+$product = $block->getProductCollection();
+$order = $block->getOrderCollection();
+$invoice = $block->getInvoiceCollection();
+$credit = $block->getCreditCollection();
+
+?>
+
+
+<h3>Requests Made Today</h3>
+<div class="col-m-5">
+    <table class="admin__table-secondary">
+        <tr>
+            <th><?= __('Numbers of all module installed in Magento 2: ') ?></th>
+            <td><?= $module ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Numbers of module you installed in Magento 2: ') ?></th>
+            <td><?= $module - count($magento) ?></td>
+        </tr>
+    </table>
+</div>
+
+<div class="col-m-2"></div>
+
+<div class="col-m-5">
+    <table class="admin__table-secondary">
+        <tr>
+            <th><?= __('Numbers of Customers') ?></th>
+            <td><?= $customer ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Numbers of Products') ?></th>
+            <td><?= $product ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Numbers of Orders') ?></th>
+            <td><?= $order ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Numbers of Invoices') ?></th>
+            <td><?= $invoice ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Numbers of Credit memos') ?></th>
+            <td><?= $credit ?></td>
+        </tr>
+    </table>
+</div>

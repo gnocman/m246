@@ -1,0 +1,39 @@
+<?php
+/**
+ * Copyright © Nam Cong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var $block SmartOSC\CrossSell\Block\Success
+ */
+
+$crossSellProducts = $block->getCrossSellProducts(); ?>
+<?php if ($crossSellProducts->count()): ?>
+    <div class="block cross-sell">
+        <div class="block-title">
+            <strong><?= __('You may also be interested in:') ?></strong>
+        </div>
+        <div class="block-content">
+            <div class="products-grid grid">
+                <?php foreach ($crossSellProducts as $_product): ?>
+                    <div class="product-item">
+                        <a href="<?= $_product->getProductUrl() ?>">
+                            <img src="<?= $block->getImage($_product, 'cart_cross_sell_products')->getImageUrl() ?>"
+                                 alt="<?= $block->escapeHtml($_product->getName()) ?>"
+                                 class="product-image"/>
+                        </a>
+                        <div class="product-details">
+                            <strong class="product-name">
+                                <a href="<?= $_product->getProductUrl() ?>">
+                                    <?= $block->escapeHtml($_product->getName()) ?>
+                                </a>
+                            </strong>
+                            <?= $block->getProductPrice($_product) ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

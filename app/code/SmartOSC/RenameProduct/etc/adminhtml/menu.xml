@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © NamCong, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="SmartOSC_RenameProduct::rename_product"
+            title="Rename Product"
+            module="SmartOSC_RenameProduct"
+            sortOrder="100"
+            parent="Magenest_Test2::movie"
+            action="adminhtml/system_config/edit/section/smart_renameProduct"
+            resource="SmartOSC_RenameProduct::rename_product"/>
+    </menu>
+</config>

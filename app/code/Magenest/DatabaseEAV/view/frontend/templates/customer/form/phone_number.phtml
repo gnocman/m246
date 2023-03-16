@@ -1,0 +1,55 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<div class="field phone_number">
+    <label class="label" for="phone_number"><span><?= /* @escapeNotVerified */
+            __('Telephone Number') ?></span></label>
+    <div class="control">
+        <input type="text" id="phone_number" name="phone_number" title="<?= /* @escapeNotVerified */
+        __('Telephone Number') ?>" class="input-text" autocomplete="off"
+               >
+<!--        data-validate="{'required':true,'validate-phoneStrict':true}"-->
+    </div>
+</div>
+
+<!--<div class="field telephone required">-->
+<!--    <label for="telephone" class="label"><span>--><?php //echo __('Telephone') ?><!--</span></label>-->
+<!--    <div class="control">-->
+<!--        <input type="text" name="telephone" id="telephone" title="--><?php //echo __('Telephone') ?><!--" class="input-text"-->
+<!--               data-validate="{required:true, 'validate-length':10}" maxlength="10"/>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script type="text/javascript">-->
+<!--    require(['jquery'], function ($) {-->
+<!--        $(document).ready(function () {-->
+<!--            $('input[name="telephone"]').blur(function () {-->
+<!--                let value = $(this).val();-->
+<!--                if (value.startsWith('+84')) {-->
+<!--                    $(this).val('0' + value.substring(3));-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+<?php
+/**
+ * @var  \Magenest\DatabaseEAV\Block\CustomerGroups $block
+ */
+$blockObj = $block->getLayout()->createBlock('Magenest\DatabaseEAV\Block\CustomerGroups');
+$groups = $blockObj->getCustomerGroup();
+?>
+<div class="field group_id required">
+    <label for="group_id" class="label"><span><?php /* @escapeNotVerified */
+            echo __('I want to register as') ?></span></label>
+    <div class="control">
+        <select name="group_id">
+            <?php foreach ($groups as $key => $data) { ?>
+                <option value="<?= $data['value'] ?>"><?= $data['label'] ?>"</option>
+            <?php } ?>
+        </select>
+    </div>
+</div>

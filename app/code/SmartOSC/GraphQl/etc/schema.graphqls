@@ -1,0 +1,21 @@
+# Copyright © Nam Cong, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type Query {
+    customer_orders (
+        customer_email: String! @doc(description: "Email of the customer.")
+    ): CustomerOrdersOutput @resolver(class: "SmartOSC\\GraphQl\\Model\\Resolver\\CustomerOrdersQuery") @doc(description: "Customer Order Information.")
+}
+
+type CustomerOrdersOutput {
+    customer_name: String @doc(description: "The customer's name")
+    customer_email: String @doc(description: "The customer's email")
+    orders: [Order] @doc(description: "The customer's order details")
+    customer_total_amount: Float @doc(description: "The customer's total amount")
+}
+
+type Order {
+    increment_id: String @doc(description: "The order's increment id")
+    order_status: String @doc(description: "The order's status")
+    order_grand_total: Float @doc(description: "The order's grand total")
+}

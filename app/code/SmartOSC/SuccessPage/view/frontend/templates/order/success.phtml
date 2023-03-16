@@ -1,0 +1,35 @@
+<?php
+
+use Magento\Framework\App\ObjectManager;
+use Magento\Store\Model\ScopeInterface;
+
+$objectManager = ObjectManager::getInstance();
+$scopeConfig = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+$showOrderInfo = $scopeConfig->getValue('check/general/enable', ScopeInterface::SCOPE_STORE);
+
+if ($showOrderInfo) {
+    echo __('<h3><b>Order Detail:</b></h3>' . '<br/>');
+
+    $lid = $this->getOrderId();
+    echo __('Order ID: ') . $lid . '<br/>';
+
+    $objectManager = ObjectManager::getInstance();
+    $order = $objectManager->create('Magento\Sales\Model\Order')->load($lid);
+
+    $total = $order->getGrandTotal();
+    echo __('Order Total: ') . $total . '<br/>';
+
+    $shippingAddress = $order->getShippingAddress();
+    echo __('Telephone No: ') . $shippingAddress->getTelephone() . '<br/>';
+    echo __('Postcode: ') . $shippingAddress->getPostcode() . '<br/>';
+
+    $items = $order->getAllItems();
+    foreach ($items as $i):
+        $_product =
+            $objectManager->create('Magento\Catalog\Model\Product')->load($i->getProductId())->getSku();
+        echo __('Product sku: ') . $_product . '<br/>';
+    endforeach;
+
+    echo __('<h3><b>Shipping Method:</b></h3>' . '<br/>');
+    echo $order->getShippingMethod() . '<br/>';
+}
