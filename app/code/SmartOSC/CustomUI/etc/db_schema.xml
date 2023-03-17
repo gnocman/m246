@@ -14,5 +14,11 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="film_id"/>
         </constraint>
+        <index referenceId="SMART_FILM_NAME" indexType="btree">
+            <column name="name"/>
+        </index>
+        <index referenceId="FTI_65B9E9925EC58F0C7C2E2F6379C233E7" indexType="fulltext">
+            <column name="name"/>
+        </index>
     </table>
 </schema>
