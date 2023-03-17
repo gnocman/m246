@@ -1,0 +1,16 @@
+{
+    "smart_film": {
+        "column": {
+            "film_id": true,
+            "name": true,
+            "description": true,
+            "rating": true
+        },
+        "index": {
+            "SMART_FILM_NAME": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
