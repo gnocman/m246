@@ -1,0 +1,51 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var $block \Magento\Sales\Block\Order\Email\Items\DefaultItems */
+/** @var $_item \Magento\Sales\Model\Order\Item */
+?>
+<?php $_item = $block->getItem() ?>
+<?php $_order = $block->getItem()->getOrder(); ?>
+<tr>
+    <td class="item-info<?= ($block->getItemOptions() ? ' has-extra' : '') ?>">
+        <p style="font-size:18px;font-weight:600;  margin-bottom: 10px;">Information</p>
+        <p style="font-size:18px;font-weight:600; color:#da0f0f;margin-bottom: 10px;">Installation (Expected delivery
+            date: <?= date_format(date_create($_order->getCreatedAt()), 'd/m/Y') ?>)</p>
+        <table style="width:100%;">
+            <tr>
+                <td class="item-img" width="120">
+                    <img src="<?= 'https://placehold.jp/100x100.png' ?>" alt="img"/>
+                </td>
+                <td>
+                    <p class="sku"><?= $escaper->escapeHtml(__('SKU')) ?>
+                        : <?= $escaper->escapeHtml($block->getSku($_item)) ?></p>
+                    <p class="product-name"><?= $escaper->escapeHtml($_item->getName()) ?></p>
+                    <?php if ($block->getItemOptions()): ?>
+                        <dl>
+                            <?php foreach ($block->getItemOptions() as $option): ?>
+                                <dt><strong><em><?= $escaper->escapeHtml($option['label']) ?></em></strong></dt>
+                                <dd>
+                                    <?= /* @noEscape */
+                                    nl2br($option['value']) ?>
+                                </dd>
+                            <?php endforeach; ?>
+                        </dl>
+                    <?php endif; ?>
+                    <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+                    <?php if ($addInfoBlock): ?>
+                        <?= $addInfoBlock->setItem($_item->getOrderItem())->toHtml() ?>
+                    <?php endif; ?>
+                    <?= $escaper->escapeHtml($_item->getDescription()) ?>
+                    <p class="product-qty">
+                        Qty : <?= (float)$_item->getQty() ?>
+                        <strong style="margin-left: 20px"><?= /* @noEscape */
+                            $block->getItemPrice($_item) ?></strong>
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
