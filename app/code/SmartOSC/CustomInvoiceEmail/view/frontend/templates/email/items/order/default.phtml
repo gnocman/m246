@@ -13,19 +13,22 @@ declare(strict_types=1);
 /** @var $_item \Magento\Sales\Model\Order\Item */
 $_item = $block->getItem();
 $_order = $_item->getOrder();
+$_store = $_order->getStore();
+
+$_imageHelper = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Catalog\Helper\Image');
+$_baseImageUrl = $_store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product';
 ?>
 <tr>
     <td class="item-info<?= ($block->getItemOptions() ? ' has-extra' : '') ?>" colspan="2" style="padding:20px 20px 10px;">
         <p style="font-size:18px;font-weight:600;  margin-bottom: 10px;">Information</p>
-        <p style="font-size:18px;font-weight:600; color:#da0f0f;margin-bottom: 10px;">Installation (Expected delivery date: 01/31/2028)</p>
+        <p style="font-size:18px;font-weight:600; color:#da0f0f;margin-bottom: 10px;">Installation (Expected delivery date: <?= date_format(date_create($_order->getCreatedAt()), 'd/m/Y') ?>)</p>
         <table style="width:100%;">
             <tr>
                 <td class="item-img" width="120">
-                    <img src="<?= 'https://placehold.jp/100x100.png' ?>" alt="img"/>
+                    <img src="<?= $_imageHelper->init($_item->getProduct(), 'small_image', ['type'=>'small_image'])->keepAspectRatio(true)->resize('65','65')->getUrl();?>" alt="<?= __('Product Image');?>">
                 </td>
                 <td>
-                    <p class="sku" style="font-size:16px;  margin-bottom: 5px;"><?= $block->escapeHtml(__('SKU')) ?>
-                        : <?= $block->escapeHtml($block->getSku($_item)) ?></p>
+                    <p class="sku" style="font-size:16px;  margin-bottom: 5px;"><?= $block->escapeHtml(__('SKU')) ?>: <?= $block->escapeHtml($block->getSku($_item)) ?></p>
                     <p class="product-name"><?= $block->escapeHtml($_item->getName()) ?></p>
                     <?php if ($block->getItemOptions()): ?>
                         <dl class="item-options">
@@ -35,7 +38,8 @@ $_order = $_item->getOrder();
                                         <dt><strong><em><?= $block->escapeHtml($option['label']) ?></em></strong></dt>
                                     <?php endif; ?>
                                     <dd>
-                                        <?= /* @noEscape */ nl2br($block->escapeHtml($option['value'])) ?>
+                                        <?= /* @noEscape */
+                                        nl2br($block->escapeHtml($option['value'])) ?>
                                     </dd>
                                 <?php endif; ?>
                             <?php endforeach; ?>
@@ -45,8 +49,7 @@ $_order = $_item->getOrder();
                     <?php if ($addInfoBlock): ?>
                         <?= $addInfoBlock->setItem($_item)->toHtml() ?>
                     <?php endif; ?>
-                    <p class="product-qty">
-                        Qty : <?= (float)$_item->getQtyOrdered() ?>
+                    <p class="product-qty">Qty : <?= (float)$_item->getQtyOrdered() ?>
                         <?= /* @noEscape */
                         $block->getItemPrice($_item) ?>
                     </p>
