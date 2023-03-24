@@ -4,6 +4,7 @@
  * See COPYING.txt for license details.
  */
 
+/** @var \Magento\Framework\Escaper $escaper */
 /** @var $block \Magento\Catalog\Block\Product\View */
 ?>
 <?php $_product = $block->getProduct(); ?>
@@ -27,7 +28,7 @@
                                id="qty"
                                min="0"
                                value="<?= $block->getProductDefaultQty() * 1 ?>"
-                               title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                               title="<?= $escaper->escapeHtmlAttr(__('Qty')) ?>"
                                class="input-text qty"
                                data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
                         />
@@ -40,7 +41,7 @@
             <?php endif; ?>
             <div class="actions">
                 <button type="submit"
-                        title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                        title="<?= $escaper->escapeHtmlAttr($buttonTitle) ?>"
                         class="action primary tocart"
                         id="product-addtocart-button" disabled>
                     <span><?= $block->escapeHtml($buttonTitle) ?></span>
