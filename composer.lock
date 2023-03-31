@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "191e0ef5bcc01c6a0545597a120384c1",
+    "content-hash": "acff4e34b6dd31acd73a3c860ae80fde",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -17783,6 +17783,51 @@
                 "source": "https://github.com/magento/magento-zend-pdf/tree/1.16.2"
             },
             "time": "2023-02-08T18:07:39+00:00"
+        },
+        {
+            "name": "mageplaza/module-backend-reindex",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-backend-reindex.git",
+                "reference": "3b693c031a3913034df8dc1d28099ff5fa8512b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-backend-reindex/zipball/3b693c031a3913034df8dc1d28099ff5fa8512b2",
+                "reference": "3b693c031a3913034df8dc1d28099ff5fa8512b2",
+                "shasum": ""
+            },
+            "require": {
+                "mageplaza/module-core": "^1.4.5"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\BackendReindex\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Magento 2 Backend Reindex Extension",
+            "support": {
+                "issues": "https://github.com/mageplaza/magento-2-backend-reindex/issues",
+                "source": "https://github.com/mageplaza/magento-2-backend-reindex/tree/v4.0.1"
+            },
+            "time": "2021-07-26T17:50:30+00:00"
         },
         {
             "name": "mageplaza/module-core",

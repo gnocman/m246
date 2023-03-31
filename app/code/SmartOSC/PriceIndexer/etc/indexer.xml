@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Indexer:etc/indexer.xsd">
+    <indexer id="SmartOSC_PriceIndexer_indexer_price" view_id="SmartOSC_PriceIndexer_indexer_price_view" class="SmartOSC\PriceIndexer\Model\Indexer\Product\Price">
+        <title translate="true">Custom Price Indexer</title>
+        <description translate="true">Updates the final price of products by subtracting 10%</description>
+    </indexer>
+</config>
