@@ -20,13 +20,14 @@ class Price implements ActionInterface, MviewActionInterface
     /**
      * @var CollectionFactory
      */
-    private $productCollectionFactory;
+    private CollectionFactory $productCollectionFactory;
 
     /**
      * @param CollectionFactory $productCollectionFactory
      */
-    public function __construct(CollectionFactory $productCollectionFactory)
-    {
+    public function __construct(
+        CollectionFactory $productCollectionFactory
+    ) {
         $this->productCollectionFactory = $productCollectionFactory;
     }
 
