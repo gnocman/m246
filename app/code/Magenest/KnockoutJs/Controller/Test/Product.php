@@ -15,7 +15,6 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Data\Form\FormKey;
 use Magento\Store\Model\StoreManager;
-use Magento\Framework\Controller\Result\JsonFactory;
 
 /**
  * Show data of product to page
