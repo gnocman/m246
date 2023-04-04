@@ -54,26 +54,27 @@
             $,
             modal
         ) {
+            let popupModal = $('#popup-modal');
+            let options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Custom Form Popup',
+                buttons: [{
+                    text: $.mage.__('Close'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+            modal(options, popupModal);
             $('#button2').click(function () {
-                let options = {
-                    type: 'popup',
-                    responsive: true,
-                    innerScroll: true,
-                    title: 'Custom Form Popup',
-                    buttons: [{
-                        text: $.mage.__('Close'),
-                        class: '',
-                        click: function () {
-                            this.closeModal();
-                        }
-                    }]
-                };
-
-                let popup = modal(options, $('#popup-modal'));
-                $('#popup-modal').modal('openModal');
+                popupModal.modal('openModal');
             });
         }
     );
 </script>
+
 
 <button id="button3">Open Custom Login Modal</button>

@@ -3,6 +3,7 @@
  * Copyright © Nam Cong, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magenest\DatabaseEAV\Setup\Patch\Data;
@@ -16,17 +17,13 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Customer\Model\ResourceModel\Attribute as AttributeResourceModel;
 use Magenest\DatabaseEAV\Model\Config\Source\AddressClassification;
-use Zend_Validate_Exception;
 
 /**
- *
+ * EAV AddAddressClassificationAttribute
  */
 class AddAddressClassificationAttribute implements DataPatchInterface
 {
-    /**
-     *
-     */
-    const ATTRIBUTE_CODE = 'address_classification';
+    public const ATTRIBUTE_CODE = 'address_classification';
 
     /**
      * @var AttributeResourceModel
@@ -64,6 +61,8 @@ class AddAddressClassificationAttribute implements DataPatchInterface
     }
 
     /**
+     * Get getDependencies
+     *
      * @return array
      */
     public static function getDependencies(): array
@@ -72,6 +71,8 @@ class AddAddressClassificationAttribute implements DataPatchInterface
     }
 
     /**
+     * Get getAliases
+     *
      * @return array
      */
     public function getAliases(): array
@@ -80,10 +81,12 @@ class AddAddressClassificationAttribute implements DataPatchInterface
     }
 
     /**
+     * Add new attribute code
+     *
      * @return $this
-     * @throws LocalizedException
      * @throws AlreadyExistsException
-     * @throws Zend_Validate_Exception
+     * @throws LocalizedException
+     * @throws \Magento\Framework\Validator\ValidateException
      */
     public function apply(): self
     {
@@ -116,5 +119,4 @@ class AddAddressClassificationAttribute implements DataPatchInterface
 
         return $this;
     }
-
 }
