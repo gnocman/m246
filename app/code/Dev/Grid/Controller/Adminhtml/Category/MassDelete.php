@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Dev\Grid\Controller\Adminhtml\Category;
 
+use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\App\Action;
@@ -74,6 +75,7 @@ class MassDelete extends Action
         }
         $collection = $this->filter->getCollection($this->collectionFactory->create());
         $categoryDeleted = 0;
+        /** @var CategoryInterface $category */
         foreach ($collection->getItems() as $category) {
             $this->categoryRepository->delete($category);
             $categoryDeleted++;
