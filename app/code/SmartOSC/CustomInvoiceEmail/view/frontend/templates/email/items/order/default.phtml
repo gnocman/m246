@@ -24,7 +24,7 @@ $_baseImageUrl = $_store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_M
         <p style="font-size:18px;font-weight:600; color:#da0f0f;margin-bottom: 10px;">Installation (Expected delivery date: <?= date_format(date_create($_order->getCreatedAt()), 'd/m/Y') ?>)</p>
         <table style="width:100%;">
             <tr>
-                <td class="item-img" width="120">
+                <td class="item-img" style="width:120px">
                     <img src="<?= $_imageHelper->init($_item->getProduct(), 'small_image', ['type'=>'small_image'])->keepAspectRatio(true)->resize('65','65')->getUrl();?>" alt="<?= __('Product Image');?>">
                 </td>
                 <td>
