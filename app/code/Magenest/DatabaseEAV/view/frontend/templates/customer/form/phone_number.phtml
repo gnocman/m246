@@ -46,10 +46,12 @@ $groups = $blockObj->getCustomerGroup();
     <label for="group_id" class="label"><span><?php /* @escapeNotVerified */
             echo __('I want to register as') ?></span></label>
     <div class="control">
-        <select name="group_id">
-            <?php foreach ($groups as $key => $data) { ?>
-                <option value="<?= $data['value'] ?>"><?= $data['label'] ?>"</option>
-            <?php } ?>
-        </select>
+        <label>
+            <select name="group_id">
+                <?php foreach ($groups as $key => $data) { ?>
+                    <option value="<?= $data['value'] ?>"><?= $data['label'] ?>"</option>
+                <?php } ?>
+            </select>
+        </label>
     </div>
 </div>

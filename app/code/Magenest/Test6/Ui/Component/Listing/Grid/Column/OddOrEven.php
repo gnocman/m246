@@ -30,6 +30,8 @@ class OddOrEven extends Column
         array $data = []
     ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
+        $this->uiComponentFactory = $uiComponentFactory;
+        $this->components = $components;
     }
 
     /**

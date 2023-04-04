@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Magenest\GraphQl\Model\Resolver;
 
-use _PHPStan_4dd92cd93\Nette\Schema\Context;
+use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -50,7 +50,7 @@ class Customer implements ResolverInterface
      * Resolve
      *
      * @param Field $field
-     * @param Context $context
+     * @param ContextInterface $context
      * @param ResolveInfo $info
      * @param array|null $value
      * @param array|null $args
@@ -82,11 +82,11 @@ class Customer implements ResolverInterface
     /**
      * Get customer data
      *
-     * @param $customerEmail
+     * @param string $customerEmail
      * @return array
      * @throws NoSuchEntityException
      */
-    private function getCustomerData($customerEmail): array
+    private function getCustomerData(string $customerEmail): array
     {
         try {
             $customerData = [];
