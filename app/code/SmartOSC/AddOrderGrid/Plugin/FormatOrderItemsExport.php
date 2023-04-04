@@ -33,7 +33,7 @@ class FormatOrderItemsExport
             return [$document, $fields, $options];
         }
 
-        $decodedItems = html_entity_decode($orderItems);
+        $decodedItems = htmlspecialchars_decode($orderItems);
         $explodedItems = explode('</div><div>', $decodedItems);
 
         foreach ($explodedItems as &$item) {

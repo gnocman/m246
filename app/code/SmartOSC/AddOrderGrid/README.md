@@ -1,12 +1,12 @@
-<h1 align="center">SmartOSC_AddOrderGrid</h1> 
+<h1 style="text-align: center">SmartOSC_AddOrderGrid</h1> 
 
-<div align="center">
+<div style="text-align: center">
   <p>Adds more details to the order grid in the admin.</p>
   <img src="https://img.shields.io/badge/magento-2.2%20|%202.3%20|%202.4-brightgreen.svg?logo=magento&longCache=true&style=flat-square" alt="Supported Magento Versions" />
   <a href="https://packagist.org/packages/markshust/magento2-module-ordergrid" target="_blank"><img src="https://img.shields.io/packagist/v/markshust/magento2-module-ordergrid.svg?style=flat-square" alt="Latest Stable Version" /></a>
   <a href="https://packagist.org/packages/markshust/magento2-module-ordergrid" target="_blank"><img src="https://poser.pugx.org/markshust/magento2-module-ordergrid/downloads" alt="Composer Downloads" /></a>
   <a href="https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity" target="_blank"><img src="https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg?style=flat-square" alt="Maintained - Yes" /></a>
-  <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
+  <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license-MIT-blue" /></a>
 </div>
 
 ## Table of contents
