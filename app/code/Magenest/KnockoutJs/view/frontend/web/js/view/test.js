@@ -20,6 +20,12 @@ define([
 
         productList: ko.observableArray([]),
 
+        // show default 1 product
+        initialize: function () {
+            this._super();
+            this.getProduct();
+        },
+
         getProduct: function () {
             let self = this;
             let serviceUrl = urlBuilder.build('knockout/test/product?id=' + id);

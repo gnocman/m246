@@ -3,21 +3,23 @@
  * Copyright © Nam Cong, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magenest\KnockoutJs\Block;
 
+use Magento\Checkout\Block\Checkout\LayoutProcessorInterface;
 use Magento\Framework\View\Element\Template;
 
 /**
- *
+ * Get getJsLayout
  */
 class Test extends Template
 {
     /**
-     * @var array
+     * @var array|LayoutProcessorInterface[]
      */
-    protected $layoutProcessors;
+    protected array $layoutProcessors;
 
     /**
      * @param Template\Context $context
@@ -35,14 +37,14 @@ class Test extends Template
     }
 
     /**
-     * @return string
+     * @return false|string
      */
-    public function getJsLayout()
+    public function getJsLayout(): bool|string
     {
         foreach ($this->layoutProcessors as $processor) {
             $this->jsLayout = $processor->process($this->jsLayout);
         }
-        return \Zend_Json::encode($this->jsLayout);
-    }
 
+        return json_encode($this->jsLayout);
+    }
 }

@@ -3,6 +3,7 @@
  * Copyright © Nam Cong, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magenest\KnockoutJs\Controller\Test;
@@ -13,11 +14,10 @@ use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 
 /**
- *
+ * Create new page
  */
 class Index extends Action implements HttpGetActionInterface
 {
-
     /**
      * @var PageFactory
      */

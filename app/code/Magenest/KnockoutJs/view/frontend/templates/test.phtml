@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+/** @var $block Magenest\KnockoutJs\Block\Test */
 ?>
 <div id="test-div" data-bind="scope:'test'">
     <!-- ko template: getTemplate() --><!-- /ko -->
@@ -10,9 +12,10 @@
        {
            "#test-div": {
                "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */
-        echo $block->getJsLayout(); ?>
+    echo $block->getJsLayout(); ?>
            }
        }
+
 
     </script>
 

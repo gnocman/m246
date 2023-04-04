@@ -3,6 +3,7 @@
  * Copyright © Nam Cong, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magenest\KnockoutJs\Controller\Test;
@@ -11,14 +12,15 @@ use Magento\Catalog\Helper\Image;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Data\Form\FormKey;
 use Magento\Store\Model\StoreManager;
-use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\Controller\Result\JsonFactory;
 
 /**
- *
+ * Show data of product to page
  */
-class Product extends Action implements HttpGetActionInterface
+class Product extends Action implements HttpPostActionInterface
 {
     /**
      * @var ProductFactory
@@ -28,10 +30,6 @@ class Product extends Action implements HttpGetActionInterface
      * @var Image
      */
     protected Image $imageHelper;
-    /**
-     * @var
-     */
-    protected $listProduct;
     /**
      * @var StoreManager
      */
@@ -58,34 +56,19 @@ class Product extends Action implements HttpGetActionInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function getCollection()
-    {
-        return $this->productFactory->create()
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->setPageSize(5)
-            ->setCurPage(1);
-    }
-
-    /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
+     * @return void
      */
     public function execute()
     {
         if ($id = $this->getRequest()->getParam('id')) {
             $product = $this->productFactory->create()->load($id);
 
-            $productData = [
+            echo json_encode([
                 'entity_id' => $product->getId(),
                 'name' => $product->getName(),
                 'price' => $product->getPrice(),
                 'src' => $this->imageHelper->init($product, 'product_base_image')->getUrl(),
-            ];
-
-            echo json_encode($productData);
-            return;
+            ]);
         }
     }
 }
