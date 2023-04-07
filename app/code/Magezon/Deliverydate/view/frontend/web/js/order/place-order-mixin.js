@@ -22,7 +22,6 @@ define([
     urlBuilder,
     urlFormatter,
     errorProcessor,
-    registry
 ) {
     'use strict';
 
@@ -58,7 +57,7 @@ define([
                     dataType: 'text',
                     type: 'POST',
                 }).done(
-                    function (response) {
+                    function () {
                         result = true;
                     }
                 ).fail(

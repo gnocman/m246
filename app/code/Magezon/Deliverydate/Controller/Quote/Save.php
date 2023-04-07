@@ -10,9 +10,9 @@ namespace Magezon\Deliverydate\Controller\Quote;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\Result\Raw;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\QuoteIdMaskFactory;
 
@@ -25,13 +25,13 @@ class Save extends Action implements HttpPostActionInterface
      * @var QuoteIdMaskFactory
      */
     protected QuoteIdMaskFactory $quoteIdMaskFactory;
-
     /**
      * @var CartRepositoryInterface
      */
     protected CartRepositoryInterface $quoteRepository;
 
     /**
+     * Save constructor.
      * @param Context $context
      * @param QuoteIdMaskFactory $quoteIdMaskFactory
      * @param CartRepositoryInterface $quoteRepository
@@ -72,5 +72,7 @@ class Save extends Action implements HttpPostActionInterface
             $quote->setData('delivery_date', $deliveryDate);
             $this->quoteRepository->save($quote);
         }
+
+        return new Raw();
     }
 }
