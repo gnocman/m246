@@ -33,7 +33,7 @@ class LayoutProcessorPlugin
                 'customScope' => 'shippingAddress',
                 'template' => 'ui/form/field',
                 'elementTmpl' => 'ui/form/element/date',
-                'options' => [],
+                'options' => ['minDate' => 'new Date()'],
                 'id' => 'delivery_date'
             ],
             'dataScope' => 'shippingAddress.delivery_date',
