@@ -8,12 +8,12 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add
-            id="SmartOSC_RenameProduct::rename_product"
-            title="Rename Product"
-            module="SmartOSC_RenameProduct"
-            sortOrder="12"
+            id="Magezon_Deliverydate::delivery_date"
+            title="Configuration Delivery Date"
+            module="Magezon_Deliverydate"
+            sortOrder="11"
             parent="SmartOSC_CustomUI::film"
-            action="adminhtml/system_config/edit/section/smart_renameProduct"
-            resource="SmartOSC_RenameProduct::rename_product"/>
+            action="adminhtml/system_config/edit/section/delivery_date"
+            resource="Magezon_Deliverydate::delivery_date"/>
     </menu>
 </config>

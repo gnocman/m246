@@ -60,6 +60,7 @@ class LayoutProcessorPlugin
                 'template' => 'ui/form/field',
                 'elementTmpl' => 'ui/form/element/date',
                 'options' => ['minDate' => $minDeliveryDate, 'maxDate' => $maxDeliveryDate],
+                'default' => date('Y-m-d', strtotime("+5 days")),
                 'id' => 'delivery_date'
             ],
             'dataScope' => 'shippingAddress.delivery_date',
@@ -69,7 +70,6 @@ class LayoutProcessorPlugin
             'validation' => ['validate-delivery-date' => true],
             'sortOrder' => 200,
             'id' => 'delivery_date',
-            'value' => date('Y-m-d', strtotime('+5 days')), // Set default value as current date plus 5 days
         ];
 
         return $jsLayout;
