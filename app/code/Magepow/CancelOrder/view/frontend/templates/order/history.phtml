@@ -45,9 +45,10 @@ $helper = $this->helper('Magepow\CancelOrder\Helper\Data');
                         class="col status"><?= $block->escapeHtml($_order->getStatusLabel()) ?></td>
                     <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
                         <?php if ($_order->canCancel() && $helper->isEnabled()): ?>
-                            <a href="<?= $this
-                                ->getUrl('cancelorder/cancelorder/index') . '?orderid=' . $_order->getEntityId(); ?>"
-                               class="action cancel"><?= /* @escapeNotVerified */ __('Cancel Order') ?></a>
+                            <a href="<?=
+                            $this->getUrl('cancelorder/cancelorder/index') . '?orderid=' . $_order->getEntityId(); ?>"
+                               class="action cancel" onclick="return confirmCancelOrder();">
+                                <?= /* @escapeNotVerified */ __('Cancel Order') ?></a>
                         <?php endif; ?>
                         <a href="<?= $block->escapeUrl($block->getViewUrl($_order)) ?>" class="action view">
                             <span><?= $block->escapeHtml(__('View Order')) ?></span>
@@ -71,3 +72,9 @@ $helper = $this->helper('Magepow\CancelOrder\Helper\Data');
 <?php else : ?>
     <div class="message info empty"><span><?= $block->escapeHtml($block->getEmptyOrdersMessage()) ?></span></div>
 <?php endif ?>
+
+<script type="text/javascript">
+    function confirmCancelOrder() {
+        return confirm("Are you sure you want to cancel this order?");
+    }
+</script>
