@@ -12,6 +12,7 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Sales\Model\Order;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory as OrderCollectionFactory;
 use Magento\Ui\Component\MassAction\Filter as MassActionFilter;
 
@@ -51,12 +52,24 @@ class Index extends Action
                 $this->orderCollectionFactory->create()
             );
             $numberOrders = $collection->getSize();
-            $collection->walk('delete');
-            $message = __('%1 orders was successfully deleted.', $numberOrders);
-            $this->messageManager->addSuccessMessage($message);
+
+            // Check if all orders are in 'Canceled' state
+            $areAllOrdersCanceled = $collection->getFirstItem()->getStatus() === Order::STATE_CANCELED;
+            foreach ($collection->getItems() as $order) {
+                if ($order->getStatus() !== Order::STATE_CANCELED) {
+                    $areAllOrdersCanceled = false;
+                    break;
+                }
+            }
+
+            if ($areAllOrdersCanceled) {
+                $collection->walk('delete');
+                $this->messageManager->addSuccessMessage(__('%1 orders was successfully deleted.', $numberOrders));
+            } else {
+                $this->messageManager->addErrorMessage(__('Only orders in "Canceled" state can be deleted.'));
+            }
         } catch (\Exception $exception) {
-            $message = $exception->getMessage();
-            $this->messageManager->addErrorMessage($message);
+            $this->messageManager->addErrorMessage($exception->getMessage());
             $result->setPath('sales/order/index');
         }
         $result->setPath('sales/order/index');
