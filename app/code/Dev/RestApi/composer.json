@@ -1,0 +1,22 @@
+{
+  "name": "dev/module-rest-api",
+  "version": "1.0.0",
+  "description": "Magento 2 Rest API",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "magento/module-catalog": "104.0.*",
+    "magento/module-webapi": "100.4.*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Dev\\RestApi\\": ""
+    }
+  }
+}
