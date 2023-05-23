@@ -1,0 +1,21 @@
+{
+  "name": "smartosc/module-product-list",
+  "version": "1.0.0",
+  "description": "Magento 2 Get All Products Simple by Rest Api",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "magento/module-catalog": "104.0.*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "SmartOSC\\ProductList\\": ""
+    }
+  }
+}
