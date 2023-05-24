@@ -1,0 +1,21 @@
+{
+  "name": "smartosc/module-cron-order-status",
+  "version": "1.0.0",
+  "description": "Magento 2 Create Cron Get all Orders have status is Complete",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "magento/module-sales": "103.0.*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "SmartOSC\\CronOrderStatus\\": ""
+    }
+  }
+}
