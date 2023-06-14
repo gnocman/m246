@@ -42,12 +42,6 @@ php bin/magento setup:upgrade
 php bin/magento setup:static-content:deploy -f
 ```
 
-Without Marketing Automation:
-```
-composer require smartosc/module-group-order
-php bin/magento setup:upgrade
-php bin/magento setup:static-content:deploy -f
-```
 ## 4. Highlight Features
 
 ### Quick share by copy-and-paste
@@ -89,6 +83,9 @@ The module is properly responsive with both mobile and desktop devices.
 #### 7.1.1. General
 
 - **Enable**: Select `Yes` to enable the extension
+```
+php bin/magento c:f
+```
 
 ### 7.2 Frontend
 **IMPORTANT NOTE:** Customer must login and add 1 product to the cart for the button 'Create A Group Order' to be displayed
