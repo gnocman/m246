@@ -8,19 +8,20 @@ declare(strict_types=1);
 
 namespace SmartOSC\GroupOrder\Helper;
 
-use Mageplaza\Core\Helper\AbstractData;
+use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Store\Model\ScopeInterface;
 
-class Data extends AbstractData
+class Data extends AbstractHelper
 {
-    public const CONFIG_MODULE_PATH = 'sharecart';
+    public const CONFIG_MODULE_PATH = 'sharecart/general/enabled';
 
     /**
-     * Get isDisabled
+     * Get isEnabled
      *
      * @return bool
      */
-    public function isDisabled()
+    public function isEnabled()
     {
-        return !$this->isEnabled();
+        return $this->scopeConfig->getValue(self::CONFIG_MODULE_PATH, ScopeInterface::SCOPE_STORE);
     }
 }

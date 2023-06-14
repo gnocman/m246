@@ -15,20 +15,24 @@
                 <argument name="jsLayout" xsi:type="array">
                     <item name="components" xsi:type="array">
                         <item name="minicart_content" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="template" xsi:type="string">SmartOSC_GroupOrder/content</item>
+                                <item name="componentDisabled" xsi:type="helper" helper="SmartOSC\GroupOrder\Helper\Data::isEnabled"/>
+                            </item>
                             <item name="children" xsi:type="array">
                                 <item name="extra_info" xsi:type="array">
                                     <item name="children" xsi:type="array">
                                         <item name="group_order" xsi:type="array">
                                             <item name="component" xsi:type="string">SmartOSC_GroupOrder/js/view/minicart</item>
                                             <item name="config" xsi:type="array">
-                                                <item name="componentDisabled" xsi:type="helper" helper="SmartOSC\GroupOrder\Helper\Data::isDisabled"/>
+                                                <item name="componentDisabled" xsi:type="helper" helper="SmartOSC\GroupOrder\Helper\Data::isEnabled"/>
                                             </item>
                                         </item>
                                         <!-- Add the new button -->
                                         <item name="group_order_redirect" xsi:type="array">
                                             <item name="component" xsi:type="string">SmartOSC_GroupOrder/js/view/redirect-button</item>
                                             <item name="config" xsi:type="array">
-                                                <item name="componentDisabled" xsi:type="helper" helper="SmartOSC\GroupOrder\Helper\Data::isDisabled"/>
+                                                <item name="componentDisabled" xsi:type="helper" helper="SmartOSC\GroupOrder\Helper\Data::isEnabled"/>
                                             </item>
                                         </item>
                                     </item>

@@ -15,4 +15,7 @@
     <event name="controller_action_predispatch_checkout_cart_add">
         <observer name="validate_product_before_add_to_cart" instance="SmartOSC\GroupOrder\Observer\ValidateProductBeforeAddToCart" />
     </event>
+    <event name="sales_order_item_save_after">
+        <observer name="name_customer_sales_after" instance="SmartOSC\GroupOrder\Observer\SalesOrderItemSaveAfter" />
+    </event>
 </config>
