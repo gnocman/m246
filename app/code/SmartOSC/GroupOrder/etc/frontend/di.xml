@@ -15,7 +15,4 @@
     <type name="Magento\Checkout\Block\Cart\AbstractCart">
         <plugin name="cart_item_override" type="SmartOSC\GroupOrder\Plugin\Cart\AbstractCart" sortOrder="1"/>
     </type>
-    <type name="Magento\Checkout\Controller\Cart\Add">
-        <plugin name="set_quote_to_param" type="SmartOSC\GroupOrder\Plugin\Quote\SetQuoteBeforeExecute"/>
-    </type>
 </config>
