@@ -13,6 +13,8 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Message\ManagerInterface;
+use Magento\Quote\Model\QuoteFactory;
+use Magento\Checkout\Model\Cart;
 
 class ValidateProductBeforeAddToCart implements ObserverInterface
 {
@@ -26,37 +28,56 @@ class ValidateProductBeforeAddToCart implements ObserverInterface
     private ManagerInterface $messageManager;
 
     /**
+     * @var Cart
+     */
+    private Cart $cart;
+    /**
+     * @var QuoteFactory
+     */
+    private QuoteFactory $quoteFactory;
+
+    /**
      * @param Session $customerSession
      * @param ManagerInterface $messageManager
+     * @param QuoteFactory $quoteFactory
+     * @param Cart $cart
      */
     public function __construct(
         Session $customerSession,
-        ManagerInterface $messageManager
+        ManagerInterface $messageManager,
+        QuoteFactory $quoteFactory,
+        Cart $cart
     ) {
         $this->customerSession = $customerSession;
         $this->messageManager = $messageManager;
+        $this->cart = $cart;
+        $this->quoteFactory = $quoteFactory;
     }
 
     /**
      * Check customer login add to cart
      *
      * @param Observer $observer
-     * @return $this|void
+     * @return void
      * @throws LocalizedException
      */
     public function execute(Observer $observer)
     {
-        $request = $observer->getEvent()->getRequest();
+        $token = $observer->getEvent()->getRequest()->getParam('key');
 
-        if ($request->getParam('key')) {
+        if ($token) {
             if (!$this->customerSession->isLoggedIn()) {
                 $this->messageManager->addErrorMessage('You must be logged in to add items.');
                 $observer->getRequest()->setParam('product', false);
+                return;
             }
-        } else {
-            return $this;
-        }
 
-        return $this;
+            $quote = $this->quoteFactory->create()->load($token, 'order_cart_token');
+            if (!$quote->getId()) {
+                throw new LocalizedException(__('Invalid quote token.'));
+            }
+
+            $this->cart->setQuote($quote);
+        }
     }
 }
