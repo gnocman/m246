@@ -12,7 +12,7 @@ use Magento\Checkout\Helper\Cart as CartHelper;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\App\RequestInterface;
 
-class CartPlugin
+class AddParamCheckoutCart
 {
     /**
      * @var UrlInterface
@@ -24,7 +24,7 @@ class CartPlugin
     private RequestInterface $request;
 
     /**
-     * CartPlugin constructor.
+     * AddParamCheckoutCart constructor.
      *
      * @param UrlInterface $url
      * @param RequestInterface $request
