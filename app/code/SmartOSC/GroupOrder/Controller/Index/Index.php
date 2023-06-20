@@ -3,11 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
 namespace SmartOSC\GroupOrder\Controller\Index;
 
+use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
@@ -15,113 +15,49 @@ use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\UrlInterface;
-use SmartOSC\GroupOrder\Api\GroupOrderRepositoryInterface;
-use Magento\Catalog\Api\Data\CategoryTreeInterface;
-use Magento\Catalog\Api\CategoryManagementInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 class Index extends Action implements HttpGetActionInterface
 {
     /**
-     * @var GroupOrderRepositoryInterface
+     * @var CategoryRepositoryInterface
      */
-    private GroupOrderRepositoryInterface $groupOrderRepository;
-    /**
-     * @var UrlInterface
-     */
-    private UrlInterface $url;
-    private CategoryManagementInterface $categoryManagement;
+    private CategoryRepositoryInterface $categoryRepository;
 
     /**
-     * Index constructor.
-     *
      * @param Context $context
-     * @param GroupOrderRepositoryInterface $groupOrderRepository
-     * @param UrlInterface $url
+     * @param CategoryRepositoryInterface $categoryRepository
      */
     public function __construct(
         Context $context,
-        GroupOrderRepositoryInterface $groupOrderRepository,
-        UrlInterface $url,
-        CategoryManagementInterface $categoryManagement
+        CategoryRepositoryInterface $categoryRepository
     ) {
-        $this->groupOrderRepository = $groupOrderRepository;
-        $this->url = $url;
-
         parent::__construct($context);
-        $this->categoryManagement = $categoryManagement;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
      * Controller redirect to categories
      *
      * @return ResponseInterface|Redirect|ResultInterface
+     * @throws NoSuchEntityException
+     * @throws LocalizedException
      */
     public function execute()
     {
         /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $groupOrderToken = $this->getRequest()->getParam('key');
+        $subCategoryId = $this->getRequest()->getParam('sub');
 
-//        try {
-//            $this->groupOrderRepository->group($groupOrderToken);
-//        } catch (LocalizedException $e) {
-//            $this->messageManager->addErrorMessage($e->getMessage());
-//        }
-
-        $categoryId = 2;
-        $subCategories = $this->getSubCategoryByParentID($categoryId);
-
-        $url = '';
-
-        foreach ($subCategories as $subCategory) {
-            $subCategoryUrl = $subCategory['url'];
-            $url = $subCategoryUrl . '?key=' . $groupOrderToken;
-            break;
+        try {
+            $subCategoryIdUrl = $this->categoryRepository->get($subCategoryId)->getUrl();
+        } catch (\Exception $e) {
+            throw new LocalizedException(__($e->getMessage()), $e);
         }
+
+        $url = $subCategoryIdUrl . '?key=' . $groupOrderToken;
 
         return $resultRedirect->setPath($url);
-    }
-
-    /**
-     * @param int $categoryId
-     * @return array
-     */
-    public function getSubCategoryByParentID(int $categoryId): array
-    {
-        $categoryData = [];
-
-        $getSubCategory = $this->getCategoryData($categoryId);
-        foreach ($getSubCategory->getChildrenData() as $category) {
-            $categoryData[$category->getId()] = [
-                'url'=> $category->getUrl()
-            ];
-            if (count($category->getChildrenData())) {
-                $getSubCategoryLevelDown = $this->getCategoryData($category->getId());
-                foreach ($getSubCategoryLevelDown->getChildrenData() as $subcategory) {
-                    $categoryData[$subcategory->getId()]  = [
-                        'url'=> $subcategory->getUrl()
-                    ];
-                }
-            }
-        }
-
-        return $categoryData;
-    }
-
-    /**
-     * @param int $categoryId
-     * @return CategoryTreeInterface|null
-     */
-    public function getCategoryData(int $categoryId): ?CategoryTreeInterface
-    {
-        try {
-            $getSubCategory = $this->categoryManagement->getTree($categoryId);
-        } catch (LocalizedException $e) {
-            $this->messageManager->addErrorMessage($e->getMessage());
-            $getSubCategory = null;
-        }
-
-        return $getSubCategory;
     }
 }

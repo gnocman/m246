@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/** @var SmartOSC\GroupOrder\Block\QuoteUrl $block */
+$quoteUrl = $block->getQuoteUrl();
+?>
+
+<button onclick="copyToClipboard('<?= $quoteUrl; ?>')">Initiate A Group Order On This Page.</button>
+
+<script>
+    function copyToClipboard(text) {
+        let dummy = document.createElement("input");
+        document.body.appendChild(dummy);
+        dummy.setAttribute("value", text);
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        alert("Group Order URL copied!");
+    }
+</script>
