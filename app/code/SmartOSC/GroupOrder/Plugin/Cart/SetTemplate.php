@@ -10,7 +10,7 @@ namespace SmartOSC\GroupOrder\Plugin\Cart;
 
 use Magento\Framework\App\Request\Http;
 
-class AbstractCart
+class SetTemplate
 {
     /**
      * @var Http
