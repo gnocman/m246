@@ -17,6 +17,17 @@ define([
             template: 'SmartOSC_GroupOrder/redirect-button'
         },
 
+        isLoggedIn: function () {
+            let customer = customerData.get('customer');
+            return customer().firstname !== undefined && this.hasToken();
+        },
+
+        hasToken: function () {
+            let currentUrl = window.location.href;
+            let token = this.extractTokenFromUrl(currentUrl);
+            return token !== null;
+        },
+
         redirect: function () {
             let currentUrl = window.location.href;
             let token = this.extractTokenFromUrl(currentUrl);
