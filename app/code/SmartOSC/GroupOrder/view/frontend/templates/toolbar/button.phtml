@@ -7,9 +7,19 @@
 <?php
 /** @var SmartOSC\GroupOrder\Block\QuoteUrl $block */
 $quoteUrl = $block->getQuoteUrl();
+
+$groupOrderToken = $this->getRequest()->getParam('key');
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->get(\Magento\Customer\Model\Session::class);
+$isCustomerLoggedIn = $customerSession->isLoggedIn();
 ?>
 
-<button onclick="copyToClipboard('<?= $quoteUrl; ?>')">Initiate A Group Order On This Page.</button>
+<?php if ($isCustomerLoggedIn) : ?>
+    <?php if ($groupOrderToken === null) : ?>
+        <button onclick="copyToClipboard('<?= $quoteUrl; ?>')">Initiate A Group Order On This Page.</button>
+    <?php endif; ?>
+<?php endif; ?>
 
 <script>
     function copyToClipboard(text) {

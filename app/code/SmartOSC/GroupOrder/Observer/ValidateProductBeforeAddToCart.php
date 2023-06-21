@@ -72,6 +72,13 @@ class ValidateProductBeforeAddToCart implements ObserverInterface
                 return;
             }
 
+            if ($this->cart->getItemsCount() === 0) {
+                $this->messageManager->addSuccessMessage(
+                    'You added Item to your shopping cart because your shopping cart is empty.'
+                );
+                return;
+            }
+
             $quote = $this->quoteFactory->create()->load($token, 'order_cart_token');
             if (!$quote->getId()) {
                 throw new LocalizedException(__('Invalid quote token.'));
