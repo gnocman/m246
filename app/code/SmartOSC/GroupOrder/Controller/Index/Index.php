@@ -57,6 +57,9 @@ class Index extends Action implements HttpGetActionInterface
         }
 
         $url = $subCategoryIdUrl . '?key=' . $groupOrderToken;
+        $this->messageManager->addNoticeMessage(
+            'YOU CAN ONLY BUY ITEM FROM THIS PAGE AND VIEW THE ITEM IN THE MINICART.'
+        );
 
         return $resultRedirect->setPath($url);
     }
