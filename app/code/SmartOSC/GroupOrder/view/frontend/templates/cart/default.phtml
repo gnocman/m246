@@ -128,13 +128,5 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
         <td class="col customer-name" data-th="<?= $block->escapeHtml(__('Name Customer')) ?>">
             <?= $block->escapeHtml($_item->getNameCustomerAddToCart()) ?>
         </td>
-
-    </tr>
-    <tr class="item-actions">
-        <td colspan="4">
-            <div class="actions-toolbar">
-                <?= /* @noEscape */ $block->getActions($_item) ?>
-            </div>
-        </td>
     </tr>
 </tbody>

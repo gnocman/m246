@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
 namespace SmartOSC\GroupOrder\Plugin\Cart;
@@ -35,11 +34,7 @@ class SetTemplate
      */
     public function afterGetItemRenderer(\Magento\Checkout\Block\Cart\AbstractCart $subject, $result)
     {
-        $routeName = $this->request->getRouteName();
-        $controllerName = $this->request->getControllerName();
-        $actionName = $this->request->getActionName();
-
-        if ($routeName === 'sharecart' && $controllerName === 'cart' && $actionName === 'index') {
+        if ($this->request->getPathInfo() === '/sharecart/cart/index') {
             $result->setTemplate('SmartOSC_GroupOrder::cart/default.phtml');
         }
 
