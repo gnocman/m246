@@ -1,11 +1,11 @@
 # Magento 2 Group Order extension
 
-Group Order Extension is based on the idea of Share Cart Extension
-
 Group Order Extension helps customers in ordering their shopping cart with friends and family as well. This is a supportive method to promote store’s conversion rate via the existing users, and this can significantly contribute to the revenue of the store.
 
-- Share shopping cart quickly
-- Shortly review purchasing cart
+- Many people can order the same cart
+- Share subcategory as you like
+- Share link Group Order quickly
+- Update cart share current quickly
 
 ## 1. Documentation
 
@@ -13,21 +13,13 @@ Group Order Extension helps customers in ordering their shopping cart with frien
 
 ## 2. FAQs
 
-**Q: I got an error: Mageplaza_Core has been already defined**
-
-A: Read solution [here](https://github.com/mageplaza/module-core/issues/3)
-
 **Q: How can customers use share button?**
 
 A: Customers only need to click on the button and paste the automated URL to anywhere they want to share.
 
 **Q: Where will the Share button appear on the website?**
 
-A: Share button can be seen on **Minicart** and **Shopping Cart** page.
-
-**Q: What if I want to inform customers that the price possibly will change later?**
-
-A: You can leave a message on **Warning Message** box (from the admin backend).
+A: Share button can be seen on **Subcategory** page.
 
 ## 3. How to install Group Order extension for Magento 2
 
@@ -48,15 +40,15 @@ php bin/magento setup:static-content:deploy -f
 
 **Group Order Extension** allows the store owners to add an extra button which is **Group Order** while a customer is processing their purchasing.
 
-The button can be displayed in the **Minicart** section and **Shopping Cart Page**. By clicking this button, the customer can copy their shopping cart’ s URL and paste to a destination just in the blink of an eye. When the URL recipient clicks on the shared URL, their current shopping cart will be automatically added with the same items.
+The button can be displayed in the **Subcategory** section. By clicking this button, the customer can copy their shopping cart’s URL and paste to a destination just in the blink of an eye. When the URL recipient clicks on the shared URL, they can shop at the current subcategory that the person who shared the url.
 
-![Quick share by copy-and-paste](https://github.com/gnocman/m246/assets/55309917/4e40e892-4e62-4542-8d90-cc5d35344e05)
+![Quick share by copy-and-paste](https://github.com/gnocman/m246/assets/55309917/2ae3c4bf-a15d-4875-a69b-96800b119867)
 
 ## 5. More features
 
 ### Update function
 
-**Update** button is for updating the shopping cart with the latest changes from the original cart.
+**Update Shopping Cart** button is for updating the shopping cart with the latest changes from the original cart.
 
 ### Mobile responsive ability
 
@@ -76,9 +68,9 @@ The module is properly responsive with both mobile and desktop devices.
 ### 7.1 Configuration
 
 - Access to your Magento 2 Admin Panel, navigate to `Store tab > Open Settings > Configuration `
-- Click `Mageplaza Extensions > Group Order > Configuration`, go to `General Configuration` section.
+- Click `General > Group Order Extention`, go to `General Configuration` section.
 
-![Magento 2 Group Order extension configure](https://github.com/gnocman/m246/assets/55309917/287f6d41-ecca-47f7-b5b1-3dd9a1f40f7f)
+![Magento 2 Group Order extension configure](https://github.com/gnocman/m246/assets/55309917/aba4df53-26b8-4cf2-97cd-fabfd80df2c6)
 
 #### 7.1.1. General
 
@@ -88,17 +80,36 @@ php bin/magento c:f
 ```
 
 ### 7.2 Frontend
-**IMPORTANT NOTE:** Customer must login and add 1 product to the cart for the button 'Create A Group Order' to be displayed
+**IMPORTANT NOTE:** All customers who want to Group Order need to login
 
-After activating the module, customers can use **Group Order** button to deliver the URL to people which they want to share the cart. After sharing, there will be already-added items in the cart of the URL recipient.
+After activating the module, customers can use **Group Order** button to deliver the URL to people which they want to share the cart. After sharing, url will return the Subcategory that was shared by the customer.
 
-- **Group Order** button displays in the **Minicart** section when adding items to cart.
+- **Initiate A Group Order On This Page.** button displays in the **Subcategory** section when adding items to cart.
 
-![Magento 2 Group Order module](https://github.com/gnocman/m246/assets/55309917/4e40e892-4e62-4542-8d90-cc5d35344e05)
+![Magento 2 Group Order module](https://github.com/gnocman/m246/assets/55309917/2ae3c4bf-a15d-4875-a69b-96800b119867)
 
-- After adding items to the cart with Group Order, those who have the share link will see the products in the shared cart.
-- Required to login to be able to add items to Group Order.
+**Example Url When Click Button: https://example.local.com/sharecart/index/index/key/I1GUnk8KMuMMY31/sub/4/**
 
-- To see what items the cart has added, in **Minicart** we click the **View Cart Group Order** button and can see the names of people who have added items to the Group Order
+- **After the customer clicks on the shared link, the interface will look like this**
 
-![View Cart  Group Order](https://github.com/gnocman/m246/assets/55309917/5a1cdb40-9f99-4c55-bbee-ca8ec4269b50)
+![Magento 2 Group Order module](https://github.com/gnocman/m246/assets/55309917/32a4e5c2-0036-423e-88fa-ee223ea9d9f5)
+
+**Example Url After Click Button: https://example.local.com/test.html?key=I1GUnk8KMuMMY31**
+
+- When adding products to the cart successfully, we have 2 places to view the Group Order cart.
+
+![Magento 2 Group Order module](https://github.com/gnocman/m246/assets/55309917/09e04f51-167e-4d9a-a8b4-c46fc0d3076b)
+
+![Magento 2 Group Order module](https://github.com/gnocman/m246/assets/55309917/eabcb0fb-5fcf-4319-aeca-84d6f94e0589)
+
+- To see what items the cart has added, in **Minicart** we click the **View Cart Group Order** or click **shopping cart** in the frontend button and can see the names of people who have added items to the Group Order
+
+![View Cart  Group Order](https://github.com/gnocman/m246/assets/55309917/f8b01994-72b4-4709-b540-2ef50c79bacf)
+
+- Customer can see the customer's name add items to cart in My Order.
+
+![View My Order Group Order](https://github.com/gnocman/m246/assets/55309917/199c1606-501a-40ba-b5e5-431939110b94)
+
+- Admin can see the customer's name add items to cart in Order Detail Page.
+
+![View My Order Group Order](https://github.com/gnocman/m246/assets/55309917/1095a024-a4a4-4d58-9ad5-a654b0e832a0)
