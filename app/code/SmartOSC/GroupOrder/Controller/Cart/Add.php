@@ -10,10 +10,16 @@ namespace SmartOSC\GroupOrder\Controller\Cart;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Checkout\Model\Cart as CustomerCart;
 use Magento\Checkout\Model\Cart\RequestQuantityProcessor;
+use Magento\Checkout\Model\Session;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Filter\LocalizedToNormalized;
+use Magento\Quote\Model\QuoteRepository\SaveHandler;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Controller for processing add to cart action.
@@ -31,15 +37,20 @@ class Add extends \Magento\Checkout\Controller\Cart\Add
      * @var RequestQuantityProcessor
      */
     private $quantityProcessor;
+    /**
+     * @var SaveHandler
+     */
+    private SaveHandler $saveHandler;
 
     /**
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Checkout\Model\Session $checkoutSession
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
+     * @param Context $context
+     * @param ScopeConfigInterface $scopeConfig
+     * @param Session $checkoutSession
+     * @param StoreManagerInterface $storeManager
+     * @param Validator $formKeyValidator
      * @param CustomerCart $cart
      * @param ProductRepositoryInterface $productRepository
+     * @param SaveHandler $saveHandler
      * @param RequestQuantityProcessor|null $quantityProcessor
      * @codeCoverageIgnore
      */
@@ -51,6 +62,7 @@ class Add extends \Magento\Checkout\Controller\Cart\Add
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         CustomerCart $cart,
         ProductRepositoryInterface $productRepository,
+        SaveHandler $saveHandler,
         ?RequestQuantityProcessor $quantityProcessor = null
     ) {
         parent::__construct(
@@ -65,6 +77,7 @@ class Add extends \Magento\Checkout\Controller\Cart\Add
         $this->productRepository = $productRepository;
         $this->quantityProcessor = $quantityProcessor
             ?? ObjectManager::getInstance()->get(RequestQuantityProcessor::class);
+        $this->saveHandler = $saveHandler;
     }
 
     /**
@@ -106,7 +119,13 @@ class Add extends \Magento\Checkout\Controller\Cart\Add
             if (!empty($related)) {
                 $this->cart->addProductsByIds(explode(',', $related));
             }
-            $this->cart->save();
+
+            $token = $this->getRequest()->getParam('key');
+            if ($token) {
+                $this->saveHandler->save($this->cart->getQuote());
+            } else {
+                $this->cart->save();
+            }
 
             /**
              * @todo remove wishlist observer \Magento\Wishlist\Observer\AddToCart
