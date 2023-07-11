@@ -1,0 +1,20 @@
+{
+  "name": "smartosc/module-select-items",
+  "version": "1.0.0",
+  "description": "Magento 2 Select Items in Checkout Cart",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "SmartOSC\\SelectItems\\": ""
+    }
+  }
+}
