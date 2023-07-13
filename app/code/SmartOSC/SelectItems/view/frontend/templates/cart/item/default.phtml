@@ -19,10 +19,22 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
 <tbody class="cart item">
 <tr class="item-info">
     <td>
-        <label for="custom-checkbox">
-            <input type="checkbox" id="custom-checkbox" class="checkbox"/>
+        <label for="select-item-checkbox">
+            <input type="checkbox" id="select-item-<?= $_item->getId() ?>" name="select-item" value="<?= $_item->getId() ?>"/>
         </label>
     </td>
+
+    <script>
+        require([
+            'jquery',
+            'Magento_Checkout/js/action/get-totals',
+            'SmartOSC_SelectItems/js/view/select-item'
+        ], function ($, getTotalsAction, selectItem) {
+            'use strict';
+            selectItem("select-item-<?= $_item->getId() ?>", <?= $_item->getId() ?>);
+        });
+    </script>
+
     <td data-th="<?= $block->escapeHtml(__('Item')) ?>" class="col item">
         <?php if ($block->hasProductUrl()): ?>
         <a href="<?= $block->escapeUrl($block->getProductUrl()) ?>"
