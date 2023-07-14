@@ -23,7 +23,7 @@ class AddressPlugin
     {
         $itemsSelect = [];
         foreach ($result as $itemSelect) {
-            if ($itemSelect->getData('is_select') == 1) {
+            if ($itemSelect->getData('is_select')) {
                 $itemsSelect[] = $itemSelect;
             }
         }

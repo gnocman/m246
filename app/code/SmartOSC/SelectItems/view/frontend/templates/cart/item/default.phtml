@@ -138,6 +138,7 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
         <?php if ($canApplyMsrp): ?>
             <span class="cart msrp subtotal">--</span>
         <?php else: ?>
+            <?php $_item->setRowTotal($_item->getPrice() * $_item->getQty()); ?>
             <?= $block->getRowTotalHtml($_item) ?>
         <?php endif; ?>
     </td>
