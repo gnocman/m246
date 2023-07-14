@@ -6,5 +6,7 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Magento\Quote\Model\Quote\Address" type="SmartOSC\SelectItems\Model\Quote\Address"/>
+    <type name="Magento\Quote\Model\Quote\Address">
+        <plugin name="check_is_select" type="SmartOSC\SelectItems\Plugin\Quote\AddressPlugin" sortOrder="1"/>
+    </type>
 </config>
