@@ -20,7 +20,7 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
 <tr class="item-info">
     <td>
         <label for="select-item-checkbox">
-            <input type="checkbox" id="select-item-<?= $_item->getId() ?>" name="select-item" value="<?= $_item->getId() ?>"/>
+            <input type="checkbox" <?php if ($_item->getIsSelect() == 1) { echo 'checked="checked"'; } ?> id="select-item-<?= $_item->getId() ?>" name="select-item" value="<?= $_item->getId() ?>"/>
         </label>
     </td>
 
