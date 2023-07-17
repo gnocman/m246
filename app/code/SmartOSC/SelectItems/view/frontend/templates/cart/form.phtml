@@ -32,11 +32,49 @@
             <caption class="table-caption"><?= $block->escapeHtml(__('Shopping Cart Items')) ?></caption>
             <thead>
             <tr>
+                <?php
+                $itemIds = [];
+                $allSelected = true;
+
+                foreach ($block->getItems() as $_item) {
+                    $itemIds[] = $_item->getId();
+
+                    if (!$_item->getIsSelect()) {
+                        $allSelected = false;
+                    }
+                }
+                ?>
                 <th class="col checkbox" scope="col">
-                    <label for="custom-checkbox">
-                        <input type="checkbox" id="custom-checkbox" class="checkbox"/>
+                    <label for="select-all-items">
+                        <input type="checkbox" id="select-all-items" class="checkbox" <?php if ($allSelected) { echo 'checked="checked"'; } ?> />
                     </label>
                 </th>
+
+                <script>
+                    require([
+                        'jquery',
+                        'Magento_Checkout/js/action/get-totals',
+                        'SmartOSC_SelectItems/js/view/select-item'
+                    ], function ($, getTotalsAction, selectItem) {
+                        'use strict';
+
+                        let itemIds = <?= json_encode($itemIds) ?>;
+                        itemIds.forEach(function (itemId) {
+                            selectItem("select-all-items", itemId);
+                        });
+
+                        let isChecked = false;
+                        $('#select-all-items').on('click', function() {
+                            if (!isChecked) {
+                                location.reload();
+                                isChecked = true;
+                            } else {
+                                isChecked = false;
+                            }
+                        });
+                    });
+                </script>
+
                 <th class="col item" scope="col"><span><?= $block->escapeHtml(__('Item')) ?></span></th>
                 <th class="col price" scope="col"><span><?= $block->escapeHtml(__('Price')) ?></span></th>
                 <th class="col qty" scope="col"><span><?= $block->escapeHtml(__('Qty')) ?></span></th>
