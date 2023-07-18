@@ -44,9 +44,10 @@
                     }
                 }
                 ?>
+
                 <th class="col checkbox" scope="col">
                     <label for="select-all-items">
-                        <input type="checkbox" id="select-all-items" class="checkbox" <?php if ($allSelected) { echo 'checked="checked"'; } ?> />
+                        <input type="checkbox" id="select-all-items" class="checkbox" <?= $allSelected ? 'checked="checked"' : '' ?> />
                     </label>
                 </th>
 
@@ -59,18 +60,29 @@
                         'use strict';
 
                         let itemIds = <?= json_encode($itemIds) ?>;
+                        const selectAllItems = $('#select-all-items');
+
                         itemIds.forEach(function (itemId) {
                             selectItem("select-all-items", itemId);
+                            const selectItemCheckbox = $('#select-item-' + itemId);
+
+                            selectItemCheckbox.on('click', function () {
+                                let allChecked = itemIds.every(function (itemId) {
+                                    return $('#select-item-' + itemId).is(':checked');
+                                });
+
+                                selectAllItems.prop('checked', allChecked);
+                            });
                         });
 
-                        let isChecked = false;
-                        $('#select-all-items').on('click', function() {
-                            if (!isChecked) {
-                                location.reload();
-                                isChecked = true;
-                            } else {
-                                isChecked = false;
-                            }
+                        selectAllItems.on('click', function () {
+                            const isChecked = $(this).is(':checked');
+
+                            itemIds.forEach(function (itemId) {
+                                $('#select-item-' + itemId).prop('checked', isChecked);
+                            });
+
+                            selectAllItems.prop('checked', isChecked);
                         });
                     });
                 </script>
