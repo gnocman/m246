@@ -18,22 +18,24 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
 ?>
 <tbody class="cart item">
 <tr class="item-info">
-    <td>
-        <label for="select-item-checkbox">
-            <input type="checkbox" <?php if ($_item->getIsSelect()) { echo 'checked="checked"'; } ?> id="select-item-<?= $_item->getId() ?>" name="select-item" value="<?= $_item->getId() ?>"/>
-        </label>
-    </td>
+    <?php if ($this->helper(SmartOSC\SelectItems\Helper\Data::class)->isEnabled()): ?>
+        <td>
+            <label for="select-item-checkbox">
+                <input type="checkbox" <?php if ($_item->getIsSelect()) { echo 'checked="checked"'; } ?> id="select-item-<?= $_item->getId() ?>" name="select-item" value="<?= $_item->getId() ?>"/>
+            </label>
+        </td>
 
-    <script>
-        require([
-            'jquery',
-            'Magento_Checkout/js/action/get-totals',
-            'SmartOSC_SelectItems/js/view/select-item'
-        ], function ($, getTotalsAction, selectItem) {
-            'use strict';
-            selectItem("select-item-<?= $_item->getId() ?>", <?= $_item->getId() ?>);
-        });
-    </script>
+        <script>
+            require([
+                'jquery',
+                'Magento_Checkout/js/action/get-totals',
+                'SmartOSC_SelectItems/js/view/select-item'
+            ], function ($, getTotalsAction, selectItem) {
+                'use strict';
+                selectItem("select-item-<?= $_item->getId() ?>", <?= $_item->getId() ?>);
+            });
+        </script>
+    <?php endif; ?>
 
     <td data-th="<?= $block->escapeHtml(__('Item')) ?>" class="col item">
         <?php if ($block->hasProductUrl()): ?>

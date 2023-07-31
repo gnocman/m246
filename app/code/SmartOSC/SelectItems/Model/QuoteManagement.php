@@ -20,26 +20,31 @@ class QuoteManagement extends \Magento\Quote\Model\QuoteManagement
      */
     protected function resolveItems(QuoteEntity $quote)
     {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $enable = $objectManager->get(\SmartOSC\SelectItems\Helper\Data::class)->isEnabled();
+
         $orderItems = [];
         foreach ($quote->getAllItems() as $quoteItem) {
-            if ($quoteItem->getData('is_select')) {
-                $itemId = $quoteItem->getId();
+            $itemId = $quoteItem->getId();
 
-                if (!empty($orderItems[$itemId])) {
-                    continue;
-                }
-
-                $parentItemId = $quoteItem->getParentItemId();
-                /** @var Item $parentItem */
-                if ($parentItemId && !isset($orderItems[$parentItemId])) {
-                    $orderItems[$parentItemId] = $this->quoteItemToOrderItem->convert(
-                        $quoteItem->getParentItem(),
-                        ['parent_item' => null]
-                    );
-                }
-                $parentItem = $orderItems[$parentItemId] ?? null;
-                $orderItems[$itemId] = $this->quoteItemToOrderItem->convert($quoteItem, ['parent_item' => $parentItem]);
+            if (!empty($orderItems[$itemId])) {
+                continue;
             }
+
+            if ($enable && empty($quoteItem->getIsSelect())) {
+                continue;
+            }
+
+            $parentItemId = $quoteItem->getParentItemId();
+            /** @var Item $parentItem */
+            if ($parentItemId && !isset($orderItems[$parentItemId])) {
+                $orderItems[$parentItemId] = $this->quoteItemToOrderItem->convert(
+                    $quoteItem->getParentItem(),
+                    ['parent_item' => null]
+                );
+            }
+            $parentItem = $orderItems[$parentItemId] ?? null;
+            $orderItems[$itemId] = $this->quoteItemToOrderItem->convert($quoteItem, ['parent_item' => $parentItem]);
         }
         return array_values($orderItems);
     }

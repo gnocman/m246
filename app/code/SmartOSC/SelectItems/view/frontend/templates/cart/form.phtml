@@ -32,60 +32,62 @@
             <caption class="table-caption"><?= $block->escapeHtml(__('Shopping Cart Items')) ?></caption>
             <thead>
             <tr>
-                <?php
-                $itemIds = [];
-                $allSelected = true;
+                <?php if ($this->helper(SmartOSC\SelectItems\Helper\Data::class)->isEnabled()): ?>
+                    <?php
+                    $itemIds = [];
+                    $allSelected = true;
 
-                foreach ($block->getItems() as $_item) {
-                    $itemIds[] = $_item->getId();
+                    foreach ($block->getItems() as $_item) {
+                        $itemIds[] = $_item->getId();
 
-                    if (!$_item->getIsSelect()) {
-                        $allSelected = false;
+                        if (!$_item->getIsSelect()) {
+                            $allSelected = false;
+                        }
                     }
-                }
-                ?>
+                    ?>
 
-                <th class="col checkbox" scope="col">
-                    <label for="select-all-items">
-                        <input type="checkbox" id="select-all-items" class="checkbox" <?= $allSelected ? 'checked="checked"' : '' ?> />
-                    </label>
-                </th>
+                    <th class="col checkbox" scope="col">
+                        <label for="select-all-items">
+                            <input type="checkbox" id="select-all-items" class="checkbox" <?= $allSelected ? 'checked="checked"' : '' ?> />
+                        </label>
+                    </th>
 
-                <script>
-                    require([
-                        'jquery',
-                        'Magento_Checkout/js/action/get-totals',
-                        'SmartOSC_SelectItems/js/view/select-item'
-                    ], function ($, getTotalsAction, selectItem) {
-                        'use strict';
+                    <script>
+                        require([
+                            'jquery',
+                            'Magento_Checkout/js/action/get-totals',
+                            'SmartOSC_SelectItems/js/view/select-item'
+                        ], function ($, getTotalsAction, selectItem) {
+                            'use strict';
 
-                        let itemIds = <?= json_encode($itemIds) ?>;
-                        const selectAllItems = $('#select-all-items');
-
-                        itemIds.forEach(function (itemId) {
-                            selectItem("select-all-items", itemId);
-                            const selectItemCheckbox = $('#select-item-' + itemId);
-
-                            selectItemCheckbox.on('click', function () {
-                                let allChecked = itemIds.every(function (itemId) {
-                                    return $('#select-item-' + itemId).is(':checked');
-                                });
-
-                                selectAllItems.prop('checked', allChecked);
-                            });
-                        });
-
-                        selectAllItems.on('click', function () {
-                            const isChecked = $(this).is(':checked');
+                            let itemIds = <?= json_encode($itemIds) ?>;
+                            const selectAllItems = $('#select-all-items');
 
                             itemIds.forEach(function (itemId) {
-                                $('#select-item-' + itemId).prop('checked', isChecked);
+                                selectItem("select-all-items", itemId);
+                                const selectItemCheckbox = $('#select-item-' + itemId);
+
+                                selectItemCheckbox.on('click', function () {
+                                    let allChecked = itemIds.every(function (itemId) {
+                                        return $('#select-item-' + itemId).is(':checked');
+                                    });
+
+                                    selectAllItems.prop('checked', allChecked);
+                                });
                             });
 
-                            selectAllItems.prop('checked', isChecked);
+                            selectAllItems.on('click', function () {
+                                const isChecked = $(this).is(':checked');
+
+                                itemIds.forEach(function (itemId) {
+                                    $('#select-item-' + itemId).prop('checked', isChecked);
+                                });
+
+                                selectAllItems.prop('checked', isChecked);
+                            });
                         });
-                    });
-                </script>
+                    </script>
+                <?php endif ?>
 
                 <th class="col item" scope="col"><span><?= $block->escapeHtml(__('Item')) ?></span></th>
                 <th class="col price" scope="col"><span><?= $block->escapeHtml(__('Price')) ?></span></th>
