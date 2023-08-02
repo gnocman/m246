@@ -10,29 +10,21 @@ namespace SmartOSC\SelectItems\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use SmartOSC\SelectItems\Helper\Data;
-use Magento\Framework\App\RequestInterface;
 
 class SetItemsSelect implements ObserverInterface
 {
     /**
      * @var Data
      */
-    private Data $isEnabledHelper;
-    /**
-     * @var RequestInterface
-     */
-    private RequestInterface $request;
+    private Data $dataHelper;
 
     /**
-     * @param Data $isEnabledHelper
-     * @param RequestInterface $request
+     * @param Data $dataHelper
      */
     public function __construct(
-        Data $isEnabledHelper,
-        RequestInterface $request
+        Data $dataHelper
     ) {
-        $this->isEnabledHelper = $isEnabledHelper;
-        $this->request = $request;
+        $this->dataHelper = $dataHelper;
     }
 
     /**
@@ -43,7 +35,7 @@ class SetItemsSelect implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        if ($this->isEnabledHelper->isEnabled() && $this->isMatchingPath()) {
+        if ($this->dataHelper->isEnabled()) {
             $shippingAssignment = $observer->getShippingAssignment();
             $address = $shippingAssignment->getShipping()->getAddress();
 
@@ -57,23 +49,5 @@ class SetItemsSelect implements ObserverInterface
 
             $shippingAssignment->setItems($itemsSelect);
         }
-    }
-
-    /**
-     * Check if the current request path matches the specified paths.
-     *
-     * @return bool
-     */
-    public function isMatchingPath()
-    {
-        $path = $this->request->getPathInfo();
-
-        $matchingPaths = [
-            '/product/select/updateItemSelectStatus',
-            '/rest/default/V1/carts/mine/totals-information',
-            '/rest/default/V1/carts/mine/estimate-shipping-methods'
-        ];
-
-        return in_array($path, $matchingPaths);
     }
 }

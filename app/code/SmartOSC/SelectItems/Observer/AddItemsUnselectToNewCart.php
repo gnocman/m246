@@ -11,6 +11,7 @@ use Magento\Catalog\Model\ProductFactory;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\QuoteFactory;
+use SmartOSC\SelectItems\Helper\Data;
 
 class AddItemsUnselectToNewCart implements ObserverInterface
 {
@@ -22,17 +23,24 @@ class AddItemsUnselectToNewCart implements ObserverInterface
      * @var ProductFactory
      */
     private ProductFactory $productFactory;
+    /**
+     * @var Data
+     */
+    private Data $dataHelper;
 
     /**
      * @param QuoteFactory $quoteFactory
      * @param ProductFactory $productFactory
+     * @param Data $dataHelper
      */
     public function __construct(
         QuoteFactory $quoteFactory,
-        ProductFactory $productFactory
+        ProductFactory $productFactory,
+        Data $dataHelper
     ) {
         $this->quoteFactory = $quoteFactory;
         $this->productFactory = $productFactory;
+        $this->dataHelper = $dataHelper;
     }
 
     /**
@@ -44,6 +52,10 @@ class AddItemsUnselectToNewCart implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
+        if (!$this->dataHelper->isEnabled()) {
+            return;
+        }
+
         $quote = $observer->getQuote();
         $items = $quote->getItems();
         $customerId = $quote->getCustomerId();
