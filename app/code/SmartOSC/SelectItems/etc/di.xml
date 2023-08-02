@@ -7,4 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\Quote\Model\QuoteManagement" type="SmartOSC\SelectItems\Model\QuoteManagement"/>
+    <type name="Magento\Quote\Model\Cart\CartTotalRepository">
+        <plugin name="get_items_and_qty_select" type="SmartOSC\SelectItems\Plugin\Model\Cart\CartTotalRepositoryPlugin"/>
+    </type>
 </config>

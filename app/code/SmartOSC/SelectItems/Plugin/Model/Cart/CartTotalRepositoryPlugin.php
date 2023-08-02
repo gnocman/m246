@@ -12,7 +12,6 @@ use Magento\Quote\Model\Cart\CartTotalRepository;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\Cart\Totals\ItemConverter;
 use SmartOSC\SelectItems\Helper\Data;
-use Magento\Framework\App\RequestInterface;
 
 class CartTotalRepositoryPlugin
 {
@@ -27,28 +26,21 @@ class CartTotalRepositoryPlugin
     /**
      * @var Data
      */
-    private Data $isEnabledHelper;
-    /**
-     * @var RequestInterface
-     */
-    private RequestInterface $request;
+    private Data $dataHelper;
 
     /**
      * @param CartRepositoryInterface $cartRepository
      * @param ItemConverter $itemConverter
-     * @param Data $isEnabledHelper
-     * @param RequestInterface $request
+     * @param Data $dataHelper
      */
     public function __construct(
         CartRepositoryInterface $cartRepository,
         ItemConverter $itemConverter,
-        Data $isEnabledHelper,
-        RequestInterface $request
+        Data $dataHelper
     ) {
         $this->cartRepository = $cartRepository;
         $this->itemConverter = $itemConverter;
-        $this->isEnabledHelper = $isEnabledHelper;
-        $this->request = $request;
+        $this->dataHelper = $dataHelper;
     }
 
     /**
@@ -62,11 +54,7 @@ class CartTotalRepositoryPlugin
      */
     public function afterGet(CartTotalRepository $subject, TotalsInterface $result, $cartId)
     {
-        if (!$this->isEnabledHelper->isEnabled()) {
-            return $result;
-        }
-
-        if (!$this->isMatchingPath()) {
+        if (!$this->dataHelper->isEnabled()) {
             return $result;
         }
 
@@ -86,15 +74,5 @@ class CartTotalRepositoryPlugin
         $result->setItemsQty($totalQty);
 
         return $result;
-    }
-
-    /**
-     * Check if the current request path matches the specified paths.
-     *
-     * @return bool
-     */
-    public function isMatchingPath()
-    {
-        return strcmp($this->request->getPathInfo(), '/checkout/') === 0;
     }
 }
