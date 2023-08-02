@@ -9,4 +9,10 @@
     <event name="sales_quote_address_collect_totals_before">
         <observer name="set_items_select" instance="SmartOSC\SelectItems\Observer\SetItemsSelect"/>
     </event>
+    <event name="controller_action_predispatch_checkout_index_index">
+        <observer name="check_selected_items_before_checkout" instance="SmartOSC\SelectItems\Observer\CheckSelectedItemsBeforeCheckout" />
+    </event>
+    <event name="checkout_submit_all_after">
+        <observer name="add_items_unselect_to_new_cart" instance="SmartOSC\SelectItems\Observer\AddItemsUnselectToNewCart" />
+    </event>
 </config>
