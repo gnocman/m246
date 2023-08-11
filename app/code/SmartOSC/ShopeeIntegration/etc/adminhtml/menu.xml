@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="SmartOSC_ShopeeIntegration::ShopeeIntegration"
+            title="Shopee Integration"
+            translate="title"
+            module="SmartOSC_ShopeeIntegration"
+            sortOrder="1"
+            resource="SmartOSC_ShopeeIntegration::ShopeeIntegration"
+        />
+
+        <add
+            id="SmartOSC_ShopeeIntegration::Configurations" title="Configurations" translate="title" module="SmartOSC_ShopeeIntegration" sortOrder="5"
+            parent="SmartOSC_ShopeeIntegration::ShopeeIntegration" resource="SmartOSC_ShopeeIntegration::Configurations"
+        />
+        <add
+            id="SmartOSC_ShopeeIntegration::Configuration"
+            title="Configuration"
+            translate="title"
+            module="SmartOSC_ShopeeIntegration"
+            sortOrder="10"
+            action="backend/movie"
+            parent="SmartOSC_ShopeeIntegration::Configurations"
+            resource="SmartOSC_ShopeeIntegration::Configuration"
+        />
+        <add
+            id="SmartOSC_ShopeeIntegration::Accounts"
+            title="Accounts"
+            translate="title"
+            module="SmartOSC_ShopeeIntegration"
+            sortOrder="15"
+            action="shopee_integration/accounts"
+            parent="SmartOSC_ShopeeIntegration::Configurations"
+            resource="SmartOSC_ShopeeIntegration::Accounts"
+        />
+
+        <add
+            id="SmartOSC_ShopeeIntegration::Listing" title="Listing" translate="title" module="SmartOSC_ShopeeIntegration" sortOrder="20"
+            parent="SmartOSC_ShopeeIntegration::ShopeeIntegration" resource="SmartOSC_ShopeeIntegration::Listing"
+        />
+        <add
+            id="SmartOSC_ShopeeIntegration::Aunderruns"
+            title="Aunderruns"
+            translate="title"
+            module="SmartOSC_ShopeeIntegration"
+            sortOrder="25"
+            action="backend/movie"
+            parent="SmartOSC_ShopeeIntegration::Listing"
+            resource="SmartOSC_ShopeeIntegration::Aunderruns"
+        />
+        <add
+            id="SmartOSC_ShopeeIntegration::Bunderruns"
+            title="Bunderruns"
+            translate="title"
+            module="SmartOSC_ShopeeIntegration"
+            sortOrder="30"
+            action="backend/movie"
+            parent="SmartOSC_ShopeeIntegration::Listing"
+            resource="SmartOSC_ShopeeIntegration::Bunderruns"
+        />
+    </menu>
+</config>
