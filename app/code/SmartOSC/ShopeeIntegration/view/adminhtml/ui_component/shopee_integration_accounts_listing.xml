@@ -17,7 +17,7 @@
                 <item name="name" xsi:type="string">add</item>
                 <item name="label" xsi:type="string" translate="true">Add Account</item>
                 <item name="class" xsi:type="string">primary</item>
-                <item name="url" xsi:type="string">backend/form/index</item>
+                <item name="url" xsi:type="string">shopee_integration/newAccount/index</item>
             </item>
         </item>
     </argument>
@@ -39,126 +39,77 @@
         </argument>
     </dataSource>
     <listingToolbar name="listing_top">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="sticky" xsi:type="boolean">true</item>
-            </item>
-        </argument>
+        <settings>
+            <sticky>true</sticky>
+        </settings>
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
         <exportButton name="export_button"/>
-        <filters name="listing_filters"/>
         <filterSearch name="fulltext"/>
-        <massaction name="listing_massaction">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
-                </item>
-            </argument>
+        <filters name="listing_filters"/>
+        <massaction name="listing_massaction" component="Magento_Ui/js/grid/tree-massactions">
             <action name="delete">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="type" xsi:type="string">delete</item>
-                        <item name="label" xsi:type="string" translate="true">Delete</item>
-                        <item name="url" xsi:type="url" path="backend/movie/massDelete"/>
-                        <item name="confirm" xsi:type="array">
-                            <item name="title" xsi:type="string" translate="true">Delete Account</item>
-                            <item name="message" xsi:type="string" translate="true">Are you sure you wan't to delete selected items?</item>
-                        </item>
-                    </item>
-                </argument>
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete the selected accounts?</message>
+                        <title translate="true">Delete items</title>
+                    </confirm>
+                    <url path="shopee_integration/accounts/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
             </action>
         </massaction>
         <paging name="listing_paging"/>
     </listingToolbar>
     <columns name="spinner_columns">
-        <selectionsColumn name="ids">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="resizeEnabled" xsi:type="boolean">false</item>
-                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
-                    <item name="indexField" xsi:type="string">account_id</item>
-                </item>
-            </argument>
+        <selectionsColumn name="ids" sortOrder="10">
+            <settings>
+                <indexField>account_id</indexField>
+            </settings>
         </selectionsColumn>
-        <column name="account_id">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">textRange</item>
-                    <item name="sorting" xsi:type="string">asc</item>
-                    <item name="label" xsi:type="string" translate="true">ID</item>
-                </item>
-            </argument>
+        <column name="account_id" sortOrder="20">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
         </column>
-        <column name="account_code">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">account_code</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">account_code</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                    <item name="label" xsi:type="string" translate="true">Account Code</item>
-                </item>
-            </argument>
+        <column name="account_code" sortOrder="60">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Account Code</label>
+            </settings>
         </column>
-        <column name="shop_id">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">shop_id</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">shop_id</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                    <item name="label" xsi:type="string" translate="true">Shop id</item>
-                </item>
-            </argument>
+        <column name="shop_id" sortOrder="70">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shop id</label>
+            </settings>
         </column>
-        <column name="account_status">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">account_status</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">account_status</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                    <item name="label" xsi:type="string" translate="true">Account Status</item>
-                </item>
-            </argument>
+        <column name="account_status" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
+            <settings>
+                <options class="SmartOSC\ShopeeIntegration\Model\Config\Source\Status"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Account Status</label>
+            </settings>
         </column>
-        <column name="valid_invalid">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">valid_invalid</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">valid_invalid</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                    <item name="label" xsi:type="string" translate="true">Valid/Invalid</item>
-                </item>
-            </argument>
+        <column name="valid_invalid" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
+            <settings>
+                <options class="SmartOSC\ShopeeIntegration\Model\Config\Source\ValidInvalid"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Account Status</label>
+            </settings>
         </column>
-        <column name="magento_store">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">magento_store</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">magento_store</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                    <item name="label" xsi:type="string" translate="true">Magento Store</item>
-                </item>
-            </argument>
+        <column name="magento_store" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
+            <settings>
+                <options class="SmartOSC\ShopeeIntegration\Model\Config\Source\StoreView"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Account Status</label>
+            </settings>
         </column>
         <actionsColumn name="actions" class="SmartOSC\ShopeeIntegration\Ui\Component\Listing\Column\Actions">
             <settings>
