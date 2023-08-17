@@ -69,29 +69,36 @@ class Save extends Action
                     $this->_redirect('shopee_integration/newaccount/index');
                     return;
                 }
-            }
 
-            // Check for duplicate name
-            $duplicateAccount = $this->accountCollectionFactory->create()
-                ->addFieldToFilter('account_code', $data['account_code'])
-                ->getFirstItem();
-            if ($duplicateAccount->getId() && ($duplicateAccount->getId() != $model->getId())) {
-                $this->messageManager->addErrorMessage(__('Account code already exists. Please enter a unique Account code.'));
-                $this->_redirect('shopee_integration/newaccount/index');
-                return;
-            }
+                $model->addData([
+                    "account_status" => $data['account_status'],
+                    "magento_store" => $data['magento_store'],
+                ]);
+            } else {
+                // Check for duplicate name
+                $duplicateAccount = $this->accountCollectionFactory->create()
+                    ->addFieldToFilter('account_code', $data['account_code'])
+                    ->getFirstItem();
+                if ($duplicateAccount->getId() && ($duplicateAccount->getId() != $model->getId())) {
+                    $this->messageManager->addErrorMessage(
+                        __('Account code already exists. Please enter a unique Account code.')
+                    );
+                    $this->_redirect('shopee_integration/newaccount/index');
+                    return;
+                }
 
-            $model->setData([
-                "account_code" => $data['account_code'],
-                "shop_id" => $data['shop_id'],
-                "account_status" => $data['account_status'],
-                "valid_invalid" => $data['valid_invalid'],
-                "magento_store" => $data['magento_store'],
-            ]);
+                $model->addData([
+                    "account_code" => $data['account_code'],
+                    "shop_id" => $data['shop_id'],
+                    "account_status" => $data['account_status'],
+                    "valid_invalid" => $data['valid_invalid'],
+                    "magento_store" => $data['magento_store'],
+                ]);
+            }
 
             $this->accountResource->save($model);
 
-            $this->messageManager->addSuccessMessage(__('Data saved successfully !'));
+            $this->messageManager->addSuccessMessage(__('Account Saved Successfully.'));
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage(__($e->getMessage()));
         }

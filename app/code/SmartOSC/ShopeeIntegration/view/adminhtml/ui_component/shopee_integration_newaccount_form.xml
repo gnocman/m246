@@ -60,6 +60,9 @@
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
+                    <item name="imports" xsi:type="array">
+                        <item name="disabled" xsi:type="string">${ $.provider}:data.edit</item>
+                    </item>
                 </item>
             </argument>
         </field>
