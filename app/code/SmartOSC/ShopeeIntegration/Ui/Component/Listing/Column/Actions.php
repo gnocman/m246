@@ -64,6 +64,12 @@ class Actions extends Column
                         ),
                         'label' => __('Edit'),
                     ];
+
+                    $item[$name]['authorize'] = [
+                        'href' => 'https://seller.test-stable.shopee.sg/',
+                        'label' => __('Authorize'),
+                        'target' => '_blank',
+                    ];
                 }
             }
         }

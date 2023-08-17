@@ -44,10 +44,14 @@ class DataProvider extends AbstractDataProvider
      */
     public function getData(): array
     {
-        if (!$this->loadedData) {
-            foreach ($this->collection->getItems() as $accounts) {
-                $this->loadedData[$accounts->getId()] = $accounts->getData();
-            }
+        if (!empty($this->loadedData)) {
+            return $this->loadedData;
+        }
+
+        foreach ($this->collection->getItems() as $accounts) {
+            $rec = $accounts->getData();
+            $rec['edit'] = true;
+            $this->loadedData[$accounts->getId()] = $rec;
         }
 
         return $this->loadedData;
