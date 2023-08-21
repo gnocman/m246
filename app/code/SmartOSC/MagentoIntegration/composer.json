@@ -1,0 +1,20 @@
+{
+  "name": "smartosc/module-magento-integration",
+  "version": "1.0.0",
+  "description": "Magento 2 Magento Integration",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "SmartOSC\\MagentoIntegration\\": ""
+    }
+  }
+}
