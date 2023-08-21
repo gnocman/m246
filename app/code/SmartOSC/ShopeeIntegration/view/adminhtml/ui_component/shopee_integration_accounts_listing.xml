@@ -52,7 +52,7 @@
                 <settings>
                     <confirm>
                         <message translate="true">Are you sure you want to delete the selected accounts?</message>
-                        <title translate="true">Delete items</title>
+                        <title translate="true">Delete accounts</title>
                     </confirm>
                     <url path="shopee_integration/accounts/massDelete"/>
                     <type>delete</type>
@@ -75,50 +75,40 @@
                 <sorting>asc</sorting>
             </settings>
         </column>
-        <column name="account_code" sortOrder="60">
+        <column name="account_name" sortOrder="30">
             <settings>
                 <filter>text</filter>
-                <label translate="true">Account Code</label>
+                <label translate="true">Account Name</label>
             </settings>
         </column>
-        <column name="shop_id" sortOrder="70">
+        <column name="base_url" sortOrder="40">
             <settings>
                 <filter>text</filter>
-                <label translate="true">Shop id</label>
+                <label translate="true">Base Url</label>
             </settings>
         </column>
-        <column name="account_status" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
+        <column name="access_token" sortOrder="50">
             <settings>
-                <options class="SmartOSC\ShopeeIntegration\Model\Config\Source\Status"/>
-                <filter>select</filter>
-                <dataType>select</dataType>
-                <label translate="true">Account Status</label>
+                <filter>text</filter>
+                <label translate="true">Access Token</label>
             </settings>
         </column>
-        <column name="valid_invalid">
+        <column name="account_status" sortOrder="60">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">valid_invalid</item>
+                    <item name="filter" xsi:type="string">account_status</item>
                     <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">valid_invalid</item>
+                        <item name="editorType" xsi:type="string">account_status</item>
                         <item name="validation" xsi:type="array">
                             <item name="required-entry" xsi:type="boolean">true</item>
                         </item>
                     </item>
-                    <item name="label" xsi:type="string" translate="true">Valid/Invalid</item>
+                    <item name="label" xsi:type="string" translate="true">Account Status</item>
                 </item>
             </argument>
             <settings>
-                <options class="SmartOSC\ShopeeIntegration\Model\Config\Source\ValidInvalid"/>
-                <bodyTmpl>SmartOSC_ShopeeIntegration/grid/cells/validinvalid</bodyTmpl>
-            </settings>
-        </column>
-        <column name="magento_store" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
-            <settings>
-                <options class="SmartOSC\ShopeeIntegration\Model\Config\Source\StoreView"/>
-                <filter>select</filter>
-                <dataType>select</dataType>
-                <label translate="true">Account Status</label>
+                <options class="SmartOSC\ShopeeIntegration\Model\Config\Source\Status"/>
+                <bodyTmpl>SmartOSC_ShopeeIntegration/grid/cells/status.html</bodyTmpl>
             </settings>
         </column>
         <actionsColumn name="actions" class="SmartOSC\ShopeeIntegration\Ui\Component\Listing\Column\Actions">

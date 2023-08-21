@@ -71,13 +71,13 @@ class Save extends Action
                 }
 
                 $model->addData([
+                    "account_name" => $data['account_name'],
                     "account_status" => $data['account_status'],
-                    "magento_store" => $data['magento_store'],
                 ]);
             } else {
                 // Check for duplicate name
                 $duplicateAccount = $this->accountCollectionFactory->create()
-                    ->addFieldToFilter('account_code', $data['account_code'])
+                    ->addFieldToFilter('account_name', $data['account_name'])
                     ->getFirstItem();
                 if ($duplicateAccount->getId() && ($duplicateAccount->getId() != $model->getId())) {
                     $this->messageManager->addErrorMessage(
@@ -88,11 +88,10 @@ class Save extends Action
                 }
 
                 $model->addData([
-                    "account_code" => $data['account_code'],
-                    "shop_id" => $data['shop_id'],
+                    "account_name" => $data['account_name'],
+                    "base_url" => $data['base_url'],
+                    "access_token" => $data['access_token'],
                     "account_status" => $data['account_status'],
-                    "valid_invalid" => $data['valid_invalid'],
-                    "magento_store" => $data['magento_store'],
                 ]);
             }
 
