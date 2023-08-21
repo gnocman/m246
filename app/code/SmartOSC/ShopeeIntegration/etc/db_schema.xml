@@ -8,19 +8,18 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="shopee_integration_accounts" resource="default" engine="innodb" comment="SmartOSC table">
         <column xsi:type="int" name="account_id" nullable="false" identity="true" comment="Account ID"/>
-        <column xsi:type="text" name="account_code" nullable="false" comment="Account Code"/>
-        <column xsi:type="int" name="shop_id" nullable="false" comment="Shop ID"/>
-        <column xsi:type="text" name="account_status" nullable="false" comment="Account Status"/>
-        <column xsi:type="text" name="valid_invalid" nullable="false" comment="Valid/Invalid"/>
-        <column xsi:type="text" name="magento_store" nullable="false" comment="Magento Store"/>
+        <column xsi:type="text" name="account_name" nullable="false" comment="Account Name"/>
+        <column xsi:type="text" name="base_url" nullable="false" comment="Base Url"/>
+        <column xsi:type="text" name="access_token" nullable="false" comment="Access Token"/>
+        <column xsi:type="int" name="account_status" nullable="false" comment="Account Status"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="account_id"/>
         </constraint>
-        <index referenceId="SHOPEE_INTEGRATION_ACCOUNTS_ACCOUNT_CODE" indexType="btree">
-            <column name="account_code"/>
+        <index referenceId="SHOPEE_INTEGRATION_ACCOUNTS_ACCOUNT_NAME" indexType="btree">
+            <column name="account_name"/>
         </index>
         <index referenceId="FTI_65B9E9925EC58F0C7C2E2F6379C233E7" indexType="fulltext">
-            <column name="account_code"/>
+            <column name="account_name"/>
         </index>
     </table>
 </schema>

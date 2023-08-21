@@ -8,10 +8,10 @@
     <div class="control review-control-vote">
         <!-- ko foreach: $col.getLabel($row()) -->
         <!-- ko if: $data == "1" -->
-        <span class="grid-severity-notice">Valid</span>
+        <span class="grid-severity-notice">Enable</span>
         <!-- /ko -->
         <!-- ko if: $data == "0" -->
-        <span class="grid-severity-minor">Invalid</span>
+        <span class="grid-severity-minor">Disable</span>
         <!-- /ko -->
         <!-- /ko -->
     </div>

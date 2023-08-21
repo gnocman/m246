@@ -2,14 +2,13 @@
     "shopee_integration_accounts": {
         "column": {
             "account_id": true,
-            "account_code": true,
-            "shop_id": true,
-            "account_status": true,
-            "valid_invalid": true,
-            "magento_store": true
+            "account_name": true,
+            "base_url": true,
+            "access_token": true,
+            "account_status": true
         },
         "index": {
-            "SHOPEE_INTEGRATION_ACCOUNTS_ACCOUNT_CODE": true
+            "SHOPEE_INTEGRATION_ACCOUNTS_ACCOUNT_NAME": true
         },
         "constraint": {
             "PRIMARY": true
