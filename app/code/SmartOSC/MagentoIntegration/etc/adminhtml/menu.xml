@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="SmartOSC_MagentoIntegration::MagentoIntegration"
+            title="Magento Integration"
+            translate="title"
+            module="SmartOSC_MagentoIntegration"
+            sortOrder="1"
+            resource="SmartOSC_MagentoIntegration::MagentoIntegration"
+        />
+
+        <add
+            id="SmartOSC_MagentoIntegration::Configurations" title="Configurations" translate="title" module="SmartOSC_MagentoIntegration" sortOrder="5"
+            parent="SmartOSC_MagentoIntegration::MagentoIntegration" resource="SmartOSC_MagentoIntegration::Configurations"
+        />
+        <add
+            id="SmartOSC_MagentoIntegration::Configuration"
+            title="Configuration Integration"
+            translate="title"
+            module="SmartOSC_MagentoIntegration"
+            sortOrder="10"
+            action="adminhtml/system_config/edit/section/integration_customers"
+            parent="SmartOSC_MagentoIntegration::Configurations"
+            resource="SmartOSC_MagentoIntegration::Configuration"
+        />
+        <add
+            id="SmartOSC_MagentoIntegration::Customers"
+            title="Customers"
+            translate="title"
+            module="SmartOSC_MagentoIntegration"
+            sortOrder="15"
+            action="magento_integration/customers"
+            parent="SmartOSC_MagentoIntegration::Configurations"
+            resource="SmartOSC_MagentoIntegration::Customers"
+        />
+
+        <add
+            id="SmartOSC_MagentoIntegration::Listing" title="Listing" translate="title" module="SmartOSC_MagentoIntegration" sortOrder="20"
+            parent="SmartOSC_MagentoIntegration::MagentoIntegration" resource="SmartOSC_MagentoIntegration::Listing"
+        />
+        <add
+            id="SmartOSC_MagentoIntegration::Aunderruns"
+            title="Aunderruns"
+            translate="title"
+            module="SmartOSC_MagentoIntegration"
+            sortOrder="25"
+            action="backend/movie"
+            parent="SmartOSC_MagentoIntegration::Listing"
+            resource="SmartOSC_MagentoIntegration::Aunderruns"
+        />
+        <add
+            id="SmartOSC_MagentoIntegration::Bunderruns"
+            title="Bunderruns"
+            translate="title"
+            module="SmartOSC_MagentoIntegration"
+            sortOrder="30"
+            action="backend/movie"
+            parent="SmartOSC_MagentoIntegration::Listing"
+            resource="SmartOSC_MagentoIntegration::Bunderruns"
+        />
+    </menu>
+</config>
