@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="magento_integration_customers" resource="default" engine="innodb" comment="SmartOSC table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="customer_id" nullable="true" comment="Customer ID"/>
+        <column xsi:type="varchar" name="email" nullable="true" length="255" comment="Email"/>
+        <column xsi:type="varchar" name="firstname" nullable="true" length="255" comment="First Name"/>
+        <column xsi:type="varchar" name="lastname" nullable="true" length="255" comment="Last Name"/>
+        <column xsi:type="varchar" name="created_in" nullable="true" length="255" comment="Created From"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <index referenceId="magento_integration_customers_customer_NAME" indexType="btree">
+            <column name="email"/>
+        </index>
+        <index referenceId="FTI_65B9E9925EC58F0C7C2E2F6379C233E7" indexType="fulltext">
+            <column name="email"/>
+        </index>
+    </table>
+</schema>
