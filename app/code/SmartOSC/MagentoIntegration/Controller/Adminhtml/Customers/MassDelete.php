@@ -12,6 +12,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Ui\Component\MassAction\Filter;
 use SmartOSC\MagentoIntegration\Model\ResourceModel\Customers\CollectionFactory;
+use SmartOSC\MagentoIntegration\Service\Helper\Customers;
 
 class MassDelete extends Action
 {
@@ -23,20 +24,27 @@ class MassDelete extends Action
      * @var Filter
      */
     public Filter $filter;
+    /**
+     * @var Customers
+     */
+    private Customers $customers;
 
     /**
      * @param Context $context
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
+     * @param Customers $customers
      */
     public function __construct(
         Context $context,
         Filter $filter,
-        CollectionFactory $collectionFactory
+        CollectionFactory $collectionFactory,
+        Customers $customers
     ) {
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
+        $this->customers = $customers;
     }
 
     /**
@@ -51,6 +59,7 @@ class MassDelete extends Action
 
             $count = 0;
             foreach ($collection as $model) {
+                $this->customers->deleteCustomer($model->getCustomerId());
                 $model->delete();
                 $count++;
             }
