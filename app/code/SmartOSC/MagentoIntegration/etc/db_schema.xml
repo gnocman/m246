@@ -23,4 +23,16 @@
             <column name="email"/>
         </index>
     </table>
+    <table name="magento_integration_orders" resource="default" engine="innodb" comment="SmartOSC table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="order_id" nullable="true" comment="Order ID"/>
+        <column xsi:type="smallint" name="store_id" nullable="true" comment="Store ID"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" comment="Created At"/>
+        <column xsi:type="varchar" name="billing_name" nullable="true" comment="Billing Name"/>
+        <column xsi:type="decimal" name="base_grand_total" nullable="true" comment="Base Grand Total"/>
+        <column xsi:type="varchar" name="status" nullable="true" comment="Status"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
 </schema>

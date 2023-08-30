@@ -19,4 +19,17 @@
             <argument name="resourceModel" xsi:type="string">SmartOSC\MagentoIntegration\Model\ResourceModel\Customers</argument>
         </arguments>
     </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="magento_integration_orders_listing_data_source" xsi:type="string">SmartOSC\MagentoIntegration\Model\ResourceModel\Orders\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="SmartOSC\MagentoIntegration\Model\ResourceModel\Orders\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magento_integration_orders</argument>
+            <argument name="resourceModel" xsi:type="string">SmartOSC\MagentoIntegration\Model\ResourceModel\Orders</argument>
+        </arguments>
+    </virtualType>
 </config>
