@@ -42,28 +42,18 @@
         />
 
         <add
-            id="SmartOSC_MagentoIntegration::Listing" title="Listing" translate="title" module="SmartOSC_MagentoIntegration" sortOrder="20"
-            parent="SmartOSC_MagentoIntegration::MagentoIntegration" resource="SmartOSC_MagentoIntegration::Listing"
+            id="SmartOSC_MagentoIntegration::Operations" title="Operations" translate="title" module="SmartOSC_MagentoIntegration" sortOrder="20"
+            parent="SmartOSC_MagentoIntegration::MagentoIntegration" resource="SmartOSC_MagentoIntegration::Operations"
         />
         <add
-            id="SmartOSC_MagentoIntegration::Aunderruns"
-            title="Aunderruns"
+            id="SmartOSC_MagentoIntegration::Orders"
+            title="Orders"
             translate="title"
             module="SmartOSC_MagentoIntegration"
             sortOrder="25"
-            action="backend/movie"
-            parent="SmartOSC_MagentoIntegration::Listing"
-            resource="SmartOSC_MagentoIntegration::Aunderruns"
-        />
-        <add
-            id="SmartOSC_MagentoIntegration::Bunderruns"
-            title="Bunderruns"
-            translate="title"
-            module="SmartOSC_MagentoIntegration"
-            sortOrder="30"
-            action="backend/movie"
-            parent="SmartOSC_MagentoIntegration::Listing"
-            resource="SmartOSC_MagentoIntegration::Bunderruns"
+            action="magento_integration/orders"
+            parent="SmartOSC_MagentoIntegration::Operations"
+            resource="SmartOSC_MagentoIntegration::Orders"
         />
     </menu>
 </config>
