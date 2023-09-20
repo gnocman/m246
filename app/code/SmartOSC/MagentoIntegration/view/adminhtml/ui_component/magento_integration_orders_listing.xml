@@ -12,14 +12,6 @@
             <item name="deps" xsi:type="string">magento_integration_orders_listing.magento_integration_orders_listing_data_source</item>
         </item>
         <item name="spinner" xsi:type="string">spinner_columns</item>
-        <item name="buttons" xsi:type="array">
-            <item name="sync" xsi:type="array">
-                <item name="name" xsi:type="string">sync</item>
-                <item name="label" xsi:type="string" translate="true">Sync Orders</item>
-                <item name="class" xsi:type="string">primary</item>
-                <item name="url" xsi:type="string">magento_integration/orders/sync</item>
-            </item>
-        </item>
     </argument>
     <dataSource name="nameOfDataSource">
         <argument name="dataProvider" xsi:type="configurableObject">

@@ -5,12 +5,12 @@
  */
 declare(strict_types=1);
 
-namespace SmartOSC\ShopeeIntegration\Block\Adminhtml\Edit;
+namespace SmartOSC\MagentoIntegration\Block\Adminhtml\Edit;
 
-use SmartOSC\ShopeeIntegration\Block\Adminhtml\Edit\Button\Generic;
+use SmartOSC\MagentoIntegration\Block\Adminhtml\Edit\Button\Generic;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-class Save extends Generic implements ButtonProviderInterface
+class Sync extends Generic implements ButtonProviderInterface
 {
     /**
      * Get Button Data
@@ -20,13 +20,13 @@ class Save extends Generic implements ButtonProviderInterface
     public function getButtonData(): array
     {
         return [
-            'label' => __('Save'),
+            'label' => __('Sync Orders'),
             'class' => 'save primary',
             'data_attribute' => [
                 'mage-init' => ['button' => ['event' => 'save']],
                 'form-role' => 'save',
             ],
-            'sort_order' => 20,
+            'sort_order' => 30,
         ];
     }
 }

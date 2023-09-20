@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">magento_integration_orders_form.magento_integration_orders_listing_data_source</item>
+            <item name="deps" xsi:type="string">magento_integration_orders_form.magento_integration_orders_listing_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Choose Date to Sync Orders</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">magento_integration_orders_form</item>
+        </item>
+        <item name="buttons" xsi:type="array">
+            <item name="save" xsi:type="string">SmartOSC\MagentoIntegration\Block\Adminhtml\Edit\Sync</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+
+    <dataSource name="magento_integration_orders_listing_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="magento_integration/orders/sync"/>
+        </settings>
+        <dataProvider class="SmartOSC\MagentoIntegration\Model\DataProvider" name="magento_integration_orders_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <fieldset name="magento_integration_orders_detail">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Choose Date to Sync Orders</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+
+        <!-- From Date Field -->
+        <field name="from_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="label" xsi:type="string" translate="true"><![CDATA[From Date]]></item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">package</item>
+                    <item name="dataScope" xsi:type="string">from_date</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item name="required-date" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">yyyy-MM-dd</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="storeTimeZone" xsi:type="string">string</item>
+                </item>
+            </argument>
+        </field>
+
+        <!-- To Date Field -->
+        <field name="to_date" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="label" xsi:type="string" translate="true"><![CDATA[To Date]]></item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">package</item>
+                    <item name="dataScope" xsi:type="string">to_date</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item name="required-date" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">yyyy-MM-dd</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="storeTimeZone" xsi:type="string">string</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>
