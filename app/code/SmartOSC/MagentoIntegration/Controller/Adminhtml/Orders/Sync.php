@@ -62,25 +62,46 @@ class Sync extends Action
      */
     public function execute()
     {
-        try {
-            $fetchedOrderIds = array_column($this->orders->getAllOrders(), 'increment_id');
-            $existingOrders = $this->ordersCollectionFactory->create()
-                ->addFieldToFilter('order_id', ['nin' => $fetchedOrderIds]);
+        $postData = $this->getRequest()->getPostValue();
+        $fromDate = $postData['from_date'] ?? null;
+        $toDate = $postData['to_date'] ?? null;
 
-            foreach ($existingOrders as $existingOrder) {
-                $this->ordersResource->delete($existingOrder);
+        if ($fromDate !== null && $toDate !== null) {
+            try {
+                $fetchedOrderIds = array_column($this->orders->getAllOrders($fromDate, $toDate), 'increment_id');
+
+                if (empty($fetchedOrderIds)) {
+                    $this->messageManager->addErrorMessage(__('There are no orders within this date range.'));
+                    return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath(
+                        'magento_integration/orders/index'
+                    );
+                }
+
+                $existingOrders = $this->ordersCollectionFactory->create()
+                    ->addFieldToFilter('order_id', ['nin' => $fetchedOrderIds]);
+
+                foreach ($existingOrders as $existingOrder) {
+                    $this->ordersResource->delete($existingOrder);
+                }
+
+                $orders = $this->orders->getAllOrders($fromDate, $toDate);
+
+                foreach ($orders as $order) {
+                    $this->syncOrder($order);
+                }
+
+                $this->messageManager->addSuccessMessage(
+                    __('Orders Fetch Successfully from %1 to %2', $fromDate, $toDate)
+                );
+            } catch (\Exception $e) {
+                $this->messageManager->addErrorMessage(__($e->getMessage()));
+            } finally {
+                return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath(
+                    'magento_integration/orders/index'
+                );
             }
-
-            $orders = $this->orders->getAllOrders();
-
-            foreach ($orders as $order) {
-                $this->syncOrder($order);
-            }
-
-            $this->messageManager->addSuccessMessage(__('Orders Fetch Successfully.'));
-        } catch (\Exception $e) {
-            $this->messageManager->addErrorMessage(__($e->getMessage()));
-        } finally {
+        } else {
+            $this->messageManager->addErrorMessage(__('Please provide both from_date and to_date.'));
             return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath(
                 'magento_integration/orders/index'
             );

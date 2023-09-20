@@ -41,9 +41,11 @@ class Orders
     /**
      * Get All Information of Order Integration
      *
+     * @param $fromDate
+     * @param $toDate
      * @return array|mixed
      */
-    public function getAllOrders()
+    public function getAllOrders($fromDate, $toDate)
     {
         $enable = $this->scopeConfig->getValue(self::ENABLE, ScopeInterface::SCOPE_STORE);
 
@@ -51,7 +53,7 @@ class Orders
             $baseUrl = $this->scopeConfig->getValue(self::BASE_URL, ScopeInterface::SCOPE_STORE);
             $accessToken = $this->scopeConfig->getValue(self::ACCESS_TOKEN, ScopeInterface::SCOPE_STORE);
 
-            $url = "$baseUrl/rest/V1/orders?searchCriteria[filter_groups][0][filters][0][field]=entity_id&searchCriteria[filter_groups][0][filters][0][value]=0&searchCriteria[filter_groups][0][filters][0][condition_type]=gt";
+            $url = "$baseUrl/rest/V1/orders?searchCriteria[filter_groups][1][filters][0][field]=created_at&searchCriteria[filter_groups][1][filters][0][value]=$fromDate&searchCriteria[filter_groups][1][filters][0][condition_type]=from&searchCriteria[filter_groups][2][filters][0][field]=created_at&searchCriteria[filter_groups][2][filters][0][value]=$toDate&searchCriteria[filter_groups][2][filters][0][condition_type]=to";
             $headers = [
                 "Authorization: Bearer $accessToken"
             ];
