@@ -72,22 +72,35 @@ class SyncOrders
      */
     public function execute()
     {
+        $prevDate = date('Y-m-d', strtotime('-3 days'));
+        $currentDate = date('Y-m-d');
+
         try {
-            $fetchedOrderIds = array_column($this->orders->getAllOrders(), 'increment_id');
-            $existingOrders = $this->ordersCollectionFactory->create()
-                ->addFieldToFilter('order_id', ['nin' => $fetchedOrderIds]);
+            while ($currentDate <= date('Y-m-d')) {
+                $fetchedOrderIds = array_column($this->orders->getAllOrders($prevDate, $currentDate), 'increment_id');
 
-            foreach ($existingOrders as $existingOrder) {
-                $this->ordersResource->delete($existingOrder);
+                if (!empty($fetchedOrderIds)) {
+                    $existingOrders = $this->ordersCollectionFactory->create()
+                        ->addFieldToFilter('order_id', ['nin' => $fetchedOrderIds]);
+
+                    foreach ($existingOrders as $existingOrder) {
+                        $this->ordersResource->delete($existingOrder);
+                    }
+
+                    $orders = $this->orders->getAllOrders($prevDate, $currentDate);
+
+                    foreach ($orders as $order) {
+                        $this->syncOrder($order);
+                    }
+
+                    $this->context->getMessageManager()->addSuccessMessage(
+                        __('Orders Fetch Successfully from %1 to %2', $prevDate, $currentDate)
+                    );
+                }
+
+                $currentDate = date('Y-m-d', strtotime('-3 days', strtotime($currentDate)));
+                $prevDate = date('Y-m-d', strtotime('-3 days', strtotime($prevDate)));
             }
-
-            $orders = $this->orders->getAllOrders();
-
-            foreach ($orders as $order) {
-                $this->syncOrder($order);
-            }
-
-            $this->context->getMessageManager()->addSuccessMessage(__('Orders Fetch Successfully.'));
         } catch (\Exception $e) {
             $this->context->getMessageManager()->addErrorMessage(__($e->getMessage()));
         } finally {

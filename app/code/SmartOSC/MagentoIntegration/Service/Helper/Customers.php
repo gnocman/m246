@@ -174,7 +174,7 @@ class Customers
             $httpStatus = $this->curlClient->getStatus();
 
             if ($httpStatus === 200) {
-                return json_decode($responseBody, true);
+                return json_encode($responseBody);
             } else {
                 return [];
             }
