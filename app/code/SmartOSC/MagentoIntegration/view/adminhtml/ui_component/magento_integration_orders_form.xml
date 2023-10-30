@@ -91,6 +91,12 @@
                     <item name="storeTimeZone" xsi:type="string">string</item>
                 </item>
             </argument>
+            <settings>
+                <notice translate="true">
+                    Date range must not exceed 3 days.
+                </notice>
+                <dataType>text</dataType>
+            </settings>
         </field>
     </fieldset>
 </form>

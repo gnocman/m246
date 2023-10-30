@@ -59,6 +59,7 @@ class Sync extends Action
      * Create Logic Button Sync Orders
      *
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|(\Magento\Framework\Controller\Result\Redirect&\Magento\Framework\Controller\ResultInterface)|\Magento\Framework\Controller\ResultInterface
+     * @throws \Exception
      */
     public function execute()
     {
@@ -67,6 +68,21 @@ class Sync extends Action
         $toDate = $postData['to_date'] ?? null;
 
         if ($fromDate !== null && $toDate !== null) {
+            // Convert date strings to DateTime objects
+            $fromDateTime = new \DateTime($fromDate);
+            $toDateTime = new \DateTime($toDate);
+
+            // Calculate the interval between the two dates
+            $interval = $fromDateTime->diff($toDateTime);
+
+            // Check if the interval is more than 3 days
+            if ($interval->days > 3) {
+                $this->messageManager->addErrorMessage(__('Date range must not exceed 3 days.'));
+                return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath(
+                    'magento_integration/orders/index'
+                );
+            }
+
             try {
                 $fetchedOrderIds = array_column($this->orders->getAllOrders($fromDate, $toDate), 'increment_id');
 
