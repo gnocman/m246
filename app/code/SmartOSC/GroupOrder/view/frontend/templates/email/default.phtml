@@ -36,10 +36,16 @@ $_order = $_item->getOrder();
     </td>
 
     <?php
+    $name = [];
     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
     $customerRepository = $objectManager->get(\Magento\Customer\Api\CustomerRepositoryInterface::class);
-    $customer = $customerRepository->getById($_item->getCustomerId());
-    $name = $customer->getFirstname() . ' ' . $customer->getLastname();
+    $customer_id = $_item->getCustomerId();
+    if ($customer_id) {
+        $customer = $customerRepository->getById($customer_id);
+        $name = $customer->getFirstname() . ' ' . $customer->getLastname();
+    } else {
+        $name = '';
+    }
     ?>
     <td class="item-name-customer"><?= $name ?></td>
 

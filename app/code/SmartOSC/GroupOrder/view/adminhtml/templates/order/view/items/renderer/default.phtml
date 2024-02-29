@@ -8,10 +8,16 @@
 <?php $_item = $block->getItem() ?>
 
 <?php
+    $name = [];
     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
     $customerRepository = $objectManager->get(\Magento\Customer\Api\CustomerRepositoryInterface::class);
-    $customer = $customerRepository->getById($_item->getData('customer_id'));
-    $name = $customer->getFirstname() . ' ' . $customer->getLastname();
+    $customer_id = $_item->getData('customer_id');
+    if ($customer_id) {
+        $customer = $customerRepository->getById($customer_id);
+        $name = $customer->getFirstname() . ' ' . $customer->getLastname();
+    } else {
+        $name = '';
+    }
 ?>
 
 <div>

@@ -136,11 +136,15 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
             $customerCurrent = $customerSession->getCustomerId();
             $customerQuoteItem = $_item->getCustomerId();
 
-            $customer = $customerRepository->getById($customerQuoteItem);
-            $name = $customer->getFirstname() . ' ' . $customer->getLastname();
+            if ($customerQuoteItem) {
+                $customer = $customerRepository->getById($customerQuoteItem);
+                $name = $customer->getFirstname() . ' ' . $customer->getLastname();
 
-            if ($customerCurrent == $customerQuoteItem) {
-                $name .= ' (You)';
+                if ($customerCurrent == $customerQuoteItem) {
+                    $name .= ' (You)';
+                }
+            } else {
+                $name = '';
             }
             ?>
             <td class="col customer-name" data-th="<?= $block->escapeHtml(__('Name Customer')) ?>">
