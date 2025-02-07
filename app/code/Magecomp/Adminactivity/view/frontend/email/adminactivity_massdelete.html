@@ -1,0 +1,38 @@
+<!--@subject {{trans "Log data cleared"}} @-->
+{{template config_path="design/email/header_template"}}
+<table style="float:left; margin-right: 10px" class="fue-abc-items">
+   <tr>
+       <td>
+           <div class="greeting">Hi {{var admin|raw}},</div>
+<!-- Custom Image with your email-->
+           <div>
+               {{trans "I’m from %store_name. " store_name=$store.getFrontendName()}},
+           </div>
+       </td>
+   </tr>
+    <tr></tr>
+   <tr></tr>
+   <tr>
+       <td>
+           <div>
+               {{trans "Your admin activity data is being cleared by "}} {{var name|raw}}
+           </div>
+       </td>
+   </tr>
+   <tr>
+       <td>
+           <div>
+               {{trans "Looking forward to seeing you around!"}}
+           </div>
+       </td>
+   </tr>
+   <tr>
+       <td>
+           <div style="font-size: 9px;text-align: center;">No longer want to receive these email ? You can
+               <a href="{{var unsubscribeLink}}" style="text-decoration-line: underline;font-weight: 400;">unsubscribe
+                   here</a>
+           </div>
+       </td>
+   </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magecomp_Adminactivity::adminactivity_menu" title="Magecomp Admin activity" translate="title" sortOrder="10">
+                    <resource id="Magecomp_Adminactivity::activity" title="Admin activity view" translate="title" sortOrder="100" />
+                    <resource id="Magecomp_Adminactivity::login_activity" title="Admin login view" translate="title" sortOrder="110" />
+                    <resource id="Magecomp_Adminactivity::configuration" title="Admin activity Configuration" translate="title" sortOrder="120" />
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Magecomp_Adminactivity::activityConfig" title="Admin Activity Configuration" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

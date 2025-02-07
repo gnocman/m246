@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Gein\Quiz\Block\Adminhtml\Exam\AssignQuestions $block */
+/** @var \Gein\Quiz\Block\Adminhtml\Exam\Tab\Question $blockGrid */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+?>
+<?= $block->getGridHtml() ?>
+<input type="hidden" name="exam_questions" id="in_exam_questions" data-form-part="gein_quiz_exam_form" value="" />
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Gein_Quiz/js/exam/assign-questions": {
+                "selectedQuestions": <?= /* @noEscape */ '"' . $block->getQuestionsString() . '"' ?>,
+                "gridJsObjectName": <?= /* @noEscape */ '"' . $gridJsObjectName . '"' ?: '{}' ?>
+            }
+        }
+    }
+</script>
+<script>
+    require('mage/apply/main').apply();
+</script>

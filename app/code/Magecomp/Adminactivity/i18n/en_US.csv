@@ -1,0 +1,115 @@
+"Clear Data","Clear Data"
+Order,Order
+Product,Product
+Category,Category
+Customer,Customer
+Promotion,Promotion
+Email,Email
+Page,Page
+Block,Block
+Widget,Widget
+Theme,Theme
+"System Config","System Config"
+Attibute,Attibute
+"Admin User","Admin User"
+SEO,SEO
+Magecomp,Magecomp
+"Admin Activity","Admin Activity"
+"Successfully deleted activity log data","Successfully deleted activity log data"
+"Something went wrong. Try again after sometime","Something went wrong. Try again after sometime"
+"Login Activity","Login Activity"
+actions,actions
+"Something went wrong, please try again","Something went wrong, please try again"
+"Activity data has already been reverted","Activity data has already been reverted"
+"Activity data has been reverted successfully","Activity data has been reverted successfully"
+"All Store Views","All Store Views"
+"Check Activity","Check Activity"
+"Activity Log","Activity Log"
+"Log data cleared","Log data cleared"
+"I’m from %store_name. ","I’m from %store_name. "
+"Your admin activity data is being cleared by ","Your admin activity data is being cleared by "
+"Looking forward to seeing you around!","Looking forward to seeing you around!"
+Back,Back
+Revert,Revert
+"Magecomp Admin activity","Magecomp Admin activity"
+"Admin activity view","Admin activity view"
+"Admin login view","Admin login view"
+"Admin activity Configuration","Admin activity Configuration"
+View,View
+New,New
+Edit,Edit
+Delete,Delete
+"Mass Delete","Mass Delete"
+"Mass Status","Mass Status"
+"Mass Edit","Mass Edit"
+"Mass Subscribe","Mass Subscribe"
+"Mass Unsubscribe","Mass Unsubscribe"
+"Mass Assign Group","Mass Assign Group"
+"Mass Disable","Mass Disable"
+"Mass Enable","Mass Enable"
+Reorder,Reorder
+Hold,Hold
+Unhold,Unhold
+Cancel,Cancel
+"Add Comment","Add Comment"
+"Mass Cancel","Mass Cancel"
+"Mass Hold","Mass Hold"
+"Mass Unhold","Mass Unhold"
+Assign,Assign
+Unassign,Unassign
+"Catalog Product","Catalog Product"
+"Catalog Categories","Catalog Categories"
+"Customer Group","Customer Group"
+"Catalog Promotion","Catalog Promotion"
+"Cart Promotion","Cart Promotion"
+"Email Newsletter","Email Newsletter"
+"Cms Pages","Cms Pages"
+"Cms Blocks","Cms Blocks"
+"Cms Widget","Cms Widget"
+Themes,Themes
+"Themes Schedule","Themes Schedule"
+"System Configuration","System Configuration"
+"Store and Website","Store and Website"
+"Product Attributes","Product Attributes"
+"Product Attributes Set","Product Attributes Set"
+"Product Review Rating","Product Review Rating"
+"Product Review","Product Review"
+"Admin User Role","Admin User Role"
+"Sales Order","Sales Order"
+Taxes,Taxes
+"Tax Rate","Tax Rate"
+"SEO URL Rewrites","SEO URL Rewrites"
+"SEO Search Term","SEO Search Term"
+"SEO Search Synonyms","SEO Search Synonyms"
+"SEO Sitemap","SEO Sitemap"
+"Terms and Conditions","Terms and Conditions"
+"Order Status","Order Status"
+"API Integration","API Integration"
+"General Configuration","General Configuration"
+"Enable Login Activity","Enable Login Activity"
+"Enable Page Visit History","Enable Page Visit History"
+"Admin email","Admin email"
+"When admin log is cleared mail will be sent on this email id.","When admin log is cleared mail will be sent on this email id."
+"Custom Email Template","Custom Email Template"
+"Email template used to send email when data will be cleared.","Email template used to send email when data will be cleared."
+"Clear Admin Activity Logs After","Clear Admin Activity Logs After"
+"Clear all admin activity logs after this days","Clear all admin activity logs after this days"
+"Clear Activity log","Clear Activity log"
+"Last clear date","Last clear date"
+"Last Cleared log date and time available here","Last Cleared log date and time available here"
+"Allowed Modules","Allowed Modules"
+"Store View","Store View"
+All,All
+"Action Type","Action Type"
+Username,Username
+Module,Module
+"Full Action","Full Action"
+Date/Time,Date/Time
+IP,IP
+Item,Item
+Name,Name
+"User Agent","User Agent"
+Device,Device
+"IP Address","IP Address"
+Date,Date
+Status,Status
