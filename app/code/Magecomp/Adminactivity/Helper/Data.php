@@ -48,6 +48,15 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements \Mage
     public static $wildcardModels = [
         \Magento\Framework\App\Config\Value\Interceptor::class
     ];
+    private ActivityFactory $activityFactory;
+    private WriterInterface $configWriter;
+    private TimezoneInterface $timezoneInterface;
+    private Session $authSession;
+    private LoggerInterface $logger;
+    private TransportBuilder $transportBuilder;
+    private StoreManagerInterface $storeManager;
+    private StateInterface $state;
+    private Mailconfig $emailTemplateConfig;
 
     /**
      * Data constructor.
@@ -76,7 +85,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements \Mage
         $this->logger = $logger;
         $this->transportBuilder = $transportBuilder;
         $this->storeManager = $storeManager;
-        $this->inlineTranslation = $state;
+        $this->state = $state;
         $this->emailTemplateConfig = $emailTemplateConfig;
         parent::__construct($context);
     }

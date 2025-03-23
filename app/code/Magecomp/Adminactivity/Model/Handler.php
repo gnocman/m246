@@ -37,6 +37,7 @@ class Handler
      * @var ActivityLogFactory
      */
     public $activityLogFactory;
+    private Fieldhelper $fieldhelper;
 
     /**
      * Handler constructor.

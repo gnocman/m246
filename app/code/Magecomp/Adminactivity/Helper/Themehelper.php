@@ -33,6 +33,7 @@ class Themehelper implements \Magecomp\Adminactivity\Api\Activity\Modelinterface
      * @var \Magento\Framework\App\RequestInterface
      */
     public $request;
+    private \Magecomp\Adminactivity\Helper\Confighelper $configHelper;
 
     /**
      * ThemeConfig constructor.
