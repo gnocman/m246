@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magecomp" translate="label" sortOrder="100" class="magecomp-logo">
+            <label><![CDATA[]]></label>
+        </tab>
+        <section id="adminactivity" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Admin Activity</label>
+            <tab>magecomp</tab>
+            <resource>Magecomp_Adminactivity::activityConfig</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Admin Activity</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="login_activity" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Login Activity</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="page_visit" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Page Visit History</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="admin_email" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Admin email</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <comment><![CDATA[When admin log is cleared mail will be sent on this email id.]]></comment>
+                    <validate>validate-email validate-no-empty</validate>
+                </field>
+                <field id="email_template" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Email Template</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <comment><![CDATA[Email template used to send email when data will be cleared.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="clearlog" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Clear Admin Activity Logs After</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <comment><![CDATA[Clear all admin activity logs after this days]]></comment>
+                    <validate>integer validate-no-empty</validate>
+                </field>
+
+                <field id="clearactivitylog" translate="label" type="button" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Clear Activity log</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <frontend_model>Magecomp\Adminactivity\Block\Adminhtml\System\Button</frontend_model>
+                    <comment><![CDATA[Clear admin activity log manually.]]></comment>
+                </field>
+
+                <field id="clearlogdate" translate="label comment" type="label" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Last clear date</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <comment><![CDATA[Last Cleared log date and time available here]]></comment>
+                </field>
+                <field id="allowed_module" translate="label" type="multiselect" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <source_model>Magecomp\Adminactivity\Block\Adminhtml\System\Modulefield</source_model>
+                    <label>Allowed Modules</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <validate>validate-select</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

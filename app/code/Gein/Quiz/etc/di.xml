@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Gein\Quiz\Api\ExamRepositoryInterface" type="Gein\Quiz\Model\ExamRepository"/>
+    <preference for="Gein\Quiz\Api\Data\ExamInterface" type="Gein\Quiz\Model\Exam"/>
+    <preference for="Gein\Quiz\Api\Data\TestingInterface" type="Gein\Quiz\Model\Data\Testing"/>
+    <preference for="Gein\Quiz\Api\Data\ExamSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <virtualType name="Gein\Quiz\Model\ResourceModel\Exam\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">gein_quiz_exam</argument>
+            <argument name="resourceModel" xsi:type="string">Gein\Quiz\Model\ResourceModel\Exam\Collection</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="gein_quiz_exam_listing_data_source" xsi:type="string">
+                    Gein\Quiz\Model\ResourceModel\Exam\Grid\Collection
+                </item>
+                <item name="gein_quiz_question_listing_data_source" xsi:type="string">
+                    Gein\Quiz\Model\ResourceModel\Question\Grid\Collection
+                </item>
+                <item name="gein_quiz_answer_listing_data_source" xsi:type="string">
+                    Gein\Quiz\Model\ResourceModel\Answer\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Gein\Quiz\Api\QuestionRepositoryInterface" type="Gein\Quiz\Model\QuestionRepository"/>
+    <preference for="Gein\Quiz\Api\Data\QuestionInterface" type="Gein\Quiz\Model\Question"/>
+    <preference for="Gein\Quiz\Api\Data\QuestionSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <virtualType name="Gein\Quiz\Model\ResourceModel\Question\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">gein_quiz_question</argument>
+            <argument name="resourceModel" xsi:type="string">Gein\Quiz\Model\ResourceModel\Question\Collection
+            </argument>
+        </arguments>
+    </virtualType>
+    <preference for="Gein\Quiz\Api\AnswerRepositoryInterface" type="Gein\Quiz\Model\AnswerRepository"/>
+    <preference for="Gein\Quiz\Api\Data\AnswerInterface" type="Gein\Quiz\Model\Answer"/>
+    <preference for="Gein\Quiz\Api\Data\AnswerSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <virtualType name="Gein\Quiz\Model\ResourceModel\Answer\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">gein_quiz_answer</argument>
+            <argument name="resourceModel" xsi:type="string">Gein\Quiz\Model\ResourceModel\Answer\Collection</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Gein\Quiz\Ui\DataProvider\Question\Form\Modifier\Pool"
+                 type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="answer-options" xsi:type="array">
+                    <item name="class" xsi:type="string">Gein\Quiz\Ui\DataProvider\Question\Form\Modifier\AnswerOptions</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Gein\Quiz\Model\Question\DataProvider">
+        <arguments>
+            <argument name="pool" xsi:type="object">Gein\Quiz\Ui\DataProvider\Question\Form\Modifier\Pool</argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,26 @@
+{
+    "name": "gein/module-quiz",
+    "description": "Gein Quiz",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        },
+        {
+            "name": "Th\u00f4ng V\u0169 Vi\u1ebft",
+            "email": "thongvv@gein.vn"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Gein\\Quiz\\": ""
+        }
+    }
+}

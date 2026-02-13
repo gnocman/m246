@@ -1,0 +1,104 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">gein_quiz_question_form.question_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">General Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="Gein\Quiz\Block\Adminhtml\Question\Edit\BackButton"/>
+            <button name="delete" class="Gein\Quiz\Block\Adminhtml\Question\Edit\DeleteButton"/>
+            <button name="save" class="Gein\Quiz\Block\Adminhtml\Question\Edit\SaveButton"/>
+            <button name="save_and_continue" class="Gein\Quiz\Block\Adminhtml\Question\Edit\SaveAndContinueButton"/>
+        </buttons>
+        <namespace>gein_quiz_question_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>gein_quiz_question_form.question_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="question_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="*/*/save"/>
+        </settings>
+        <dataProvider name="question_form_data_source" class="Gein\Quiz\Model\Question\DataProvider">
+            <settings>
+                <requestFieldName>question_id</requestFieldName>
+                <primaryFieldName>question_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label>General</label>
+            <additionalClasses>
+                <class name="question__general-default">true</class>
+            </additionalClasses>
+        </settings>
+        <field name="content" formElement="textarea" sortOrder="10">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">Question</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Content</label>
+                <dataScope>content</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="exam_id" formElement="select" sortOrder="15">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">Question</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Exam</label>
+                <dataScope>exam_id</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Gein\Quiz\Model\Exam\Source\Exam"/>
+                        <caption translate="true">-- Please Select --</caption>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="question_image" formElement="imageUploader">
+            <settings>
+                <label translate="true">Image</label>
+                <componentType>imageUploader</componentType>
+                <dataScope>question_image</dataScope>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>2097152</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="string" name="url">gein_quiz/question/upload</param>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

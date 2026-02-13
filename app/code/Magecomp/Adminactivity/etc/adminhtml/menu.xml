@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magecomp_Adminactivity::adminactivity_menu" title="Admin Activity" module="Magecomp_Adminactivity" sortOrder="51" resource="Magecomp_Adminactivity::adminactivity_menu"/>
+        <add id="Magecomp_Adminactivity::activity" title="Admin Activity" module="Magecomp_Adminactivity" sortOrder="10" parent="Magecomp_Adminactivity::adminactivity_menu" action="adminactivity/adminactivity" resource="Magecomp_Adminactivity::activity" />
+        <add id="Magecomp_Adminactivity::login_activity" title="Login Activity" module="Magecomp_Adminactivity" sortOrder="20" parent="Magecomp_Adminactivity::adminactivity_menu" action="adminactivity/loginaction" resource="Magecomp_Adminactivity::login_activity" />
+        <add id="Magecomp_Adminactivity::configuration" title="Configuration" module="Magecomp_Adminactivity" sortOrder="40" parent="Magecomp_Adminactivity::adminactivity_menu" action="adminhtml/system_config/edit/section/admin_activity" resource="Magecomp_Adminactivity::configuration"/>
+    </menu>
+</config>

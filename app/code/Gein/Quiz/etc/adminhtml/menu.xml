@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Gein_Quiz::menu" title="Quiz" module="Gein_Quiz" sortOrder="2" resource="Gein_Quiz::menu"/>
+        <add id="Gein_Quiz::gein_quiz_exam" title="Exam" module="Gein_Quiz" sortOrder="5"
+             resource="Gein_Quiz::gein_quiz_exam" parent="Gein_Quiz::menu" action="gein_quiz/exam/index"/>
+        <add id="Gein_Quiz::gein_quiz_question" title="Question" module="Gein_Quiz" sortOrder="10"
+             resource="Gein_Quiz::gein_quiz_question" parent="Gein_Quiz::menu" action="gein_quiz/question/index"/>
+<!--        <add id="Gein_Quiz::gein_quiz_answer" title="Result" module="Gein_Quiz" sortOrder="15"-->
+<!--             resource="Gein_Quiz::gein_quiz_answer" parent="Gein_Quiz::menu" action="gein_quiz/result/index"/>-->
+        <remove id="Magento_Backend::dashboard" />
+        <remove id="Magento_Backend::marketing" />
+        <remove id="Magento_Backend::content" />
+        <remove id="Magento_Backend::system" />
+        <remove id="Magento_Reports::report" />
+        <remove id="Magento_Marketplace::partners" />
+    </menu>
+</config>

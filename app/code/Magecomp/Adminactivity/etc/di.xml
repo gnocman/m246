@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magecomp\Adminactivity\Api\Activityrepositoryinterface" type="Magecomp\Adminactivity\Model\Activityrepository" />
+    <preference for="Magecomp\Adminactivity\Api\Loginrepositoryinterface" type="Magecomp\Adminactivity\Model\Loginrepository" />
+
+    <!-- Type for admin_activity_listing_data_source -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="admin_activity_listing_data_source" xsi:type="string">Magecomp\Adminactivity\Model\ResourceModel\Grid\Activity\Collection</item>
+                <item name="login_activity_listing_data_source" xsi:type="string">Magecomp\Adminactivity\Model\ResourceModel\Grid\Login\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Magecomp\Adminactivity\Model\ResourceModel\Grid\Activity\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magecomp_admin_activity</argument>
+            <argument name="resourceModel" xsi:type="string">Magecomp\Adminactivity\Model\ResourceModel\Activity</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Magecomp\Adminactivity\Model\ResourceModel\Grid\Login\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magecomp_admin_login_activity</argument>
+            <argument name="resourceModel" xsi:type="string">Magecomp\Adminactivity\Model\ResourceModel\Login</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="magecomp_configreader" type="Magento\Framework\Config\Reader\Filesystem">
+        <arguments>
+            <argument name="converter" xsi:type="object">Magecomp\Adminactivity\Model\Config\Converter</argument>
+            <argument name="schemaLocator" xsi:type="object">Magecomp\Adminactivity\Model\Config\Schemalocator</argument>
+            <argument name="fileName" xsi:type="string">activitylogdetail.xml</argument>
+            <argument name="idAttributes" xsi:type="array">
+                <item name="/config/modules/module" xsi:type="string">name</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- AdminActivity Logger and Handler -->
+
+    <type name="Magecomp\Adminactivity\Model\Config\Data">
+        <arguments>
+            <argument name="reader" xsi:type="object">magecomp_configreader</argument>
+            <argument name="cacheId" xsi:type="string">magecomp_admin_activity_cache</argument>
+        </arguments>
+    </type>
+</config>

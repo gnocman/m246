@@ -1,0 +1,112 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+<table name="magecomp_admin_activity" comment="Magecomp Admin Activity">
+    <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Primary key for the Table" />
+    <column xsi:type="varchar" name="username" nullable="false" length="40"  comment="Store admin username" />
+    <column xsi:type="varchar" name="name" nullable="false" length="64" comment="Full name of admin"/>
+    <column xsi:type="int" name="admin_id" nullable="false" default="1" unsigned="true"  comment="Store id of admin user" />
+    <column xsi:type="varchar" name="scope" nullable="true"  length="15" comment="Scope of activity"/>
+    <column xsi:type="smallint" name="store_id" nullable="false" default="0" comment="Insert store id"/>
+    <column xsi:type="varchar" name="action_type" nullable="false" default="NULL" length="32" comment="Action type like New, Edit, View, Delete, Mass Delete, etc"/>
+    <column xsi:type="varchar" name="remote_ip" nullable="false" default="NULL" comment="IP address of logged in admin user"/>
+    <column xsi:type="varchar" name="forwarded_ip" nullable="true" default="NULL" comment="Real ip address if visitor used proxy"/>
+    <column xsi:type="text" name="user_agent"  comment="Store browser’s user agent"/>
+    <column xsi:type="varchar" name="module" default="NULL" length="50" comment="Name of module in which action performed"/>
+    <column xsi:type="varchar" name="fullaction"  default="NULL" length="200"  comment="fullaction"/>
+    <column xsi:type="varchar" name="item_name" length="255" comment="Name of item which is effected like product, user, order, etc"/>
+    <column xsi:type="varchar" name="item_url" length="255"  comment=""/>
+    <column xsi:type="boolean" name="is_revertable" nullable="true" default="0" comment="0 = Not able revert activity, 1= Able to revert activity"/>
+    <column xsi:type="varchar" name="revert_by" length="64"  comment="Name of admin user who reverted the activity"/>
+    <column xsi:type="timestamp"  name="created_at"  nullable="false" default="CURRENT_TIMESTAMP"  comment="The date when the activity was created"/>
+    <column xsi:type="timestamp" name="updated_at"    nullable="false" default="CURRENT_TIMESTAMP" comment="The date when the activity was modified or reverted"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="entity_id"/>
+    </constraint>
+    <index referenceId="INDEX_USERID"    indexType="btree">
+        <column name="admin_id"/>
+    </index>
+    <index referenceId="INDEX_STOREID" indexType="btree">
+        <column name="store_id"/>
+    </index>
+    <index referenceId="INDEX_FULLACTION" indexType="fulltext">
+        <column name="fullaction"/>
+    </index>
+    <index referenceId="INDEX_ACTIONTYPE" indexType="fulltext">
+        <column name="action_type"/>
+    </index>
+    <index referenceId="INDEX_MODULE" indexType="fulltext">
+        <column name="module"/>
+    </index>
+</table>
+
+
+<table name="magecomp_admin_login_activity" comment="Magecomp Admin Login Activity">
+    <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Primary key for the Table" />
+    <column xsi:type="varchar" name="username" nullable="false" length="40"  comment="Store admin username" />
+    <column xsi:type="varchar" name="name" nullable="false" length="64" comment="Full name of admin"/>
+    <column xsi:type="varchar" name="remote_ip" nullable="false" default="NULL" comment="IP address of logged in admin user"/>
+    <column xsi:type="varchar" name="forwarded_ip" nullable="true" default="NULL" comment="Real ip address if visitor used proxy"/>
+    <column xsi:type="text" name="user_agent"  comment="Store browser’s user agent"/>
+    <column xsi:type="varchar" name="location" default="NULL" length="255" comment="Name of module in which action performed"/>
+    <column xsi:type="varchar" name="type"  default="NULL" length="8"  comment="Type"/>
+    <column xsi:type="boolean" name="status"    nullable="true" comment="0 = Faild, 1= Success"/>
+    <column xsi:type="text" name="remark"  nullable="false"  comment="Reason for failed"/>
+    <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="The date when the activity was created"/>
+  
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="entity_id"/>
+    </constraint>
+    <index referenceId="INDEX_USERNAME" indexType="fulltext">
+        <column name="username"/>
+    </index>
+    <index referenceId="INDEX_TYPE" indexType="fulltext">
+        <column name="type"/>
+    </index>
+</table>
+
+
+<table name="magecomp_admin_activity_log" comment="Magecomp Admin Activity Log">
+    <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Primary key for the Table" />
+    <column xsi:type="int" name="activity_id" unsigned="true" nullable="false"  comment="Entity id of magecomp_admin_activity table" />
+    <column xsi:type="varchar" name="field_name" nullable="false" length="32" comment="Name of field which is effected"/>
+    <column xsi:type="text" name="old_value"  comment="Old value of field"/>
+    <column xsi:type="text" name="new_value" comment="New value of field"/>
+    <column xsi:type="text" name="user_agent"  comment="Store browser’s user agent"/>
+    <column xsi:type="varchar" name="location" default="NULL" length="255" comment="Name of module in which action performed"/>
+    <column xsi:type="varchar" name="type"  default="NULL" length="8"  comment="Type"/>
+    <column xsi:type="boolean" name="status"    nullable="true" comment="0 = Faild, 1= Success"/>
+    <column xsi:type="text" name="remark"  nullable="false"  comment="Reason for failed"/>
+    <column xsi:type="timestamp" name="created_at"  nullable="false" default="CURRENT_TIMESTAMP"  comment="The date when the activity was created"/>
+  
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="entity_id"/>
+    </constraint>
+    <index referenceId="INDEX_ENTITYID" indexType="btree">
+        <column name="entity_id"/>
+    </index>
+    <index referenceId="INDEX_ACTIVITYID" indexType="btree">
+        <column name="activity_id"/>
+    </index>
+    <constraint xsi:type="foreign" referenceId="FL_ALLOWED_ACTIVITYID" table="magecomp_admin_activity_log" column="activity_id" referenceTable="magecomp_admin_activity" referenceColumn="entity_id" onDelete="CASCADE"/>
+</table>
+
+
+<table name="magecomp_admin_activity_detail" comment="Magecomp Admin Activity Detail">
+    <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Primary key for the Table" />
+    <column xsi:type="int" name="activity_id" unsigned="true" nullable="false"  comment="Entity id of magecomp_admin_activity table" />
+    <column xsi:type="varchar" name="model_class" nullable="false" length="255" comment="Name of field which is effected"/>
+    <column xsi:type="int" name="item_id"  comment="Old value of field"/>
+    <column xsi:type="varchar" name="status"  comment=""/>
+    <column xsi:type="text" name="response" nullable="false" comment="Name of module in which action performed"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="entity_id"/>
+    </constraint>
+    <index referenceId="INDEX_ENTITYID" indexType="btree">
+        <column name="entity_id"/>
+    </index>
+    <index referenceId="INDEX_ACTIVITYID" indexType="btree">
+        <column name="activity_id"/>
+    </index>
+    <constraint xsi:type="foreign" referenceId="FL_ALLOWED_ACTIVITYID" table="magecomp_admin_activity_detail" column="activity_id" referenceTable="magecomp_admin_activity" referenceColumn="entity_id" onDelete="CASCADE"/>
+</table>
+</schema>

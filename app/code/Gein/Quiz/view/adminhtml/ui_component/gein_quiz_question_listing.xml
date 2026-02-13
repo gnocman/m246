@@ -1,0 +1,158 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">gein_quiz_question_listing.gein_quiz_question_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>gein_quiz_question_columns</spinner>
+        <deps>
+            <dep>gein_quiz_question_listing.gein_quiz_question_listing_data_source</dep>
+        </deps>
+        <buttons>
+            <button name="add">
+                <url path="*/*/new"/>
+                <class>primary</class>
+                <label translate="true">Add new Question</label>
+            </button>
+        </buttons>
+    </settings>
+    <dataSource name="gein_quiz_question_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">question_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Gein_Quiz::Question</aclResource>
+        <dataProvider name="gein_quiz_question_listing_data_source" class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>question_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="gein_quiz_question_columns">
+        <settings>
+            <editorConfig>
+                <param name="selectProvider" xsi:type="string">gein_quiz_question_listing.gein_quiz_question_listing.gein_quiz_question_columns.ids</param>
+                <param name="enabled" xsi:type="boolean">true</param>
+                <param name="indexField" xsi:type="string">question_id</param>
+                <param name="clientConfig" xsi:type="array">
+                    <item name="saveUrl" xsi:type="url" path="gein_quiz/Question/inlineEdit"/>
+                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                </param>
+            </editorConfig>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">gein_quiz_question_listing.gein_quiz_question_listing.gein_quiz_question_columns_editor</item>
+                    <item name="target" xsi:type="string">startEdit</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                        <item name="1" xsi:type="boolean">true</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>question_id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="question_id" sortOrder="5">
+            <settings>
+                <filter>text</filter>
+                <sorting>asc</sorting>
+                <label translate="true">ID</label>
+            </settings>
+        </column>
+        <column name="content" sortOrder="10">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">content</label>
+                <editor>
+                    <editorType>text</editorType>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">false</rule>
+                    </validation>
+                </editor>
+            </settings>
+        </column>
+        <column name="exam_id" sortOrder="15">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">exam_id</label>
+                <editor>
+                    <editorType>text</editorType>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">false</rule>
+                    </validation>
+                </editor>
+            </settings>
+        </column>
+        <column name="type" sortOrder="20">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">type</label>
+                <editor>
+                    <editorType>text</editorType>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">false</rule>
+                    </validation>
+                </editor>
+            </settings>
+        </column>
+        <column name="image">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+            <settings>
+                <filter>text</filter>
+                <label translate="true">image</label>
+            </settings>
+        </column>
+        <column name="create_time" sortOrder="25">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">create_time</label>
+                <editor>
+                    <editorType>date</editorType>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">false</rule>
+                    </validation>
+                </editor>
+            </settings>
+        </column>
+        <column name="update_time" sortOrder="30">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">update_time</label>
+                <editor>
+                    <editorType>date</editorType>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">false</rule>
+                    </validation>
+                </editor>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Gein\Quiz\Ui\Component\Listing\Column\QuestionActions" sortOrder="35">
+            <settings>
+                <indexField>question_id</indexField>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>107</resizeDefaultWidth>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

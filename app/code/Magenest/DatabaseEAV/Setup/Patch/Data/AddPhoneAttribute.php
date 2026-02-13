@@ -7,14 +7,12 @@ declare(strict_types=1);
 
 namespace Magenest\DatabaseEAV\Setup\Patch\Data;
 
-use Magento\Catalog\Ui\DataProvider\Product\ProductCollectionFactory;
 use Magento\Customer\Model\Customer;
 use Magento\Eav\Model\Config;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchRevertableInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class CustomerAttribute for Create Customer Attribute using Data Patch.
@@ -33,11 +31,6 @@ class AddPhoneAttribute implements DataPatchInterface, PatchRevertableInterface
     private EavSetupFactory $eavSetupFactory;
 
     /**
-     * @var ProductCollectionFactory
-     */
-    private ProductCollectionFactory $productCollectionFactory;
-
-    /**
      * @var Config
      */
     private Config $eavConfig;
@@ -51,20 +44,17 @@ class AddPhoneAttribute implements DataPatchInterface, PatchRevertableInterface
      * CustomerAttribute Constructor
      * @param EavSetupFactory $eavSetupFactory
      * @param Config $eavConfig
-     * @param LoggerInterface $logger
      * @param \Magento\Customer\Model\ResourceModel\Attribute $attributeResource
      * @param \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup
      */
     public function __construct(
         EavSetupFactory $eavSetupFactory,
         Config $eavConfig,
-        LoggerInterface $logger,
         \Magento\Customer\Model\ResourceModel\Attribute $attributeResource,
         \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup
     ) {
         $this->eavSetupFactory = $eavSetupFactory;
         $this->eavConfig = $eavConfig;
-        $this->logger = $logger;
         $this->attributeResource = $attributeResource;
         $this->moduleDataSetup = $moduleDataSetup;
     }

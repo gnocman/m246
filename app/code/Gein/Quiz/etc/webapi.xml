@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/gein-quiz/testing" method="GET">
+        <service class="Gein\Quiz\Api\ExamRepositoryInterface" method="getTesting"/>
+        <resources>
+            <resource ref="Gein_Quiz::Exam_view"/>
+        </resources>
+        <data>
+            <parameter name="examId">%exam_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/gein-quiz/exam" method="POST">
+        <service class="Gein\Quiz\Api\ExamRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Gein_Quiz::Exam_save"/>
+        </resources>
+    </route>
+    <route url="/V1/gein-quiz/exam/search" method="GET">
+        <service class="Gein\Quiz\Api\ExamRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Gein_Quiz::Exam_view"/>
+        </resources>
+    </route>
+    <route url="/V1/gein-quiz/exam/:examId" method="GET">
+        <service class="Gein\Quiz\Api\ExamRepositoryInterface" method="get"/>
+        <resources>
+            <resource ref="Gein_Quiz::Exam_view"/>
+        </resources>
+    </route>
+    <route url="/V1/gein-quiz/exam/:examId" method="PUT">
+        <service class="Gein\Quiz\Api\ExamRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Gein_Quiz::Exam_update"/>
+        </resources>
+    </route>
+    <route url="/V1/gein-quiz/exam/:examId" method="DELETE">
+        <service class="Gein\Quiz\Api\ExamRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Gein_Quiz::Exam_delete"/>
+        </resources>
+    </route>
+</routes>

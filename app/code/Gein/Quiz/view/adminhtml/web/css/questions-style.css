@@ -1,0 +1,27 @@
+.entry-edit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.answer-options {
+    border-bottom: none !important;
+}
+
+.answer-options .admin__collapsible-title {
+    margin-left: 40px;
+}
+
+.answer-options .admin__field-control, .admin__control-textarea, table{
+    width: 300px !important;
+    max-width: 300px !important;
+}
+
+.question__general-default .admin__field-label {
+    text-align: left;
+}
+
+.question__general-default .admin__field textarea, select, input {
+    width: 300px !important;
+    max-width: 300px !important;
+}
