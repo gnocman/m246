@@ -1,0 +1,72 @@
+{
+    "loyalty_points": {
+        "column": {
+            "point_id": true,
+            "customer_id": true,
+            "total_points": true,
+            "level": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "LOYALTY_POINTS_CUSTOMER_ID": true
+        }
+    },
+    "loyalty_history": {
+        "column": {
+            "history_id": true,
+            "customer_id": true,
+            "points": true,
+            "action_type": true,
+            "order_id": true,
+            "comment": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        },
+        "index": {
+            "LOYALTY_HISTORY_CUSTOMER_ID_IDX": true,
+            "LOYALTY_HISTORY_ACTION_TYPE_IDX": true
+        }
+    },
+    "loyalty_rule": {
+        "column": {
+            "rule_id": true,
+            "name": true,
+            "points": true,
+            "condition_serialized": true,
+            "customer_group_ids": true,
+            "is_active": true,
+            "from_date": true,
+            "to_date": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        },
+        "index": {
+            "LOYALTY_RULE_IS_ACTIVE_IDX": true
+        }
+    },
+    "loyalty_reward": {
+        "column": {
+            "reward_id": true,
+            "name": true,
+            "required_points": true,
+            "reward_type": true,
+            "reward_value": true,
+            "is_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        },
+        "index": {
+            "LOYALTY_REWARD_IS_ACTIVE_IDX": true
+        }
+    }
+}

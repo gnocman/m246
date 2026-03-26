@@ -1,0 +1,43 @@
+type Query {
+    loyaltyCustomerPoints: LoyaltyPoints @resolver(class: "NamCong\\Loyalty\\Model\\Resolver\\CustomerPoints") @doc(description: "Get loyalty points for the current customer")
+    loyaltyRewards: [LoyaltyReward] @resolver(class: "NamCong\\Loyalty\\Model\\Resolver\\Rewards") @doc(description: "Get all available loyalty rewards")
+}
+
+type Mutation {
+    loyaltyRedeemReward(rewardId: Int!): LoyaltyRedeemResult @resolver(class: "NamCong\\Loyalty\\Model\\Resolver\\RedeemReward") @doc(description: "Redeem a loyalty reward")
+}
+
+type LoyaltyPoints @doc(description: "Customer loyalty points data") {
+    total_points: Int @doc(description: "Total points balance")
+    level: String @doc(description: "Customer loyalty level")
+    next_level_points: Int @doc(description: "Points needed for next level")
+    progress_percentage: Float @doc(description: "Progress to next level as percentage")
+    history: [LoyaltyHistory] @resolver(class: "NamCong\\Loyalty\\Model\\Resolver\\PointsHistory") @doc(description: "Points history")
+}
+
+type LoyaltyHistory @doc(description: "Points history entry") {
+    history_id: Int
+    points: Int
+    action_type: String
+    comment: String
+    created_at: String
+}
+
+type LoyaltyReward @doc(description: "Loyalty reward") {
+    reward_id: Int
+    name: String
+    required_points: Int
+    reward_type: String
+    reward_value: Float
+    is_active: Boolean
+}
+
+type LoyaltyRedeemResult @doc(description: "Result of a reward redemption") {
+    success: Boolean
+    message: String
+    remaining_points: Int
+}
+
+type Customer {
+    loyalty_points: LoyaltyPoints @resolver(class: "NamCong\\Loyalty\\Model\\Resolver\\CustomerPoints") @doc(description: "Loyalty points for the customer")
+}

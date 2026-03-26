@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Data Interfaces -->
+    <preference for="NamCong\Loyalty\Api\Data\PointsInterface"
+                type="NamCong\Loyalty\Model\Points"/>
+    <preference for="NamCong\Loyalty\Api\Data\HistoryInterface"
+                type="NamCong\Loyalty\Model\History"/>
+    <preference for="NamCong\Loyalty\Api\Data\RuleInterface"
+                type="NamCong\Loyalty\Model\Rule"/>
+    <preference for="NamCong\Loyalty\Api\Data\RewardInterface"
+                type="NamCong\Loyalty\Model\Reward"/>
+
+    <!-- Repository Interfaces -->
+    <preference for="NamCong\Loyalty\Api\PointRepositoryInterface"
+                type="NamCong\Loyalty\Model\Repository\PointRepository"/>
+    <preference for="NamCong\Loyalty\Api\HistoryRepositoryInterface"
+                type="NamCong\Loyalty\Model\Repository\HistoryRepository"/>
+    <preference for="NamCong\Loyalty\Api\RuleRepositoryInterface"
+                type="NamCong\Loyalty\Model\Repository\RuleRepository"/>
+    <preference for="NamCong\Loyalty\Api\RewardRepositoryInterface"
+                type="NamCong\Loyalty\Model\Repository\RewardRepository"/>
+
+    <!-- Service Interfaces -->
+    <preference for="NamCong\Loyalty\Api\PointManagerInterface"
+                type="NamCong\Loyalty\Service\PointManager"/>
+
+    <!-- Virtual types for search result factory -->
+    <virtualType name="NamCong\Loyalty\Model\Api\SearchCriteria\CollectionProcessor"
+                 type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Cache plugin for RewardRepository -->
+    <type name="NamCong\Loyalty\Model\Repository\RewardRepository">
+        <plugin name="namcong_loyalty_reward_cache_invalidate"
+                type="NamCong\Loyalty\Plugin\Reward\InvalidateRewardCachePlugin"/>
+    </type>
+
+    <type name="Magento\Sales\Model\Service\OrderService">
+        <plugin name="namcong_loyalty_restore_coupon_after_cancel"
+                type="NamCong\Loyalty\Plugin\Order\RestoreCouponAfterCancelPlugin"
+                sortOrder="50"/>
+    </type>
+
+    <!-- Wire default cache frontend to RewardManager -->
+    <type name="NamCong\Loyalty\Service\RewardManager">
+        <arguments>
+            <argument name="cache" xsi:type="object">Magento\Framework\App\Cache\Type\Config</argument>
+        </arguments>
+    </type>
+
+</config>
