@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/menu.xsd">
+    <menu>
+        <add id="NamCong_Loyalty::loyalty"
+             title="Loyalty Program"
+             module="NamCong_Loyalty"
+             sortOrder="60"
+             parent="Magento_Backend::marketing"
+             dependsOnModule="NamCong_Loyalty"
+             resource="NamCong_Loyalty::loyalty"/>
+
+        <add id="NamCong_Loyalty::loyalty_rules"
+             title="Loyalty Rules"
+             module="NamCong_Loyalty"
+             sortOrder="10"
+             parent="NamCong_Loyalty::loyalty"
+             action="loyalty_admin/rule/index"
+             dependsOnModule="NamCong_Loyalty"
+             resource="NamCong_Loyalty::manage_rules"/>
+
+        <add id="NamCong_Loyalty::loyalty_rewards"
+             title="Rewards Management"
+             module="NamCong_Loyalty"
+             sortOrder="20"
+             parent="NamCong_Loyalty::loyalty"
+             action="loyalty_admin/reward/index"
+             dependsOnModule="NamCong_Loyalty"
+             resource="NamCong_Loyalty::manage_rewards"/>
+
+        <add id="NamCong_Loyalty::loyalty_customer_points"
+             title="Customer Points"
+             module="NamCong_Loyalty"
+             sortOrder="30"
+             parent="NamCong_Loyalty::loyalty"
+             action="loyalty_admin/points/index"
+             dependsOnModule="NamCong_Loyalty"
+             resource="NamCong_Loyalty::view_customer_points"/>
+    </menu>
+</config>

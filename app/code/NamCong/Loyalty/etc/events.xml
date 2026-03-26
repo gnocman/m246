@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <event name="sales_order_save_after">
+        <observer name="namcong_loyalty_add_points_after_order"
+                  instance="NamCong\Loyalty\Observer\AddPointsAfterOrder"/>
+    </event>
+
+    <event name="sales_order_place_after">
+        <observer name="namcong_loyalty_consume_coupon_after_order_place"
+                  instance="NamCong\Loyalty\Observer\ConsumeCouponAfterOrderPlace"/>
+    </event>
+
+    <event name="customer_register_success">
+        <observer name="namcong_loyalty_add_points_after_registration"
+                  instance="NamCong\Loyalty\Observer\AddPointsAfterRegistration"/>
+    </event>
+
+    <event name="review_save_after">
+        <observer name="namcong_loyalty_add_points_after_review"
+                  instance="NamCong\Loyalty\Observer\AddPointsAfterReview"/>
+    </event>
+
+</config>

@@ -1,0 +1,462 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \NamCong\Loyalty\ViewModel\LoyaltyDashboard $vm */
+$vm = $block->getData('view_model');
+$totalPoints        = $vm->getTotalPoints();
+$level              = $vm->getCurrentLevel();
+$levelLabel         = $vm->getLevelLabel();
+$progress           = $vm->getProgressPercentage();
+$nextThreshold      = $vm->getNextLevelThreshold();
+$pointsToNext       = $vm->getPointsToNextLevel();
+$history            = $vm->getPointsHistory(15);
+$rewards            = $vm->getAvailableRewards();
+$badgeColor         = $vm->getLevelBadgeColor($level);
+$escaper            = $block->escapeHtml(...);
+?>
+<!DOCTYPE html>
+<div class="loyalty-dashboard">
+
+    <!-- ===== HERO SECTION ===== -->
+    <div class="loyalty-hero" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+        <div class="loyalty-hero__inner">
+            <div class="loyalty-hero__badge" style="border-color: <?= $badgeColor ?>; box-shadow: 0 0 24px <?= $badgeColor ?>55;">
+                <span class="loyalty-hero__badge-icon">
+                    <?php if ($level === 'gold'): ?>
+                        &#9733;
+                    <?php elseif ($level === 'silver'): ?>
+                        &#9670;
+                    <?php else: ?>
+                        &#9632;
+                    <?php endif; ?>
+                </span>
+                <span class="loyalty-hero__badge-level" style="color: <?= $badgeColor ?>"><?= $block->escapeHtml($levelLabel) ?></span>
+            </div>
+            <div class="loyalty-hero__points">
+                <span class="loyalty-hero__points-number" id="loyalty-total-points"><?= (int) $totalPoints ?></span>
+                <span class="loyalty-hero__points-label"><?= $block->escapeHtml(__('Loyalty Points')) ?></span>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <?php if ($nextThreshold !== null): ?>
+        <div class="loyalty-progress">
+            <div class="loyalty-progress__labels">
+                <span><?= $block->escapeHtml($levelLabel) ?></span>
+                <span><?= $block->escapeHtml(__('%1 pts to next level', $pointsToNext ?? 0)) ?></span>
+                <span><?= $nextThreshold ?> pts</span>
+            </div>
+            <div class="loyalty-progress__track">
+                <div class="loyalty-progress__fill"
+                     id="loyalty-progress-fill"
+                     style="width: 0%;"
+                     data-target="<?= (float) $progress ?>">
+                </div>
+            </div>
+            <div class="loyalty-progress__pct" id="loyalty-progress-pct">0%</div>
+        </div>
+        <?php else: ?>
+        <div class="loyalty-progress loyalty-progress--maxed">
+            <p><?= $block->escapeHtml(__('🏆 Congratulations! You have reached Gold level — the highest tier!')) ?></p>
+        </div>
+        <?php endif; ?>
+    </div>
+
+    <!-- ===== STATS CARDS ===== -->
+    <div class="loyalty-stats">
+        <div class="loyalty-stat-card loyalty-stat-card--blue">
+            <div class="loyalty-stat-card__icon">💎</div>
+            <div class="loyalty-stat-card__value"><?= (int) $totalPoints ?></div>
+            <div class="loyalty-stat-card__label"><?= $block->escapeHtml(__('Total Points')) ?></div>
+        </div>
+        <div class="loyalty-stat-card loyalty-stat-card--purple">
+            <div class="loyalty-stat-card__icon">🏅</div>
+            <div class="loyalty-stat-card__value"><?= $block->escapeHtml($levelLabel) ?></div>
+            <div class="loyalty-stat-card__label"><?= $block->escapeHtml(__('Your Level')) ?></div>
+        </div>
+        <div class="loyalty-stat-card loyalty-stat-card--green">
+            <div class="loyalty-stat-card__icon">🎁</div>
+            <div class="loyalty-stat-card__value"><?= count($rewards) ?></div>
+            <div class="loyalty-stat-card__label"><?= $block->escapeHtml(__('Available Rewards')) ?></div>
+        </div>
+        <div class="loyalty-stat-card loyalty-stat-card--orange">
+            <div class="loyalty-stat-card__icon">⚡</div>
+            <div class="loyalty-stat-card__value"><?= count($history) ?></div>
+            <div class="loyalty-stat-card__label"><?= $block->escapeHtml(__('Transactions')) ?></div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT GRID ===== -->
+    <div class="loyalty-content-grid">
+
+        <!-- Rewards Section -->
+        <div class="loyalty-panel loyalty-panel--rewards">
+            <div class="loyalty-panel__header">
+                <h2 class="loyalty-panel__title">🎁 <?= $block->escapeHtml(__('Available Rewards')) ?></h2>
+            </div>
+            <div class="loyalty-panel__body">
+                <?php if (empty($rewards)): ?>
+                    <div class="loyalty-empty">
+                        <span class="loyalty-empty__icon">🎯</span>
+                        <p><?= $block->escapeHtml(__('No rewards available right now. Keep earning points!')) ?></p>
+                    </div>
+                <?php else: ?>
+                    <div class="loyalty-rewards-grid">
+                        <?php foreach ($rewards as $reward): ?>
+                        <div class="loyalty-reward-card <?= !$vm->canAffordReward($reward) ? 'loyalty-reward-card--locked' : '' ?>">
+                            <div class="loyalty-reward-card__top">
+                                <div class="loyalty-reward-card__icon">
+                                    <?php if ($reward->getRewardType() === 'free_shipping'): ?>🚚
+                                    <?php elseif ($reward->getRewardType() === 'gift_product'): ?>🎀
+                                    <?php else: ?>💸<?php endif; ?>
+                                </div>
+                                <?php if (!$vm->canAffordReward($reward)): ?>
+                                    <span class="loyalty-reward-card__lock">🔒</span>
+                                <?php endif; ?>
+                            </div>
+                            <h3 class="loyalty-reward-card__name"><?= $block->escapeHtml($reward->getName()) ?></h3>
+                            <p class="loyalty-reward-card__cost">
+                                <strong><?= (int) $reward->getRequiredPoints() ?></strong> <?= $block->escapeHtml(__('pts')) ?>
+                            </p>
+                            <p class="loyalty-reward-card__value">
+                                <?php if ($reward->getRewardType() === 'discount'): ?>
+                                    <?= $block->escapeHtml(__('Save $%1', number_format($reward->getRewardValue(), 2))) ?>
+                                <?php elseif ($reward->getRewardType() === 'free_shipping'): ?>
+                                    <?= $block->escapeHtml(__('Free Shipping')) ?>
+                                <?php else: ?>
+                                    <?= $block->escapeHtml(__('Gift Product')) ?>
+                                <?php endif; ?>
+                            </p>
+                            <?php if ($vm->canAffordReward($reward)): ?>
+                            <form method="post"
+                                  action="<?= $block->escapeUrl($block->getUrl('loyalty/account/redeem')) ?>"
+                                  class="loyalty-reward-card__form">
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <input type="hidden" name="reward_id" value="<?= (int) $reward->getRewardId() ?>"/>
+                                <button type="submit" class="loyalty-btn loyalty-btn--redeem">
+                                    <?= $block->escapeHtml(__('Redeem Now')) ?>
+                                </button>
+                            </form>
+                            <?php else: ?>
+                            <div class="loyalty-reward-card__need">
+                                <?= $block->escapeHtml(__('Need %1 more pts', $reward->getRequiredPoints() - $totalPoints)) ?>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Points History Section -->
+        <div class="loyalty-panel loyalty-panel--history">
+            <div class="loyalty-panel__header">
+                <h2 class="loyalty-panel__title">📋 <?= $block->escapeHtml(__('Points History')) ?></h2>
+            </div>
+            <div class="loyalty-panel__body">
+                <?php if (empty($history)): ?>
+                    <div class="loyalty-empty">
+                        <span class="loyalty-empty__icon">📭</span>
+                        <p><?= $block->escapeHtml(__('No points history yet. Start shopping to earn points!')) ?></p>
+                    </div>
+                <?php else: ?>
+                    <div class="loyalty-history-list">
+                        <?php foreach ($history as $entry): ?>
+                        <div class="loyalty-history-row <?= $entry->getPoints() >= 0 ? 'loyalty-history-row--earn' : 'loyalty-history-row--spend' ?>">
+                            <div class="loyalty-history-row__icon">
+                                <?php
+                                $icon = match($entry->getActionType()) {
+                                    'order'        => '🛒',
+                                    'registration' => '👋',
+                                    'review'       => '⭐',
+                                    'redemption'   => '🎁',
+                                    'expiration'   => '⏰',
+                                    default        => '📌',
+                                };
+                                echo $icon;
+                                ?>
+                            </div>
+                            <div class="loyalty-history-row__info">
+                                <span class="loyalty-history-row__type">
+                                    <?= $block->escapeHtml($vm->getActionTypeLabel($entry->getActionType())) ?>
+                                </span>
+                                <span class="loyalty-history-row__comment">
+                                    <?php 
+                                        $comment = $entry->getComment() ?? '';
+                                        if (strpos($comment, 'LOYALTY-') !== false) {
+                                            $parts = explode('LOYALTY-', $comment);
+                                            echo $block->escapeHtml($parts[0]);
+                                            $code = 'LOYALTY-' . $parts[1];
+                                            echo '<code class="loyalty-coupon-code" onclick="copyLoyaltyCode(\'' . $block->escapeJs($code) . '\', this)">' . $block->escapeHtml($code) . '</code>';
+                                        } else {
+                                            echo $block->escapeHtml($comment);
+                                        }
+                                    ?>
+                                </span>
+                                <span class="loyalty-history-row__date">
+                                    <?= $block->escapeHtml($entry->getCreatedAt() ?? '') ?>
+                                </span>
+                            </div>
+                            <div class="loyalty-history-row__points <?= $entry->getPoints() >= 0 ? 'loyalty-history-row__points--positive' : 'loyalty-history-row__points--negative' ?>">
+                                <?= $entry->getPoints() >= 0 ? '+' : '' ?><?= (int) $entry->getPoints() ?>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+    </div><!-- /.loyalty-content-grid -->
+
+</div><!-- /.loyalty-dashboard -->
+
+<style>
+/* ================================================
+   NamCong Loyalty Dashboard Styles
+   ================================================ */
+
+.loyalty-dashboard {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 1100px;
+    margin: 0 auto 40px;
+    color: #1a1a2e;
+}
+
+/* --- Hero --- */
+.loyalty-hero {
+    border-radius: 20px;
+    padding: 40px 32px 28px;
+    margin-bottom: 24px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+.loyalty-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 260px;
+    height: 260px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+}
+.loyalty-hero__inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+.loyalty-hero__badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    border: 3px solid;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+}
+.loyalty-hero__badge-icon { font-size: 2rem; line-height: 1; }
+.loyalty-hero__badge-level { font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+.loyalty-hero__points { display: flex; flex-direction: column; }
+.loyalty-hero__points-number { font-size: 3.5rem; font-weight: 800; line-height: 1; letter-spacing: -2px; color: #fff; }
+.loyalty-hero__points-label { font-size: 0.85rem; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+/* Progress Bar */
+.loyalty-progress { margin-top: 8px; }
+.loyalty-progress__labels { display: flex; justify-content: space-between; font-size: 0.78rem; opacity: 0.75; margin-bottom: 8px; }
+.loyalty-progress__track { background: rgba(255,255,255,0.15); border-radius: 100px; height: 10px; overflow: hidden; }
+.loyalty-progress__fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #FFD700, #FF8C00); transition: width 1.2s cubic-bezier(.22,1,.36,1); }
+.loyalty-progress__pct { text-align: right; font-size: 0.78rem; opacity: 0.75; margin-top: 6px; }
+.loyalty-progress--maxed p { color: #FFD700; font-weight: 600; font-size: 1rem; margin: 0; }
+
+/* --- Stat Cards --- */
+.loyalty-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.loyalty-stat-card {
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    color: #fff;
+    background: #0f3460;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.loyalty-stat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
+.loyalty-stat-card--blue   { background: linear-gradient(135deg, #0f3460, #1a6fc4); }
+.loyalty-stat-card--purple { background: linear-gradient(135deg, #6a0dad, #a855f7); }
+.loyalty-stat-card--green  { background: linear-gradient(135deg, #065f46, #10b981); }
+.loyalty-stat-card--orange { background: linear-gradient(135deg, #92400e, #f59e0b); }
+.loyalty-stat-card__icon  { font-size: 1.8rem; margin-bottom: 10px; }
+.loyalty-stat-card__value { font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+.loyalty-stat-card__label { font-size: 0.78rem; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* --- Content Grid --- */
+.loyalty-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+/* --- Panels --- */
+.loyalty-panel {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+.loyalty-panel__header { padding: 20px 24px 16px; border-bottom: 1px solid #f3f4f6; }
+.loyalty-panel__title { margin: 0; font-size: 1rem; font-weight: 700; color: #1a1a2e; }
+.loyalty-panel__body { padding: 20px 24px; }
+
+/* --- Rewards --- */
+.loyalty-rewards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.loyalty-reward-card {
+    border: 2px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    background: #fafafa;
+}
+.loyalty-reward-card:hover { border-color: #6a0dad; box-shadow: 0 4px 16px rgba(106,13,173,0.12); transform: translateY(-2px); }
+.loyalty-reward-card--locked { opacity: 0.55; }
+.loyalty-reward-card__top { display: flex; justify-content: center; align-items: center; position: relative; margin-bottom: 10px; }
+.loyalty-reward-card__icon { font-size: 2rem; }
+.loyalty-reward-card__lock { position: absolute; right: 0; top: 0; font-size: 0.9rem; }
+.loyalty-reward-card__name { font-size: 0.85rem; font-weight: 700; margin: 0 0 6px; color: #1a1a2e; }
+.loyalty-reward-card__cost { font-size: 0.9rem; color: #6a0dad; margin: 0 0 4px; }
+.loyalty-reward-card__value { font-size: 0.8rem; color: #6b7280; margin: 0 0 12px; }
+.loyalty-reward-card__need { font-size: 0.75rem; color: #9ca3af; font-style: italic; }
+.loyalty-btn { display: inline-block; border: none; border-radius: 8px; padding: 8px 16px; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s, transform 0.15s; }
+.loyalty-btn--redeem { background: linear-gradient(135deg, #6a0dad, #a855f7); color: #fff; width: 100%; }
+.loyalty-btn--redeem:hover { opacity: 0.9; transform: scale(1.02); }
+
+/* --- History --- */
+.loyalty-history-list { display: flex; flex-direction: column; gap: 12px; }
+.loyalty-history-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: #f9fafb;
+    border-left: 4px solid #e5e7eb;
+    transition: background 0.15s;
+}
+.loyalty-history-row:hover { background: #f3f4f6; }
+.loyalty-history-row--earn  { border-left-color: #10b981; }
+.loyalty-history-row--spend { border-left-color: #f59e0b; }
+.loyalty-history-row__icon { font-size: 1.4rem; flex-shrink: 0; }
+.loyalty-history-row__info { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.loyalty-history-row__type    { font-weight: 600; font-size: 0.85rem; color: #1a1a2e; }
+.loyalty-history-row__comment { font-size: 0.78rem; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.loyalty-history-row__date    { font-size: 0.72rem; color: #9ca3af; margin-top: 2px; }
+.loyalty-history-row__points { font-size: 1.05rem; font-weight: 800; flex-shrink: 0; }
+.loyalty-history-row__points--positive { color: #10b981; }
+.loyalty-history-row__points--negative { color: #f59e0b; }
+
+.loyalty-coupon-code {
+    display: inline-block;
+    background: #fef3c7;
+    border: 1px dashed #d97706;
+    color: #b45309;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-left: 5px;
+    cursor: copy;
+    position: relative;
+    transition: background 0.2s;
+}
+.loyalty-coupon-code:hover { background: #fde68a; }
+.loyalty-coupon-code::after {
+    content: 'Click to copy';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s;
+}
+.loyalty-coupon-code:hover::after { opacity: 1; visibility: visible; }
+
+/* Empty state */
+.loyalty-empty { text-align: center; padding: 28px 16px; color: #9ca3af; }
+.loyalty-empty__icon { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .loyalty-stats { grid-template-columns: repeat(2, 1fr); }
+    .loyalty-content-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 500px) {
+    .loyalty-stats { grid-template-columns: 1fr 1fr; }
+    .loyalty-rewards-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Animate progress bar
+    var fill = document.getElementById('loyalty-progress-fill');
+    var pct  = document.getElementById('loyalty-progress-pct');
+    if (fill) {
+        var target = parseFloat(fill.dataset.target || 0);
+        setTimeout(function () {
+            fill.style.width = target + '%';
+            if (pct) { pct.textContent = target.toFixed(1) + '%'; }
+        }, 300);
+    }
+
+    // Animate points counter
+    var counter = document.getElementById('loyalty-total-points');
+    if (counter) {
+        var endVal = parseInt(counter.textContent, 10);
+        var duration = 1200;
+        var startTime = null;
+        function animateCounter(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 4); // ease-out-quart
+            counter.textContent = Math.round(eased * endVal).toLocaleString();
+            if (progress < 1) { requestAnimationFrame(animateCounter); }
+        }
+        requestAnimationFrame(animateCounter);
+    }
+});
+
+function copyLoyaltyCode(code, element) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(function() {
+            var originalText = element.textContent;
+            element.textContent = 'Copied!';
+            element.classList.add('loyalty-coupon--copied');
+            setTimeout(function() {
+                element.textContent = code;
+                element.classList.remove('loyalty-coupon--copied');
+            }, 2000);
+        });
+    } else {
+        // Fallback
+        var textArea = document.createElement("textarea");
+        textArea.value = code;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            element.textContent = 'Copied!';
+            setTimeout(function() { element.textContent = code; }, 2000);
+        } catch (err) {}
+        document.body.removeChild(textArea);
+    }
+}
+</script>

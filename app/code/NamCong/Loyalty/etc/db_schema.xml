@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <!-- Loyalty Points Table -->
+    <table name="loyalty_points" resource="default" engine="innodb" comment="Loyalty Points">
+        <column xsi:type="int" name="point_id" unsigned="true" nullable="false" identity="true" comment="Point ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" comment="Customer ID"/>
+        <column xsi:type="int" name="total_points" unsigned="false" nullable="false" default="0" comment="Total Points"/>
+        <column xsi:type="varchar" name="level" nullable="false" length="32" default="bronze" comment="Level"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="true" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="point_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="LOYALTY_POINTS_CUSTOMER_ID">
+            <column name="customer_id"/>
+        </constraint>
+    </table>
+
+    <!-- Loyalty History Table -->
+    <table name="loyalty_history" resource="default" engine="innodb" comment="Loyalty Points History">
+        <column xsi:type="int" name="history_id" unsigned="true" nullable="false" identity="true" comment="History ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" comment="Customer ID"/>
+        <column xsi:type="int" name="points" unsigned="false" nullable="false" default="0" comment="Points"/>
+        <column xsi:type="varchar" name="action_type" nullable="false" length="64" comment="Action Type"/>
+        <column xsi:type="int" name="order_id" unsigned="true" nullable="true" comment="Order ID"/>
+        <column xsi:type="text" name="comment" nullable="true" comment="Comment"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="history_id"/>
+        </constraint>
+        <index referenceId="LOYALTY_HISTORY_CUSTOMER_ID_IDX" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+        <index referenceId="LOYALTY_HISTORY_ACTION_TYPE_IDX" indexType="btree">
+            <column name="action_type"/>
+        </index>
+    </table>
+
+    <!-- Loyalty Rule Table -->
+    <table name="loyalty_rule" resource="default" engine="innodb" comment="Loyalty Rule">
+        <column xsi:type="int" name="rule_id" unsigned="true" nullable="false" identity="true" comment="Rule ID"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Rule Name"/>
+        <column xsi:type="int" name="points" unsigned="false" nullable="false" default="0" comment="Points"/>
+        <column xsi:type="text" name="condition_serialized" nullable="true" comment="Condition Serialized"/>
+        <column xsi:type="text" name="customer_group_ids" nullable="true" comment="Customer Group IDs"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="date" name="from_date" nullable="true" comment="From Date"/>
+        <column xsi:type="date" name="to_date" nullable="true" comment="To Date"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="true" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="rule_id"/>
+        </constraint>
+        <index referenceId="LOYALTY_RULE_IS_ACTIVE_IDX" indexType="btree">
+            <column name="is_active"/>
+        </index>
+    </table>
+
+    <!-- Loyalty Reward Table -->
+    <table name="loyalty_reward" resource="default" engine="innodb" comment="Loyalty Reward">
+        <column xsi:type="int" name="reward_id" unsigned="true" nullable="false" identity="true" comment="Reward ID"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Reward Name"/>
+        <column xsi:type="int" name="required_points" unsigned="true" nullable="false" default="0" comment="Required Points"/>
+        <column xsi:type="varchar" name="reward_type" nullable="false" length="64" default="discount" comment="Reward Type"/>
+        <column xsi:type="decimal" name="reward_value" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Reward Value"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="true" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="reward_id"/>
+        </constraint>
+        <index referenceId="LOYALTY_REWARD_IS_ACTIVE_IDX" indexType="btree">
+            <column name="is_active"/>
+        </index>
+    </table>
+
+</schema>

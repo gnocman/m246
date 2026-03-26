@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">loyalty_reward_form.loyalty_reward_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Loyalty Reward</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="reverseMetadataMerge" xsi:type="boolean">true</item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="back">
+                <url path="loyalty_admin/reward/index"/>
+                <class>back</class>
+                <label translate="true">Back</label>
+            </button>
+            <button name="save" class="NamCong\Loyalty\Block\Adminhtml\Reward\Edit\SaveButton"/>
+        </buttons>
+        <namespace>loyalty_reward_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>loyalty_reward_form.loyalty_reward_form_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="loyalty_reward_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="loyalty_admin/reward/save"/>
+        </settings>
+        <dataProvider class="NamCong\Loyalty\Ui\DataProvider\Reward\FormDataProvider"
+                      name="loyalty_reward_form_data_source">
+            <settings>
+                <requestFieldName>reward_id</requestFieldName>
+                <primaryFieldName>reward_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <fieldset name="general">
+        <settings>
+            <label translate="true">Reward Information</label>
+        </settings>
+        <field name="reward_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">reward</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="name" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">reward</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Reward Name</label>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="required_points" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">reward</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Required Points</label>
+                <dataType>number</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-greater-than-zero" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="reward_type" sortOrder="30" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">reward</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Reward Type</label>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="NamCong\Loyalty\Model\Config\Source\RewardType"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="reward_value" sortOrder="40" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">reward</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Reward Value (amount / product ID)</label>
+                <dataType>number</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="is_active" sortOrder="50" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Active</label>
+                <dataType>boolean</dataType>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <!-- Get customer loyalty points -->
+    <route url="/V1/loyalty/customer-points" method="GET">
+        <service class="NamCong\Loyalty\Api\PointManagerInterface" method="getCustomerPoints"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+
+    <!-- Apply/add points -->
+    <route url="/V1/loyalty/apply-points" method="POST">
+        <service class="NamCong\Loyalty\Api\PointManagerInterface" method="addPoints"/>
+        <resources>
+            <resource ref="Magento_Backend::admin"/>
+        </resources>
+    </route>
+
+    <!-- Get all active rewards -->
+    <route url="/V1/loyalty/rewards" method="GET">
+        <service class="NamCong\Loyalty\Api\RewardRepositoryInterface" method="getActiveRewards"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <!-- Redeem a reward -->
+    <route url="/V1/loyalty/redeem" method="POST">
+        <service class="NamCong\Loyalty\Api\PointManagerInterface" method="redeemReward"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+
+</routes>
