@@ -1,0 +1,55 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \NamCong\ReturnShield\ViewModel\ProductRisk $viewModel
+ */
+$viewModel = $block->getData('view_model');
+$analysis = $viewModel ? $viewModel->getAnalysis() : null;
+if (!$viewModel || !$viewModel->shouldRender() || !$analysis) {
+    return;
+}
+$hasSignals = $analysis->getScore() > 0 || $analysis->getReasons() !== [] || $analysis->getRecommendations() !== [];
+?>
+<section class="returnshield-card returnshield-card-<?= $block->escapeHtmlAttr(strtolower($analysis->getLabel())) ?>">
+    <div class="returnshield-card__header">
+        <span class="returnshield-card__eyebrow"><?= $block->escapeHtml(__('Return Risk Advisor')) ?></span>
+        <strong class="returnshield-card__title">
+            <?= $block->escapeHtml(__('Return risk: %1', $analysis->getLabel())) ?>
+        </strong>
+        <span class="returnshield-card__score"><?= $block->escapeHtml($analysis->getScore()) ?>/100</span>
+    </div>
+
+    <?php if ($analysis->getReasons()): ?>
+        <ul class="returnshield-card__list">
+            <?php foreach ($analysis->getReasons() as $reason): ?>
+                <li><?= $block->escapeHtml($reason) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <p class="returnshield-cart__meta">
+            <?php if ($hasSignals): ?>
+                <?= $block->escapeHtml(__('This product currently has a low return-risk profile with only limited warning signals.')) ?>
+            <?php else: ?>
+                <?= $block->escapeHtml(__('No major return-warning signals were detected for this product with the current configuration.')) ?>
+            <?php endif; ?>
+        </p>
+    <?php endif; ?>
+
+    <?php if ($analysis->getRecommendations()): ?>
+        <div class="returnshield-card__footer">
+            <strong><?= $block->escapeHtml(__('How to reduce mismatch')) ?></strong>
+            <ul class="returnshield-card__list">
+                <?php foreach ($analysis->getRecommendations() as $recommendation): ?>
+                    <li><?= $block->escapeHtml($recommendation) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php elseif (!$hasSignals): ?>
+        <div class="returnshield-card__footer">
+            <strong><?= $block->escapeHtml(__('Current guidance')) ?></strong>
+            <p class="returnshield-cart__meta">
+                <?= $block->escapeHtml(__('Keep fit notes, compatibility details, and review signals updated so stronger warnings can appear when needed.')) ?>
+            </p>
+        </div>
+    <?php endif; ?>
+</section>

@@ -1,0 +1,69 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \NamCong\ReturnShield\ViewModel\CartRisk $viewModel
+ */
+$viewModel = $block->getData('view_model');
+$flaggedItems = $viewModel ? $viewModel->getFlaggedItems() : [];
+$items = $flaggedItems !== [] ? $flaggedItems : ($viewModel ? $viewModel->getItems() : []);
+$hasFlaggedItems = $viewModel ? $viewModel->hasFlaggedItems() : false;
+if (!$viewModel || !$viewModel->shouldRender()) {
+    return;
+}
+?>
+<section class="returnshield-cart">
+    <div class="returnshield-cart__intro">
+        <span class="returnshield-card__eyebrow"><?= $block->escapeHtml(__('Before you place the order')) ?></span>
+        <?php if ($hasFlaggedItems): ?>
+            <h2><?= $block->escapeHtml(__('A few items in your cart may have a higher return risk')) ?></h2>
+            <p><?= $block->escapeHtml(__('These are soft warnings to help the shopper self-correct before checkout.')) ?></p>
+        <?php else: ?>
+            <h2><?= $block->escapeHtml(__('Return check completed for your cart')) ?></h2>
+            <p><?= $block->escapeHtml(__('No medium-risk items were detected with the current rules, so this block is showing a low-risk snapshot instead.')) ?></p>
+        <?php endif; ?>
+    </div>
+
+    <?php foreach ($items as $item): ?>
+        <article class="returnshield-card returnshield-card-<?= $block->escapeHtmlAttr(strtolower((string) $item['label'])) ?>">
+            <div class="returnshield-card__header">
+                <strong class="returnshield-card__title">
+                    <?= $block->escapeHtml((string) $item['name']) ?>
+                </strong>
+                <span class="returnshield-card__score">
+                    <?= $block->escapeHtml(__('Risk %1/100', (string) $item['score'])) ?>
+                </span>
+            </div>
+            <p class="returnshield-cart__meta">
+                <?= $block->escapeHtml(__('Qty: %1 | Level: %2', (string) $item['qty'], (string) $item['label'])) ?>
+            </p>
+            <?php if (!empty($item['reasons'])): ?>
+                <ul class="returnshield-card__list">
+                    <?php foreach ($item['reasons'] as $reason): ?>
+                        <li><?= $block->escapeHtml((string) $reason) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p class="returnshield-cart__meta">
+                    <?= $block->escapeHtml(__('No major return-warning signals were detected for this item with the current configuration.')) ?>
+                </p>
+            <?php endif; ?>
+            <?php if (!empty($item['recommendations'])): ?>
+                <div class="returnshield-card__footer">
+                    <strong><?= $block->escapeHtml(__('Suggested fix')) ?></strong>
+                    <ul class="returnshield-card__list">
+                        <?php foreach ($item['recommendations'] as $recommendation): ?>
+                            <li><?= $block->escapeHtml((string) $recommendation) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php elseif (!$hasFlaggedItems): ?>
+                <div class="returnshield-card__footer">
+                    <strong><?= $block->escapeHtml(__('Current guidance')) ?></strong>
+                    <p class="returnshield-cart__meta">
+                        <?= $block->escapeHtml(__('Keep category mapping, fit notes, and compatibility notes updated so stronger warnings can appear when needed.')) ?>
+                    </p>
+                </div>
+            <?php endif; ?>
+        </article>
+    <?php endforeach; ?>
+</section>
