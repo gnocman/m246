@@ -1,0 +1,47 @@
+<?php
+/**
+ * @var \NamCong\ReturnShield\Block\Adminhtml\Dashboard\Report $block
+ */
+$rows = $block->getRows();
+?>
+<div class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?= $block->escapeHtml(__('Top Return Risk Products')) ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <p><?= $block->escapeHtml(__('This MVP dashboard is rule-driven. Tune weights in Stores > Configuration > Catalog > ReturnShield.')) ?></p>
+
+        <?php if ($rows === []): ?>
+            <div class="message message-notice">
+                <div><?= $block->escapeHtml(__('No medium or high risk products were found with the current rules.')) ?></div>
+            </div>
+        <?php else: ?>
+            <div class="admin__data-grid-wrap admin__data-grid-wrap-static">
+                <table class="data-grid">
+                    <thead>
+                    <tr>
+                        <th class="data-grid-th"><span><?= $block->escapeHtml(__('SKU')) ?></span></th>
+                        <th class="data-grid-th"><span><?= $block->escapeHtml(__('Product')) ?></span></th>
+                        <th class="data-grid-th"><span><?= $block->escapeHtml(__('Score')) ?></span></th>
+                        <th class="data-grid-th"><span><?= $block->escapeHtml(__('Level')) ?></span></th>
+                        <th class="data-grid-th"><span><?= $block->escapeHtml(__('Top Reasons')) ?></span></th>
+                        <th class="data-grid-th"><span><?= $block->escapeHtml(__('Recommended Action')) ?></span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($rows as $row): ?>
+                        <tr>
+                            <td><?= $block->escapeHtml((string) $row['sku']) ?></td>
+                            <td><?= $block->escapeHtml((string) $row['name']) ?></td>
+                            <td><?= $block->escapeHtml((string) $row['score']) ?>/100</td>
+                            <td><?= $block->escapeHtml((string) $row['label']) ?></td>
+                            <td><?= $block->escapeHtml(implode(' | ', $row['reasons'])) ?></td>
+                            <td><?= $block->escapeHtml(implode(' | ', $row['recommendations'])) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

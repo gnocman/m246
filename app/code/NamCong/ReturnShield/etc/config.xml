@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <returnshield>
+            <general>
+                <enabled>1</enabled>
+                <medium_threshold>40</medium_threshold>
+                <high_threshold>70</high_threshold>
+                <max_dashboard_products>25</max_dashboard_products>
+            </general>
+            <rules>
+                <high_risk_category_ids></high_risk_category_ids>
+                <fashion_category_ids></fashion_category_ids>
+                <electronics_category_ids></electronics_category_ids>
+                <high_risk_category_penalty>20</high_risk_category_penalty>
+                <configurable_penalty>10</configurable_penalty>
+                <size_guidance_penalty>20</size_guidance_penalty>
+                <material_penalty>10</material_penalty>
+                <compatibility_penalty>20</compatibility_penalty>
+                <guest_penalty>10</guest_penalty>
+                <low_rating_threshold>65</low_rating_threshold>
+                <low_rating_penalty>15</low_rating_penalty>
+                <negative_review_keywords>small,large,fit,color,darker,lighter,quality,cheap,broken,not as described</negative_review_keywords>
+                <negative_review_penalty>15</negative_review_penalty>
+            </rules>
+        </returnshield>
+    </default>
+</config>

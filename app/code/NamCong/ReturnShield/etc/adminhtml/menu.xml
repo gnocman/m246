@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/menu.xsd">
+    <menu>
+        <add id="NamCong_ReturnShield::returnshield"
+             title="ReturnShield"
+             module="NamCong_ReturnShield"
+             sortOrder="70"
+             parent="Magento_Backend::marketing"
+             resource="NamCong_ReturnShield::returnshield"/>
+        <add id="NamCong_ReturnShield::risk_dashboard"
+             title="Return Risk Dashboard"
+             module="NamCong_ReturnShield"
+             sortOrder="10"
+             parent="NamCong_ReturnShield::returnshield"
+             action="returnshield_admin/dashboard/index"
+             resource="NamCong_ReturnShield::dashboard"/>
+    </menu>
+</config>

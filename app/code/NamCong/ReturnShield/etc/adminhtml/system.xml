@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="returnshield" translate="label" type="text" sortOrder="560" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>ReturnShield</label>
+            <tab>catalog</tab>
+            <resource>NamCong_ReturnShield::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="medium_threshold" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Medium Risk Threshold</label>
+                    <comment>Score from 0-100.</comment>
+                    <validate>required-number validate-digits</validate>
+                </field>
+                <field id="high_threshold" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>High Risk Threshold</label>
+                    <comment>Score from 0-100.</comment>
+                    <validate>required-number validate-digits</validate>
+                </field>
+                <field id="max_dashboard_products" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Products In Dashboard</label>
+                    <comment>How many highest-risk products to display in the admin dashboard snapshot.</comment>
+                    <validate>required-number validate-digits</validate>
+                </field>
+            </group>
+            <group id="rules" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Rule Engine</label>
+                <field id="high_risk_category_ids" translate="label comment" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>High Risk Category IDs</label>
+                    <comment>Comma-separated category IDs that often drive returns.</comment>
+                </field>
+                <field id="fashion_category_ids" translate="label comment" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Fashion Category IDs</label>
+                    <comment>Used to trigger fit, size and material checks.</comment>
+                </field>
+                <field id="electronics_category_ids" translate="label comment" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Electronics/Home Category IDs</label>
+                    <comment>Used to trigger compatibility checks.</comment>
+                </field>
+                <field id="high_risk_category_penalty" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>High Risk Category Penalty</label>
+                    <validate>required-number validate-digits</validate>
+                </field>
+                <field id="configurable_penalty" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Configurable Product Penalty</label>
+                    <validate>required-number validate-digits</validate>
+                </field>
+                <field id="size_guidance_penalty" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Missing Size Guidance Penalty</label>
+                    <validate>required-number validate-digits</validate>
+                </field>
+                <field id="material_penalty" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Missing Material Details Penalty</label>
+                    <validate>required-number validate-digits</validate>
+                </field>
+                <field id="compatibility_penalty" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Missing Compatibility Notes Penalty</label>
+                    <validate>required-number validate-digits</validate>
+                </field>
+                <field id="guest_penalty" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Guest Penalty</label>
+                    <validate>required-number validate-digits</validate>
+                </field>
+                <field id="low_rating_threshold" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Low Rating Threshold</label>
+                    <comment>Rating summary below this number is treated as a return signal. Magento stores summary on a 0-100 scale.</comment>
+                    <validate>required-number validate-digits</validate>
+                </field>
+                <field id="low_rating_penalty" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Low Rating Penalty</label>
+                    <validate>required-number validate-digits</validate>
+                </field>
+                <field id="negative_review_keywords" translate="label comment" type="textarea" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Negative Review Keywords</label>
+                    <comment>Comma-separated words and phrases scanned from the latest approved reviews.</comment>
+                </field>
+                <field id="negative_review_penalty" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Negative Review Penalty</label>
+                    <validate>required-number validate-digits</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

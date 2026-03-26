@@ -1,0 +1,28 @@
+{
+    "name": "namcong/module-return-shield",
+    "description": "Pre-purchase return prevention toolkit for Magento 2",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": "OSL-3.0",
+    "require": {
+        "php": "^8.1",
+        "magento/framework": "*",
+        "magento/module-backend": "*",
+        "magento/module-catalog": "*",
+        "magento/module-checkout": "*",
+        "magento/module-configurable-product": "*",
+        "magento/module-customer": "*",
+        "magento/module-review": "*",
+        "magento/module-store": "*",
+        "magento/module-config": "*",
+        "magento/module-eav": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "NamCong\\ReturnShield\\": ""
+        }
+    }
+}
